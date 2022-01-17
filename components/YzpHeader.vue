@@ -45,7 +45,6 @@ const setItemNavRefs = (el: any) => {
 // 设置滑块位置
 const setActiveNav = (flag: boolean, index: number) => {
   const navCurrEle = navItemRefs[index]
-  console.log(navItemRefs[index])
   if (!navCurrEle) {
     return
   }
@@ -76,8 +75,14 @@ columns.value = [homeRoute, ...toRaw(navData.value)]
 
 onMounted(() => {
   initActiveNav()
-  setScrollAnimation(props.settings.web_notice, 300, 3000, (data: any) => {
-    scrolling.value = data.isChange
+  setScrollAnimation({
+    list: props.settings.web_notice,
+    intervalChange: () => {
+      scrolling.value = true
+    },
+    durationChange: () => {
+      scrolling.value = false
+    },
   })
 })
 

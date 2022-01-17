@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 })
 
+const arrs = ref(props.list)
 const swiperRefs = ref()
 const swiperWidth = ref(0)
 const swiperConfig = reactive({
@@ -69,18 +70,22 @@ const { $config } = useNuxtApp()
 
 // 循环
 const startSlide = (type: string) => {
-  swiperConfig.index = type == 'right' ? 0 : props.list.length - 1
+  if (type == 'right') {
+    swiperConfig.index = 0
+  } else {
+    swiperConfig.index = arrs.value.length - 1
+  }
 }
 
 // 往右
 const slideToRight = () => {
   swiperConfig.index ++
   if (props.loop) {
-    if (swiperConfig.index === props.list.length) {
+    if (swiperConfig.index === arrs.value.length) {
       startSlide('right')
     }
   } else {
-    if (swiperConfig.index > props.list.length -1) {
+    if (swiperConfig.index > arrs.value.length -1) {
       swiperConfig.index = 0
     }
   }
@@ -95,7 +100,7 @@ const slideToLeft = () => {
     }
   } else {
     if (swiperConfig.index  === 0) {
-      swiperConfig.index = props.list.length -1
+      swiperConfig.index = arrs.value.length -1
       swiperConfig.index --
     }
   }
@@ -140,7 +145,7 @@ onMounted(() => {
       class="yzp-swiper-list"
     >
       <li
-        v-for="(item, index) in list"
+        v-for="(item, index) in arrs"
         :style="{ 'z-index': -index }"
         :key="index"
         class="yzp-swiper-item"
