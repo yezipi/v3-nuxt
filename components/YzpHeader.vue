@@ -21,7 +21,7 @@ const navActiveIndex = ref(0)
 const navItemRefs = []
 const navActiveDiv = reactive({
   left: 0,
-  with: 0,
+  width: 0,
 })
 const homeRoute = {
   name: '首页',
@@ -45,12 +45,13 @@ const setItemNavRefs = (el: any) => {
 // 设置滑块位置
 const setActiveNav = (flag: boolean, index: number) => {
   const navCurrEle = navItemRefs[index]
+  console.log(navItemRefs[index])
   if (!navCurrEle) {
     return
   }
   const { offsetLeft = 0, clientWidth = 0 } = navItemRefs[index]
   navActiveDiv.left = offsetLeft
-  navActiveDiv.with = flag ? clientWidth : 0
+  navActiveDiv.width = flag ? clientWidth : 0
 }
 
 // 初始化选中的菜单位置
@@ -131,8 +132,8 @@ onMounted(() => {
           </li>
         </ul>
         <div
-          v-show="navActiveDiv.with > 0"
-          :style="{ transform: `translateX(${navActiveDiv.left}px) scale(${navActiveDiv.with ? 1 : 0})` }"
+          v-show="navActiveDiv.width > 0"
+          :style="{ transform: `translateX(${navActiveDiv.left}px) scale(${navActiveDiv.width ? 1 : 0})` }"
           class="yzp-nav-active"
         ></div>
       </nav>

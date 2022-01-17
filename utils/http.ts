@@ -8,7 +8,7 @@ export interface ResponseConfig {
   msg: string
 }
 
-const fetch = (url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<ResponseConfig>> => {
+const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
   const { $config } = useNuxtApp()
   return new Promise((resolve, reject) => {
     useFetch($config.baseURL + url, { ...config }).then((res: any) => {
@@ -26,19 +26,19 @@ const fetch = (url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<R
 
 export default class Http {
 
-  get(url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<ResponseConfig>> {
+  get(url: string, config?: UseFetchOptions<any>): Promise<any> {
     return fetch(url, { method: 'get', ...config })
   }
 
-  post(url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<ResponseConfig>> {
+  post(url: string, config?: UseFetchOptions<any>): Promise<any> {
     return fetch(url, { method: 'post', ...config })
   }
 
-  put(url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<ResponseConfig>> {
+  put(url: string, config?: UseFetchOptions<any>): Promise<any> {
     return fetch(url, { method: 'put', ...config })
   }
 
-  delete(url: string, config?: UseFetchOptions<any>): Promise<_AsyncData<ResponseConfig>> {
+  delete(url: string, config?: UseFetchOptions<any>): Promise<any> {
     return fetch(url, { method: 'delete', ...config })
   }
 }

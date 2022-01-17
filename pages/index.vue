@@ -3,10 +3,10 @@
 import api from '~~/api'
 import { setAticleLink } from '@/utils'
 
-const banners: Array<any> = await api.getBanners()
-const hots: Array<any> = await api.getHotArticle()
-const articles: Array<any> = await api.getIndexArticle()
-console.log(articles)
+const banners = await api.getBanners()
+const hots = await api.getHotArticle()
+const articles = await api.getIndexArticle()
+
 </script>
 
 <template>

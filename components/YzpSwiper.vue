@@ -11,55 +11,46 @@ interface SwiperConfig {
   url: string,
 }
 
-const props = defineProps({
+interface Props {
+  list?: Array<SwiperConfig>
+  duration?: number,
+  interval?: number,
+  effect?: string,
+  loop?: boolean,
+  autoplay?: boolean,
+}
+
+const props = withDefaults(defineProps<Props>(), {
 
   /**
    * 列表数据
    */
-  list: {
-    type: Array,
-    default: () => [] as any,
-  },
+  list: () => [],
 
   /**
    * 动画时长，毫秒
    */
-  duration: {
-    type: Number,
-    default: 300,
-  },
+  duration: 300,
 
   /**
    * 间隔时间，毫秒
    */
-  interval: {
-    type: Number,
-    default: 3000,
-  },
+  interval: 3000,
 
   /**
    * 效果: slide, fade
    */
-  effect: {
-    type: String,
-    default: 'slide',
-  },
+  effect: 'slide',
 
   /**
    * 循环播放
    */
-  loop: {
-    type: Boolean,
-    default: true,
-  },
+  loop: true,
 
   /**
    * 自动播放
    */
-  autoplay: {
-    type: Boolean,
-    default: true,
-  }
+  autoplay: true
 
 })
 
@@ -149,7 +140,7 @@ onMounted(() => {
       class="yzp-swiper-list"
     >
       <li
-        v-for="(item, index) in list as Array<SwiperConfig>"
+        v-for="(item, index) in list"
         :style="{ 'z-index': -index }"
         :key="index"
         class="yzp-swiper-item"
