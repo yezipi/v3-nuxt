@@ -1,11 +1,16 @@
 // 封装请求，2022-1-15 yzp
 import { UseFetchOptions} from 'nuxt3/dist/app/composables/fetch'
 import { _AsyncData } from 'nuxt3/dist/app/composables/asyncData'
+
 export interface ResponseConfig {
   code: number,
   status: number,
   data: any,
   msg: string
+}
+export interface ValueConfig {
+  value: any,
+  [x: string]: any,
 }
 
 const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
@@ -16,7 +21,7 @@ const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
       if (!value.data) {
         reject(value)
       } else {
-        resolve(ref(value.data))
+        resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
       }
     }).catch((err: any) => {
       reject(err)

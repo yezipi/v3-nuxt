@@ -3,9 +3,19 @@
 import api from '~~/api'
 import { setAticleLink } from '@/utils'
 
+const { $config } = useNuxtApp()
+
 const banners = await api.getBanners()
 const hots = await api.getHotArticle()
 const articles = await api.getIndexArticle()
+
+const swipers = banners.value.map((e: any) => {
+  return {
+    ...e,
+    title: e.name,
+    url: $config.baseURL + e.cover
+  }
+})
 
 </script>
 
@@ -13,7 +23,25 @@ const articles = await api.getIndexArticle()
   <div class="yzp-index">
     <div class="yzp-index-top mb15">
       <!--轮播图部分-->
-      <yzp-swiper :list="banners" class="yzp-top-swiper"></yzp-swiper>
+      <yzp-swiper :list="swipers" class="yzp-top-swiper">
+        <template #swiperItem="{ item }">
+          <nuxt-link
+            v-if="item.type === 1 || item.type === 2"
+            :to="setAticleLink(item.target, item.type === 1 ? 'article' : 'case')"
+            :title="item.name"
+            class="yzp-swiper-a"
+            target="_blank"
+          >
+          </nuxt-link>
+          <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank"></a>
+        </template>
+        <template #swiperLeftButton>
+          <i class="iconfont iconright" style="transform: rotate(-180deg);"></i>
+        </template>
+        <template #swiperRightButton>
+          <i class="iconfont iconright"></i>
+        </template>
+      </yzp-swiper>
       <!--end 轮播图部分-->
       <!--热门排行-->
       <div class="yzp-top-hot bg box">
@@ -86,5 +114,10 @@ const articles = await api.getIndexArticle()
         }
       }
     }
+  }
+  .yzp-swiper-a {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

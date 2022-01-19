@@ -1,21 +1,23 @@
 
 <!-- 轮播图组件 2022-01-15 yzp -->
 <script lang="ts" setup>
-import { setAticleLink } from '@/utils'
 
 interface SwiperConfig {
-  name: string,
-  target: any,
-  cover: string,
-  type: number,
+  title: string,
   url: string,
+  id?: string,
+  [x: string]: any,
 }
 
 interface Props {
-  list?: Array<SwiperConfig>
+  list: Array<SwiperConfig>
   duration?: number,
   interval?: number,
   autoplay?: boolean,
+  direction?: string,
+  showTitle?: boolean,
+  showDots?: boolean,
+  showArrow?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -38,68 +40,91 @@ const props = withDefaults(defineProps<Props>(), {
   /**
    * 自动播放
    */
-  autoplay: true
+  autoplay: true,
+
+  /**
+   * 方向，prev：往右滚动，next：往左滚动
+   */
+  direction: 'left',
+
+  /**
+   * 显示标题
+   */
+  showTitle: true,
+
+  /**
+   * 显示滑动指示点, 标题和指示点二选一
+   */
+  showDots: false,
+
+  /**
+   * 显示箭头
+   */
+  showArrow: true,
 
 })
-const newX = ref(-1) // 因为是translateX里面有异步的，所以用这个来替换衔接后的值
+
+const emit = defineEmits([ 'change' ])
+
+const newSwiperX = ref(-1) // 因为是translateX里面有异步的，所以用这个来替换衔接后的值
 const swiperRefs = ref()
-const swiperWidth = ref(0)
 const swiperConfig = reactive({
   index: 0,
   arrow: true,
   inter: null,
+  width: 0,
+  direction: props.direction
 })
-const direction = ref('next') // 滑动的方向: prev, next
 const noAnimated = ref(true) // 防止刷新页面的时候有过度效果
 const isAnimating = ref(false) // 点击间隔控制
-
-const isPrevEnd = computed(() => (swiperConfig.index === props.list.length - 1) && direction.value === 'prev') // 第一张往后
-const isNextEnd = computed(() => (swiperConfig.index === 0) && direction.value === 'next') // 下一张到了最后一张
-
 const translateX = computed(() => {
-  const w = swiperWidth.value
-  const index = swiperConfig.index
-  let swiperX = -w - (index * w)
-  return swiperX
+  const { width, index } = swiperConfig
+  return -width - (index * width)
 })
 
-// 滑动到最后一张判断
-watch(() => isNextEnd.value, (res: boolean) => {
-  const w = swiperWidth.value
-  if (res && !isPrevEnd.value) {
+// 监听索引改变
+watch(() => swiperConfig.index, (index: number) => {
+  const { width, direction } = swiperConfig
+  const len = props.list.length
+  const duration = props.duration
+  const isNextEnd = (index === 0) && direction === 'next'
+  const isPrevEnd = (index === len - 1) && direction === 'prev'
+  let nextTimer = undefined
+  let prevTimer = undefined
+  
+  clearTimeout(nextTimer)
+  clearTimeout(prevTimer)
+
+  // 滑动到最后一张判断
+  if (isNextEnd) {
     console.log('最后一张衔接了')
-    newX.value = -(w * props.list.length) + (-w) // 因为末尾多添加了一张开头的，所以距离要多加一个个宽度
+    newSwiperX.value = -(width * len) + (-width) // 因为末尾多添加了一张开头的，所以距离要多加一个个宽度
     isAnimating.value = true // 改变的时候禁止点击
-    setTimeout(() => {
+    nextTimer = setTimeout(() => {
       noAnimated.value = true // 也不要有过渡动画
       isAnimating.value = false
-      newX.value = -w // 就把距离替换成第二张的距离, 动画过渡完结束isAnimating
-    }, props.duration)
+      newSwiperX.value = -width // 就把距离替换成第二张的距离, 动画过渡完结束isAnimating
+    }, duration)
   }
-  if (!res && !isPrevEnd.value) {
-    newX.value = -1
-  }
-})
 
-// 如果是第一张开始往左, 距离设置为0
-watch(() => isPrevEnd.value, (res: boolean) => {
-  const w = swiperWidth.value
-  console.log('第一张衔接了')
-  if (res && !isNextEnd.value) {
-    newX.value = 0 // 因为开头多添加了一张结尾的，所以距离距离设置为0
+  // 如果是第一张开始往左, 距离设置为0
+  if (isPrevEnd) {
+    console.log('第一张衔接了')
+    newSwiperX.value = 0 // 因为开头多添加了一张结尾的，所以距离距离设置为0
     isAnimating.value = true // 改变的时候禁止点击
-    setTimeout(() => {
+    prevTimer = setTimeout(() => {
       noAnimated.value = true // 也不要有过渡动画
       isAnimating.value = false
-      newX.value = -w * (props.list.length) // 就把距离替换成倒数第二张的距离, 动画过渡完结束isAnimating
-    }, props.duration)
+      newSwiperX.value = -width * (len) // 就把距离替换成倒数第二张的距离, 动画过渡完结束isAnimating
+    }, duration)
   }
-  if (!res && !isNextEnd.value) {
-    newX.value = -1
-  }
-})
 
-const { $config } = useNuxtApp()
+  if (!isNextEnd && !isPrevEnd) {
+    newSwiperX.value = -1
+    console.log(newSwiperX.value)
+  }
+  emit('change', index)
+})
 
 // 循环
 const loop = (type: string) => {
@@ -108,7 +133,7 @@ const loop = (type: string) => {
 
 // 往左
 const next = () => {
-  direction.value = 'next'
+  swiperConfig.direction = 'next'
   if (isAnimating.value) {
     return
   }
@@ -121,7 +146,7 @@ const next = () => {
 
 // 往右
 const prev = () => {
-  direction.value = 'prev'
+  swiperConfig.direction = 'prev'
   if (isAnimating.value) {
     return
   }
@@ -132,45 +157,50 @@ const prev = () => {
   }
 }
 
-const stopAutoplay = () => {
+const stop = () => {
   if (props.autoplay) {
     clearInterval(swiperConfig.inter)
   }
 }
 
 // 初始化
-const startAutoPlay = () => {
+const start = () => {
   if(props.autoplay){
     clearInterval(swiperConfig.inter)
-    swiperConfig.inter=setInterval(()=>{
-      next()
+    swiperConfig.inter = setInterval(() => {
+      swiperConfig.direction === 'next' ? next() : prev()
     }, props.interval)
   }
 }
 
 
 onMounted(() => {
-  swiperWidth.value = swiperRefs.value.clientWidth
-  // startAutoPlay()
+  if (props.list.length) {
+    swiperConfig.width = swiperRefs.value.clientWidth
+    start()
+  }
 })
 </script>
 
 <template>
   <div
+    v-if="list.length"
     ref="swiperRefs"
     class="yzp-swiper-wrap"
+    @mouseover="stop"
+    @mouseout="start"
   >
     <ul
       :style="{
-        transform: `translate3d(${newX === -1 ? translateX : newX }px,0,0)`,
+        transform: `translate3d(${newSwiperX === -1 ? translateX : newSwiperX }px,0,0)`,
         transition: noAnimated ? 'none' : `all ${duration / 1000}s`
       }"
       class="yzp-swiper-list"
     >
-      <li v-show="swiperWidth" class="yzp-swiper-item">
+      <li v-show="swiperConfig.width" class="yzp-swiper-item">
         <div 
           class="yzp-swiper-link"
-          :style="{ background: `url(${$config.baseURL + (list[list.length -1].cover)}) no-repeat center` }"
+          :style="{ background: `url(${list[list.length -1].url}) no-repeat center` }"
         >
         </div>
       </li>
@@ -180,38 +210,51 @@ onMounted(() => {
         :key="index"
         class="yzp-swiper-item"
       >
-        <div class="yzp-swiper-link" :style="{ background: `url(${$config.baseURL + item.cover}) no-repeat center` }">
-          <nuxt-link
-            v-if="item.type === 1 || item.type === 2"
-            :to="setAticleLink(item.target, item.type === 1 ? 'article' : 'case')"
-            :title="(list[swiperConfig.index] as any).name"
-            target="_blank"
-          >
-          </nuxt-link>
-          <a v-if="item.type === 3" :href="item.url" target="_blank"></a>
+        <div class="yzp-swiper-link" :style="{ background: `url(${item.url}) no-repeat center` }">
+          <slot name="swiperItem" :item="item"></slot>
         </div>
       </li>
-      <li v-show="swiperWidth" class="yzp-swiper-item">
+      <li v-show="swiperConfig.width" class="yzp-swiper-item">
         <div
           class="yzp-swiper-link"
-          :style="{ background: `url(${$config.baseURL + (list[0].cover)}) no-repeat center` }"
+          :style="{ background: `url(${list[0].url}) no-repeat center` }"
         >
         </div>
       </li>
     </ul>
     <!--swiper btn-->
-    <div class="yzp-swiper-btn">
-      <i class="yzp-swiper-next iconfont iconright" @click="prev"></i>
-      <i class="yzp-swiper-prev  iconfont iconright" @click="next"></i>
+    <div v-if="showArrow && !!$slots.swiperLeftButton && !!$slots.swiperRightButton && !$slots.swiperButton" class="yzp-swiper-btn">
+      <div class="yzp-swiper-left" @click="prev">
+        <slot name="swiperLeftButton"></slot>
+      </div>
+      <div class="yzp-swiper-right" @click="next">
+        <slot name="swiperRightButton"></slot>
+      </div>
     </div>
+    <!--自定义箭头按钮-->
+    <slot name="swiperButton"></slot>
     <!--end swiper btn-->
-     <!--swiper title-->
-    <div class="yzp-swiper-text">
-      <span class="yzp-swiper-title">{{ list[swiperConfig.index].name }}</span>
-      <!-- <span class="yzp-swiper-index" style="red">{{ newX }} / {{ translateX }}</span> -->
+
+    <!--swiper title-->
+    <div v-if="showTitle" class="yzp-swiper-text">
+      <span class="yzp-swiper-title">{{ list[swiperConfig.index].title || '-' }}</span>
       <span class="yzp-swiper-index">{{ swiperConfig.index + 1 }} / {{ list.length }}</span>
     </div>
     <!--end swiper title-->
+
+    <!--swiper dots-->
+    <div v-if="showDots && !showTitle" class="yzp-swiper-dots">
+      <ul class="yzp-swiper-dots-list">
+        <li
+          v-for="(dot, i) in list"
+          :key="`dot-${i}`"
+          :class="{ active: swiperConfig.index === i }"
+          class="yzp-swiper-dots-item"
+        >
+        </li>
+      </ul>
+    </div>
+    <!--end swiper dots-->
   </div>
 </template>
 
@@ -224,17 +267,16 @@ onMounted(() => {
   width: 300px;
   &:hover {
     .yzp-swiper-btn {
-      .yzp-swiper-next {
+      .yzp-swiper-left {
         left: 15px;
-        transform: rotate(-180deg);
       }
-      .yzp-swiper-prev {
+      .yzp-swiper-right {
         right: 15px;
       }
     }
   }
   .yzp-swiper-btn {
-    .iconfont {
+    > div {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -253,11 +295,10 @@ onMounted(() => {
         box-shadow: 0 0 10px rgba(0,0,0,0.15);
       }
     }
-    .yzp-swiper-next {
+    .yzp-swiper-left {
       left: -55px;
-      transform: rotate(-180deg);
     }
-    .yzp-swiper-prev {
+    .yzp-swiper-right {
       right: -55px;
     }
   }
@@ -284,7 +325,7 @@ onMounted(() => {
         height: 100%;
         background-size: cover!important;
         overflow: hidden;
-        a {
+        .yzp-swiper-inner {
           display: block;
           width: 100%;
           height: 100%;
@@ -311,6 +352,32 @@ onMounted(() => {
     align-items: center;
     padding: 5px 10px;
     justify-content: space-between;
+  }
+  .yzp-swiper-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .yzp-swiper-dots-list {
+      display: flex;
+      align-items: center;
+      .yzp-swiper-dots-item {
+        height: 5px;
+        width: 10px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.5);
+        transition: all 0.3s;
+        margin: 0 5px;
+        &.active {
+          background: #ffffff;
+          width: 20px;
+        }
+      }
+    }
   }
 }
 </style>
