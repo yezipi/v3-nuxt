@@ -15,8 +15,6 @@ interface Props {
   list?: Array<SwiperConfig>
   duration?: number,
   interval?: number,
-  effect?: string,
-  loop?: boolean,
   autoplay?: boolean,
 }
 
@@ -38,23 +36,12 @@ const props = withDefaults(defineProps<Props>(), {
   interval: 3000,
 
   /**
-   * 效果: slide, fade
-   */
-  effect: 'slide',
-
-  /**
-   * 循环播放
-   */
-  loop: true,
-
-  /**
    * 自动播放
    */
   autoplay: true
 
 })
-
-const arrs = ref(props.list)
+const newX = ref(-1) // 因为是translateX里面有异步的，所以用这个来替换衔接后的值
 const swiperRefs = ref()
 const swiperWidth = ref(0)
 const swiperConfig = reactive({
@@ -62,47 +49,86 @@ const swiperConfig = reactive({
   arrow: true,
   inter: null,
 })
-const swiperItemRefs = []
+const direction = ref('next') // 滑动的方向: prev, next
+const noAnimated = ref(true) // 防止刷新页面的时候有过度效果
+const isAnimating = ref(false) // 点击间隔控制
 
-const translateX = computed(() => swiperConfig.index * swiperWidth.value)
+const isPrevEnd = computed(() => (swiperConfig.index === props.list.length - 1) && direction.value === 'prev') // 第一张往后
+const isNextEnd = computed(() => (swiperConfig.index === 0) && direction.value === 'next') // 下一张到了最后一张
+
+const translateX = computed(() => {
+  const w = swiperWidth.value
+  const index = swiperConfig.index
+  let swiperX = -w - (index * w)
+  return swiperX
+})
+
+// 滑动到最后一张判断
+watch(() => isNextEnd.value, (res: boolean) => {
+  const w = swiperWidth.value
+  if (res && !isPrevEnd.value) {
+    console.log('最后一张衔接了')
+    newX.value = -(w * props.list.length) + (-w) // 因为末尾多添加了一张开头的，所以距离要多加一个个宽度
+    isAnimating.value = true // 改变的时候禁止点击
+    setTimeout(() => {
+      noAnimated.value = true // 也不要有过渡动画
+      isAnimating.value = false
+      newX.value = -w // 就把距离替换成第二张的距离, 动画过渡完结束isAnimating
+    }, props.duration)
+  }
+  if (!res && !isPrevEnd.value) {
+    newX.value = -1
+  }
+})
+
+// 如果是第一张开始往左, 距离设置为0
+watch(() => isPrevEnd.value, (res: boolean) => {
+  const w = swiperWidth.value
+  console.log('第一张衔接了')
+  if (res && !isNextEnd.value) {
+    newX.value = 0 // 因为开头多添加了一张结尾的，所以距离距离设置为0
+    isAnimating.value = true // 改变的时候禁止点击
+    setTimeout(() => {
+      noAnimated.value = true // 也不要有过渡动画
+      isAnimating.value = false
+      newX.value = -w * (props.list.length) // 就把距离替换成倒数第二张的距离, 动画过渡完结束isAnimating
+    }, props.duration)
+  }
+  if (!res && !isNextEnd.value) {
+    newX.value = -1
+  }
+})
 
 const { $config } = useNuxtApp()
 
 // 循环
-const startSlide = (type: string) => {
-  if (type == 'right') {
-    swiperConfig.index = 0
-  } else {
-    swiperConfig.index = arrs.value.length - 1
+const loop = (type: string) => {
+  swiperConfig.index = type == 'next' ? 0 : props.list.length - 1
+}
+
+// 往左
+const next = () => {
+  direction.value = 'next'
+  if (isAnimating.value) {
+    return
+  }
+  noAnimated.value = false
+  swiperConfig.index ++
+  if (swiperConfig.index === props.list.length) {
+    loop('next')
   }
 }
 
 // 往右
-const slideToRight = () => {
-  swiperConfig.index ++
-  if (props.loop) {
-    if (swiperConfig.index === arrs.value.length) {
-      startSlide('right')
-    }
-  } else {
-    if (swiperConfig.index > arrs.value.length -1) {
-      swiperConfig.index = 0
-    }
+const prev = () => {
+  direction.value = 'prev'
+  if (isAnimating.value) {
+    return
   }
-}
-
-// 左
-const slideToLeft = () => {
-  if (props.loop) {
-    swiperConfig.index --
-    if (swiperConfig.index <= -1) {
-      startSlide('left')
-    }
-  } else {
-    if (swiperConfig.index  === 0) {
-      swiperConfig.index = arrs.value.length -1
-      swiperConfig.index --
-    }
+  noAnimated.value = false
+  swiperConfig.index --
+  if (swiperConfig.index <= -1) {
+    loop('prev')
   }
 }
 
@@ -117,7 +143,7 @@ const startAutoPlay = () => {
   if(props.autoplay){
     clearInterval(swiperConfig.inter)
     swiperConfig.inter=setInterval(()=>{
-      slideToRight()
+      next()
     }, props.interval)
   }
 }
@@ -125,7 +151,7 @@ const startAutoPlay = () => {
 
 onMounted(() => {
   swiperWidth.value = swiperRefs.value.clientWidth
-  startAutoPlay()
+  // startAutoPlay()
 })
 </script>
 
@@ -133,19 +159,23 @@ onMounted(() => {
   <div
     ref="swiperRefs"
     class="yzp-swiper-wrap"
-    @mouseover="stopAutoplay"
-    @mouseout="startAutoPlay"
   >
     <ul
-      :class="{ fade: effect === 'fade' }"
       :style="{
-        transform: `translate3d(-${translateX}px,0,0)`,
-        transition: `all ${duration / 1000}s`
+        transform: `translate3d(${newX === -1 ? translateX : newX }px,0,0)`,
+        transition: noAnimated ? 'none' : `all ${duration / 1000}s`
       }"
       class="yzp-swiper-list"
     >
+      <li v-show="swiperWidth" class="yzp-swiper-item">
+        <div 
+          class="yzp-swiper-link"
+          :style="{ background: `url(${$config.baseURL + (list[list.length -1].cover)}) no-repeat center` }"
+        >
+        </div>
+      </li>
       <li
-        v-for="(item, index) in arrs"
+        v-for="(item, index) in list"
         :style="{ 'z-index': -index }"
         :key="index"
         class="yzp-swiper-item"
@@ -161,16 +191,24 @@ onMounted(() => {
           <a v-if="item.type === 3" :href="item.url" target="_blank"></a>
         </div>
       </li>
+      <li v-show="swiperWidth" class="yzp-swiper-item">
+        <div
+          class="yzp-swiper-link"
+          :style="{ background: `url(${$config.baseURL + (list[0].cover)}) no-repeat center` }"
+        >
+        </div>
+      </li>
     </ul>
     <!--swiper btn-->
     <div class="yzp-swiper-btn">
-      <i class="yzp-swiper-next iconfont iconright" @click="slideToLeft"></i>
-      <i class="yzp-swiper-prev  iconfont iconright" @click="slideToRight"></i>
+      <i class="yzp-swiper-next iconfont iconright" @click="prev"></i>
+      <i class="yzp-swiper-prev  iconfont iconright" @click="next"></i>
     </div>
     <!--end swiper btn-->
      <!--swiper title-->
     <div class="yzp-swiper-text">
-      <span class="yzp-swiper-title">{{ (list[swiperConfig.index] as any).name }}</span>
+      <span class="yzp-swiper-title">{{ list[swiperConfig.index].name }}</span>
+      <!-- <span class="yzp-swiper-index" style="red">{{ newX }} / {{ translateX }}</span> -->
       <span class="yzp-swiper-index">{{ swiperConfig.index + 1 }} / {{ list.length }}</span>
     </div>
     <!--end swiper title-->
