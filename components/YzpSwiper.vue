@@ -67,7 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits([ 'change' ])
 
 const newSwiperX = ref(-1) // 因为是translateX里面有异步的，所以用这个来替换衔接后的值
-const swiperRefs = ref()
+const swiperRefs = ref(undefined)
 const swiperConfig = reactive({
   index: 0,
   arrow: true,
@@ -176,8 +176,10 @@ const start = () => {
 
 onMounted(() => {
   if (props.list.length) {
-    swiperConfig.width = swiperRefs.value.clientWidth
-    start()
+    setTimeout(() => {
+      swiperConfig.width = swiperRefs.value.clientWidth
+      start()
+    }, 100)
   }
 })
 </script>
