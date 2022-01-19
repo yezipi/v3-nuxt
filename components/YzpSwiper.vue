@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<Props>(), {
   /**
    * 方向，prev：往右滚动，next：往左滚动
    */
-  direction: 'left',
+  direction: 'next',
 
   /**
    * 显示标题
