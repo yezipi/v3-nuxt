@@ -2,19 +2,7 @@
 <script lang="ts" setup>
 import api from '~~/api'
 import { setScrollAnimation } from '~~/utils/index'
-const { $config } = useNuxtApp()
-
-const props = defineProps({
-  settings: {
-    type: Object,
-    default: () => {
-      return {
-        web_logo: '',
-        web_notice: []
-      }
-    }
-  }
-})
+const { $config, $baseSettings } = useNuxtApp()
 
 const columns = ref<any>([])
 const navActiveIndex = ref(0)
@@ -55,8 +43,9 @@ const setActiveNav = (flag: boolean, index: number) => {
 
 // 初始化选中的菜单位置
 const initActiveNav = () => {
-  const columnIndex = columns.value.findIndex((e: any) => e.url === route.name)
-  navActiveIndex.value = route.name === 'index' ? 0 : columnIndex
+  console.log(route.name)
+  const columnIndex = columns.value.findIndex((e: any) => (route.name as string).indexOf(e.url) > -1)
+  navActiveIndex.value = route.name === 'index' ? 0 : columnIndex + 1
   setActiveNav(true, navActiveIndex.value)
 }
 
@@ -76,7 +65,7 @@ columns.value = [homeRoute, ...toRaw(navData.value)]
 onMounted(() => {
   initActiveNav()
   setScrollAnimation({
-    list: props.settings.web_notice,
+    list: $baseSettings.value.web_notice,
     intervalChange: () => {
       scrolling.value = true
     },
@@ -89,17 +78,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="yzp-header bg">
+  <header class="yzp-header bg blur">
     <div class="yzp-header-main max-w1200">
       <div class="yzp-header-left">
         <div class="yzp-header-logo">
-          <img :src="settings.web_logo" />
+          <img :src="$baseSettings.web_logo" />
         </div>
         <!--滚动消息-->
-        <div v-if="settings.web_notice.length" class="yzp-header-notice">
+        <div v-if="$baseSettings.web_notice && $baseSettings.web_notice.length" class="yzp-header-notice">
           <i class="iconfont icongonggao"></i>
           <ul :class="{ scrolling }" class="yzp-notice-list">
-            <li v-for="(item, index) in settings.web_notice" :key="index">{{ item }}</li>
+            <li v-for="(item, index) in $baseSettings.web_notice" :key="index">{{ item }}</li>
           </ul>
         </div>
         <!--end 滚动消息-->
@@ -125,7 +114,7 @@ onMounted(() => {
             </nuxt-link>
             <!--下拉菜单-->
             <div v-if="item.subcolumns.length" class="yzp-drop-nav">
-              <ul class="yzp-sub-list">
+              <ul class="yzp-sub-list bg">
                 <li v-for="(sub, idx) in item.subcolumns" :key="idx" class="yzp-sub-item">
                   <nuxt-link :to="`/${item.url}/${sub.url}`" class="yzp-sub-link ft14">
                     <span class="yzp-sub-name">{{ sub.name }}</span>
@@ -150,7 +139,6 @@ onMounted(() => {
 <style scoped lang="less">
 .yzp-header {
   position: fixed;
-  background: #ffffff;
   box-shadow: 0 0 10px #cccccc;
   top: 0;
   right: 0;
@@ -281,7 +269,6 @@ onMounted(() => {
     border: 1px solid #eeeeee;
     border-radius: 5px;
     overflow: hidden;
-    background: #ffffff;
   }
   .yzp-sub-link {
     display: block;
@@ -289,8 +276,7 @@ onMounted(() => {
     text-align: center;
     width: 100%;
     &:hover {
-      background: -webkit-linear-gradient(left, #f3a3a3, #f56c6c);
-      color: #ffffff;
+      background: #eeeeee;
     }
   }
 }

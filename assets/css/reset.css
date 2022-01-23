@@ -18,8 +18,8 @@ ul li {list-style: none;}
 a {text-decoration: none;color: inherit;}
 body {
   font-family: Microsoft YaHei,Menlo,Monaco,Consolas,Courier New,monospace;
-  font-size: 12px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 28px;
   margin: 0;
   padding: 0;
   min-width: 320px;
@@ -48,9 +48,16 @@ body:after {
   z-index: -1;
   opacity: .5;
 }
+
 code {
-  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
-  font-style: normal;
-  line-height: 20px;
+  font-family: Lucida Console,Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace!important;
+  line-height: 1.5;
+  border-radius: 5px;
 }
-img { max-width: 100%; }
+img, video { max-width: 100%; }
+h1,h2,h3,h4,h5 {
+  font-size: initial;
+  line-height: initial;
+  margin: 0;
+  padding: 0;
+}

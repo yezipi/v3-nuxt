@@ -1,5 +1,5 @@
 <template>
-  <aside class="yzp-aside"></aside>
+  <aside class="yzp-aside box"></aside>
 </template>
 
 <script lang="ts" setup>
@@ -12,5 +12,6 @@
   margin-left: 15px;
   height: 100%;
   background:darkseagreen;
+  flex-shrink: 0;
 }
 </style>

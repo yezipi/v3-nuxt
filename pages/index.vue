@@ -1,21 +1,21 @@
 
 <script lang="ts" setup>
-import api from '~~/api'
+import api from '@/api'
 import { setAticleLink } from '@/utils'
 
 const { $config } = useNuxtApp()
 
 const banners = await api.getBanners()
-const hots = await api.getHotArticle()
-const articles = await api.getIndexArticle()
-
 const swipers = banners.value.map((e: any) => {
   return {
     ...e,
     title: e.name,
-    url: $config.baseURL + e.cover
+    url: e.cover ? $config.baseURL + e.cover : '/assets/img/nopic.jpg',
   }
 })
+
+const hots = await api.getHotArticle()
+const articles = await api.getIndexArticle()
 
 </script>
 
@@ -35,16 +35,10 @@ const swipers = banners.value.map((e: any) => {
           </nuxt-link>
           <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank"></a>
         </template>
-        <template #swiperLeftButton>
-          <i class="iconfont iconright" style="transform: rotate(-180deg);"></i>
-        </template>
-        <template #swiperRightButton>
-          <i class="iconfont iconright"></i>
-        </template>
       </yzp-swiper>
       <!--end 轮播图部分-->
       <!--热门排行-->
-      <div class="yzp-top-hot bg box">
+      <div :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot bg box">
         <yzp-title icon="iconhuoyan" title="热门排行"></yzp-title>
         <div class="yzp-hot-wrap">
           <ul v-if="hots && hots.length" class="yzp-hot-list p1015">
@@ -66,17 +60,23 @@ const swipers = banners.value.map((e: any) => {
 </template>
 
 <style scoped lang="less">
+
   .yzp-index-top {
     display: flex;
     justify-content: space-between;
     height: 250px;
     .yzp-top-swiper {
+      height: 100%;
+      width: 520px;
       flex: 1;
+      border-radius: 5px;
+      flex-shrink: 0;
     }
     .yzp-top-hot {
-      width: 280px;
-      flex-shrink: 0;
       margin-left: 15px;
+      &.noSwiper {
+        flex: 1
+      }
       .yzp-hot-wrap {
         position: relative;
         height: 100%;

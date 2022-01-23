@@ -3,9 +3,9 @@ const baseURL = 'http://localhost:7001'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  // server: {
-  //   port: 4000,
-  // },
+  server: {
+    port: 4000,
+  },
   alias: {
     '/public/': baseURL + '/public/'
   },

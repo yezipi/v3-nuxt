@@ -81,6 +81,7 @@ const translateX = computed(() => {
   const { width, index } = swiperConfig
   return -width - (index * width)
 })
+const isMoreThanOne = computed(() => props.list.length &&  props.list.length > 1)
 
 // 监听索引改变
 watch(() => swiperConfig.index, (index: number) => {
@@ -121,7 +122,7 @@ watch(() => swiperConfig.index, (index: number) => {
 
   if (!isNextEnd && !isPrevEnd) {
     newSwiperX.value = -1
-    console.log(newSwiperX.value)
+    // console.log(newSwiperX.value)
   }
   emit('change', index)
 })
@@ -175,7 +176,7 @@ const start = () => {
 
 
 onMounted(() => {
-  if (props.list.length) {
+  if (isMoreThanOne.value) {
     setTimeout(() => {
       swiperConfig.width = swiperRefs.value.clientWidth
       start()
@@ -225,27 +226,30 @@ onMounted(() => {
       </li>
     </ul>
     <!--swiper btn-->
-    <div v-if="showArrow && !!$slots.swiperLeftButton && !!$slots.swiperRightButton && !$slots.swiperButton" class="yzp-swiper-btn">
-      <div class="yzp-swiper-left" @click="prev">
+    <div
+      v-if="showArrow && !$slots.swiperCustomButton && isMoreThanOne"
+      class="yzp-swiper-btn"
+    >
+      <div :class="{ hasBtnSlot: !!$slots.swiperLeftButton }" class="yzp-swiper-left" @click="prev">
         <slot name="swiperLeftButton"></slot>
       </div>
-      <div class="yzp-swiper-right" @click="next">
+      <div :class="{ hasBtnSlot: !!$slots.swiperRightButton }" class="yzp-swiper-right" @click="next">
         <slot name="swiperRightButton"></slot>
       </div>
     </div>
     <!--自定义箭头按钮-->
-    <slot name="swiperButton"></slot>
+    <slot name="swiperCustomButton"></slot>
     <!--end swiper btn-->
 
     <!--swiper title-->
-    <div v-if="showTitle" class="yzp-swiper-text">
+    <div v-if="showTitle && !showDots" class="yzp-swiper-text">
       <span class="yzp-swiper-title">{{ list[swiperConfig.index].title || '-' }}</span>
-      <span class="yzp-swiper-index">{{ swiperConfig.index + 1 }} / {{ list.length }}</span>
+      <span v-if="isMoreThanOne" class="yzp-swiper-index">{{ swiperConfig.index + 1 }} / {{ list.length }}</span>
     </div>
     <!--end swiper title-->
 
     <!--swiper dots-->
-    <div v-if="showDots && !showTitle" class="yzp-swiper-dots">
+    <div v-if="showDots && isMoreThanOne" class="yzp-swiper-dots">
       <ul class="yzp-swiper-dots-list">
         <li
           v-for="(dot, i) in list"
@@ -293,12 +297,35 @@ onMounted(() => {
       z-index: 2;
       cursor: pointer;
       transition: all 0.3s;
+      &:after, &:before {
+        display: block;
+        content: '';
+        width: 1px;
+        height: 12px;
+        background: #666666;
+        position: absolute;
+        border-radius: 4px;
+      }
+      &:before {
+        transform: rotate(-45deg);
+        margin-top: -8px;
+      }
+      &:after {
+        transform: rotate(45deg);
+        margin-top: 8px;
+      }
       &:hover {
         box-shadow: 0 0 10px rgba(0,0,0,0.15);
       }
     }
     .yzp-swiper-left {
       left: -55px;
+      &:before {
+        transform: rotate(45deg);
+      }
+      &:after {
+        transform: rotate(-45deg);
+      }
     }
     .yzp-swiper-right {
       right: -55px;

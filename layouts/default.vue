@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import api from '~~/api'
-
+const nuxtApp = useNuxtApp()
 const baseSettings = await api.getBaseSettings()
+nuxtApp.provide('baseSettings', baseSettings || {})
 </script>
 
 <template>
   <div class="yzp-wrapper">
     <!--顶部-->
-    <yzp-header :settings="baseSettings"></yzp-header>
+    <yzp-header></yzp-header>
     <!--end 顶部-->
 
     <!--内容部分-->
@@ -53,5 +54,7 @@ const baseSettings = await api.getBaseSettings()
 }
 .yzp-section {
   flex: 1;
+  max-width: 835px;
+  min-height: calc(100vh - 170px);
 }
 </style>

@@ -14,12 +14,20 @@ export interface ValueConfig {
 }
 
 const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
-  const { $config } = useNuxtApp()
+  const { $config, $router } = useNuxtApp()
   return new Promise((resolve, reject) => {
-    useFetch($config.baseURL + url, { ...config }).then((res: any) => {
-      const value = res.data.value
-      if (!value.data) {
-        reject(value)
+    useFetch($config.baseURL + url, { ...config }).then(({ data, error }: _AsyncData<any>) => {
+      if (error.value) {
+        reject(error.value)
+        return
+      }
+      const value = data.value
+      if (!value.data || value.code !== 1) {
+        if (value.status !== 200) {
+          console.log(value)
+          $router.replace('/error/' + value.status)
+        }
+        resolve(ref({}))
       } else {
         resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
       }

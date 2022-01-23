@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="yzp-title p1015 ft14">
+  <div class="yzp-title p1015 ft14 color-primary">
     <i :class="icon" class="iconfont"></i>
     <span>{{ title }}</span>
   </div>
