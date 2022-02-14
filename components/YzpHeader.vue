@@ -1,8 +1,10 @@
 <!-- 顶部导航组件 2022-01-15 yzp -->
 <script lang="ts" setup>
 import api from '~~/api'
-import { setScrollAnimation } from '~~/utils/index'
+import { scrollAnimation } from '~~/utils/index'
 const { $config, $baseSettings } = useNuxtApp()
+
+const scroller = new scrollAnimation()
 
 const columns = ref<any>([])
 const navActiveIndex = ref(0)
@@ -64,7 +66,7 @@ columns.value = [homeRoute, ...toRaw(navData.value)]
 
 onMounted(() => {
   initActiveNav()
-  setScrollAnimation({
+  scroller.start({
     list: $baseSettings.value.web_notice,
     intervalChange: () => {
       scrolling.value = true

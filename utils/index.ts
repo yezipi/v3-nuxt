@@ -10,61 +10,75 @@ interface ScrollConfig {
   durationChange?: Function,
 }
 
-/**
- * 设置消息滚动
- * @param { Object } params
- * @param { Array } params.list 数组
- * @param { Number } params.duration 动画时长
- * @param { Number } params.interval 滚动间隔
- * @param { Boolean } params.reverse 是否反向插入
- * @param { Object } params.inter 时间对象
- * @param { Function } params.intervalChange interval结束回调
- * @param { Function } params.durationChange duration结束回调
- * @version 2021-01-17 yzp
- */
-const setScrollAnimation = (params: ScrollConfig) => {
-  const {
-    list = [],
-    duration = 300,
-    interval = 3000,
-    reverse = false,
-    intervalChange = () => {},
-    durationChange = () => {},
-  } = params
-
-  let arr = list
-  let index = 0
-  let timer = undefined
-  let inter = params.inter
-
-  clearTimeout(inter)
-  clearTimeout(timer)
-
-  if (!arr.length || arr.length < 2) {
-    return
+class scrollAnimation {
+  timer: any
+  inter: any
+  index: number
+  constructor() {
+    this.timer = undefined
+    this.inter = undefined
+    this.index = 0
   }
 
-  inter = setInterval(() => {
-    if (index === arr.length) {
-      index = 0
+  /**
+   * 设置消息滚动
+   * @param { Object } params
+   * @param { Array } params.list 数组
+   * @param { Number } params.duration 动画时长
+   * @param { Number } params.interval 滚动间隔
+   * @param { Boolean } params.reverse 是否反向插入
+   * @param { Object } params.inter 时间对象
+   * @param { Function } params.intervalChange interval结束回调
+   * @param { Function } params.durationChange duration结束回调
+   * @version 2021-01-17 yzp
+   */
+  start(params: ScrollConfig) {
+    const {
+      list = [],
+      duration = 300,
+      interval = 3000,
+      reverse = false,
+      intervalChange = () => {},
+      durationChange = () => {},
+    } = params
+
+    let arr = list
+
+    clearInterval(this.inter)
+    clearTimeout(this.timer)
+
+    if (!arr.length || arr.length < 2) {
+      return
     }
 
-    intervalChange(index)
-
-    timer = setTimeout(() => {
-      // 每滚动一次后把这条数据插入到最后面,并清除class, 否则把这条数据插入到最前面
-      if (reverse) {
-        arr.unshift(arr.pop())
-      } else {
-        arr.push(arr.shift())
+    this.inter = setInterval(() => {
+      if (this.index === arr.length) {
+        this.index = 0
       }
-      durationChange(index)
-      clearTimeout(timer)
-    }, duration)
 
-    index ++
+      intervalChange(this.index)
 
-  }, interval)
+      this.timer = setTimeout(() => {
+        // 每滚动一次后把这条数据插入到最后面,并清除class, 否则把这条数据插入到最前面
+        if (reverse) {
+          arr.unshift(arr.pop())
+        } else {
+          arr.push(arr.shift())
+        }
+        durationChange(this.index)
+        clearTimeout(this.timer)
+      }, duration)
+
+      this.index ++
+
+    }, interval)
+  }
+  
+  stop() {
+    clearInterval(this.inter)
+    clearTimeout(this.timer)
+  }
+  
 }
 
 /**
@@ -125,7 +139,7 @@ const setRandomTag = () => {
 }
  
 export {
-  setScrollAnimation,
+  scrollAnimation,
   setAticleLink,
   setRandomTag,
   timeAgao,
