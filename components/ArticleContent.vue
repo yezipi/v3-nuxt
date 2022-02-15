@@ -199,11 +199,13 @@ onMounted(() => {
     <div class="yzp-article-neighbor bg box p15 mb15 mt15">
       <div class="yzp-article-neighbor-item ft14">
         <i class="iconfont iconzuijin"></i>
-        <nuxt-link :to="setAticleLink(info.prev.id, info.prev.type)" class="color-link">{{ info.prev.title }}</nuxt-link>
+        <nuxt-link v-if="info.prev.id" :to="setAticleLink(info.prev.id, info.prev.type)" class="color-link">{{ info.prev.title }}</nuxt-link>
+        <span v-else>没有了</span>
       </div>
       <div class="yzp-article-neighbor-item ft14">
         <i class="iconfont iconzuijin" style="transform: rotate(-180deg)"></i>
-        <nuxt-link :to="setAticleLink(info.next.id, info.next.type)" class="color-link">{{ info.next.title }}</nuxt-link>
+        <nuxt-link v-if="info.next.id" :to="setAticleLink(info.next.id, info.next.type)" class="color-link">{{ info.next.title }}</nuxt-link>
+        <span v-else>没有了</span>
       </div>
     </div>
     <!--end-->
@@ -414,6 +416,9 @@ onMounted(() => {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    span {
+      color: #999999;
+    }
   }
   .color-link {
     &:hover {
