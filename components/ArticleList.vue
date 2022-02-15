@@ -17,7 +17,8 @@ const { $config } = useNuxtApp()
   <ul class="yzp-article-list">
     <li v-for="(item, index) in list as any" :key="index" class="yzp-article-item p15 bg mb15 box">
       <div class="yzp-article-cover mr15">
-        <div :style="{ background: `#eeeeee url(${$config.baseURL + item.cover}) no-repeat center` }" class="yzp-article-img"></div>
+        <!-- <div :style="{ background: `#eeeeee url(${$config.baseURL + item.cover}) no-repeat center` }" class="yzp-article-img"></div> -->
+        <img :src="$config.baseURL + item.cover" class="yzp-article-img" :alt="item.title" />
       </div>
       <div class="yzp-article-info">
         <div class="yzp-article-text">
@@ -64,11 +65,9 @@ const { $config } = useNuxtApp()
         filter:contrast(150%)
       }
     }
-    .yzp-article-link {
-      font-weight: bold;
-    }
     .yzp-article-link:hover {
       text-decoration: underline;
+      color: #ff6666;
     }
     .yzp-article-cover {
       width: 160px;
