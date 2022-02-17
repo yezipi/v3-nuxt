@@ -218,6 +218,7 @@ onMounted(() => {
     &:hover {
       .yzp-drop-nav {
         display: block;
+        animation: toTop 0.3s ease;
       }
     }
     .yzp-nav-link {
@@ -294,13 +295,5 @@ onMounted(() => {
   margin: auto;
   border-radius: 50px;
   transition: all 0.3s;
-}
- @keyframes scrollUp {
-	0% {
-		transform: translateY(0px);
-	}
-	100% {
-		transform: translateY(-24px);
-	}
 }
 </style>

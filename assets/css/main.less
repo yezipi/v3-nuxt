@@ -28,6 +28,7 @@
 .mt30 { margin-top: 30px; }
 .m15 { margin: 15px; }
 .m10 { margin: 10px; }
+.m150 { margin: 15px 0; }
 
 .ft12 { font-size: 12px; }
 .ft14 { font-size: 14px; }
@@ -75,13 +76,29 @@
   color: #999999
 }
 
-@keyframes swiperFade {
-	0% {
-		opacity: 1;
-    backdrop-filter: blur(10px);
-	}
-	100% {
-		opacity: 0;
-    backdrop-filter: blur(0px);
-	}
+.up-arrow {
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  &:after {
+    top: 2px;
+    border-width: 0 10px 10px;
+    border-color: transparent transparent #ffffff;
+    z-index: 1;
+  }
+  &:before {
+    top: 1px;
+    z-index: 0;
+    border-width: 0 11px 11px;
+    border-color: transparent transparent #dddddd;
+  }
 }

@@ -54,7 +54,7 @@ nuxtApp.provide('baseSettings', baseSettings || {})
 }
 .yzp-section {
   flex: 1;
-  max-width: 835px;
+  max-width: 820px;
   min-height: calc(100vh - 170px);
 }
 </style>

@@ -67,13 +67,13 @@ const articles = await api.getIndexArticle()
     height: 250px;
     .yzp-top-swiper {
       height: 100%;
-      width: 520px;
       flex: 1;
       border-radius: 5px;
       flex-shrink: 0;
     }
     .yzp-top-hot {
       margin-left: 15px;
+      flex: 0.42;
       &.noSwiper {
         flex: 1
       }
