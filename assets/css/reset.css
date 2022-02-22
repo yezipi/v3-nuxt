@@ -61,3 +61,56 @@ h1,h2,h3,h4,h5 {
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --space-5: 5px;
+  --space-10: 10px;
+  --space-15: 15px;
+  --text-dark: #333333;
+  --text-gray: #999999;
+  --text-primary: #ff6666;
+  --bg-white: rgba(255,255,255,1);
+  --bg-primary: #ff6666;
+  --border-1: #eeeeee;
+  --border-2: #dddddd;
+  --font-default: 14px;
+  --font-s: 10px;
+  --font-m: 12px;
+  --font-l: 16px;
+  --font-xl: 18px;
+  --font-xxl: 20px;
+  --font-xxx: 22px;
+  --font-xxxl: 24px;
+  --font-xxxxl: 26px;
+  --font-xxxxxl: 28px;
+}
+
+
+@keyframes scrollUp {
+	0% {
+		transform: translateY(0px);
+	}
+	100% {
+		transform: translateY(-24px);
+	}
+}
+
+@keyframes toTop {
+	0% {
+		transform: translateY(24px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+@keyframes swiperFade {
+	0% {
+		opacity: 1;
+    backdrop-filter: blur(10px);
+	}
+	100% {
+		opacity: 0;
+    backdrop-filter: blur(0px);
+	}
+}

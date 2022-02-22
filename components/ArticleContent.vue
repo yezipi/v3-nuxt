@@ -328,52 +328,54 @@ onMounted(() => {
       position:absolute;
       width: 150px;
       left: -50px;
-      top:-190px;
+      top: 47px;
       background:rgba(255,255,255,0.8);
       backdrop-filter: saturate(100%) blur(10px);
       border-radius:5px;
       border-bottom:1px solid #e1dfdf;
-      box-shadow:0 5px 15px #999;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      animation: toTop 0.3s ease;
       &:after{
         content:'';
         display:block;
-        height:5px;
-        opacity:0}
+        height: 5px;
+        opacity:0
+      }
       .yzp-dashang-main{
-        padding:10px;
+        padding: 10px;
       }
       .yzp-dashang-code {
         text-align:center;
-        height:120px;
+        height: 120px;
       }
       img{
-        width:120px;
-        margin:auto;
-        height:120px;
+        width: 120px;
+        margin: auto;
+        height: 120px;
       }
       .yzp-dashang-tab{
-        position:relative;
-        margin-top:10px;
-        display:flex;
-        justify-content:space-around;
-        align-items:center;
+        position: relative;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
       }
       .yzp-dashang-tab span {
-        display:inline-block;
-        text-align:center;
-        width:35%;
-        font-size:12px;
-        color:#555;
-        height:30px;
-        line-height:30px;
-        cursor:pointer;
-        box-sizing:border-box;
+        display: inline-block;
+        text-align: center;
+        width: 35%;
+        font-size: 12px;
+        color: #555;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        box-sizing: border-box;
       }
       .yzp-dashang-tab span.active{
         border-bottom:1px solid #ff4300;
         color:#ff4300;
       }
-      .yzp-dashang-tab:before{
+      .yzp-dashang-tab:before {
         content:'';
         display:block;
         position:absolute;
@@ -384,19 +386,19 @@ onMounted(() => {
         height:20px;
         background:#ddd;
       }
-      .yzp-dashang-triangle{
-        width:0;
-        height:0;
+      .yzp-dashang-triangle {
+        width: 0;
+        height: 0;
         line-height:0;
-        border-top:10px solid #fff;
-        border-left:10px solid transparent;
-        border-right:10px solid transparent;
+        border-bottom: 10px solid #fff;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
         position:absolute;
-        bottom:-10px;
+        top: -10px;
         left:0;
         right:0;
         margin:auto;
-        z-index:99;
+        z-index:9;
       }
     }
   }

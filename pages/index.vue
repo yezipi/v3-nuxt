@@ -32,8 +32,11 @@ const articles = await api.getIndexArticle()
             class="yzp-swiper-a"
             target="_blank"
           >
+            <img :src="item.url" class="yzp-swiper-img" />
           </nuxt-link>
-          <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank"></a>
+          <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank">
+            <img :src="item.url" class="yzp-swiper-img" />
+          </a>
         </template>
       </yzp-swiper>
       <!--end 轮播图部分-->
@@ -67,13 +70,13 @@ const articles = await api.getIndexArticle()
     height: 250px;
     .yzp-top-swiper {
       height: 100%;
-      width: 520px;
       flex: 1;
       border-radius: 5px;
       flex-shrink: 0;
     }
     .yzp-top-hot {
       margin-left: 15px;
+      flex: 0.42;
       &.noSwiper {
         flex: 1
       }
@@ -119,5 +122,10 @@ const articles = await api.getIndexArticle()
     display: block;
     width: 100%;
     height: 100%;
+    .yzp-swiper-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 </style>

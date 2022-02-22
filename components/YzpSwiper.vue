@@ -202,7 +202,7 @@ onMounted(() => {
     >
       <li v-show="swiperConfig.width" class="yzp-swiper-item">
         <div class="yzp-swiper-link">
-          <img :src="list[list.length -1].url" class="yzp-swiper-img" />
+          <slot name="swiperItem" :item="list[list.length -1]"></slot>
         </div>
       </li>
       <li
@@ -212,14 +212,12 @@ onMounted(() => {
         class="yzp-swiper-item"
       >
         <div class="yzp-swiper-link">
-          <img :src="item.url" class="yzp-swiper-img" />
           <slot name="swiperItem" :item="item"></slot>
         </div>
       </li>
       <li v-show="swiperConfig.width" class="yzp-swiper-item">
-        <div
-          class="yzp-swiper-link">
-          <img :src="list[0].url" class="yzp-swiper-img" />
+        <div class="yzp-swiper-link">
+          <slot name="swiperItem" :item="list[0]"></slot>
         </div>
       </li>
     </ul>
@@ -352,6 +350,7 @@ onMounted(() => {
         height: 100%;
         background-size: cover!important;
         overflow: hidden;
+        position: relative;
         .yzp-swiper-inner {
           display: block;
           width: 100%;
@@ -361,6 +360,10 @@ onMounted(() => {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 0;
         }
       }
     }
