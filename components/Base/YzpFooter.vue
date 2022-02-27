@@ -10,8 +10,6 @@
 
 <style scoped lang="less">
 .yzp-footer {
-  position: relative;
-  z-index: 9;
   background: rgba(0,0,0,0.8);
   display: flex;
   align-items: center;

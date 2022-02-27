@@ -46,7 +46,8 @@ const setActiveNav = (flag: boolean, index: number) => {
 // 初始化选中的菜单位置
 const initActiveNav = () => {
   console.log(route.name)
-  const columnIndex = columns.value.findIndex((e: any) => (route.name as string).indexOf(e.url) > -1)
+  const urls = columns.value.map((e: any) => e.url).filter((e: any) => e)
+  const columnIndex = urls.findIndex((e: any) => (route.name as string).indexOf(e) > -1)
   navActiveIndex.value = route.name === 'index' ? 0 : columnIndex + 1
   setActiveNav(true, navActiveIndex.value)
 }
@@ -180,6 +181,7 @@ onMounted(() => {
       height: 24px;
       display: flex;
       overflow: hidden;
+      line-height: 24px;
       .yzp-notice-list {
         margin-left: 10px;
         &.scrolling {

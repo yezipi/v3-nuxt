@@ -201,10 +201,8 @@ onMounted(() => {
       class="yzp-swiper-list"
     >
       <li v-show="swiperConfig.width" class="yzp-swiper-item">
-        <div 
-          class="yzp-swiper-link"
-          :style="{ background: `url(${list[list.length -1].url}) no-repeat center` }"
-        >
+        <div class="yzp-swiper-link">
+          <slot name="swiperItem" :item="list[list.length -1]"></slot>
         </div>
       </li>
       <li
@@ -213,15 +211,13 @@ onMounted(() => {
         :key="index"
         class="yzp-swiper-item"
       >
-        <div class="yzp-swiper-link" :style="{ background: `url(${item.url}) no-repeat center` }">
+        <div class="yzp-swiper-link">
           <slot name="swiperItem" :item="item"></slot>
         </div>
       </li>
       <li v-show="swiperConfig.width" class="yzp-swiper-item">
-        <div
-          class="yzp-swiper-link"
-          :style="{ background: `url(${list[0].url}) no-repeat center` }"
-        >
+        <div class="yzp-swiper-link">
+          <slot name="swiperItem" :item="list[0]"></slot>
         </div>
       </li>
     </ul>
@@ -354,6 +350,7 @@ onMounted(() => {
         height: 100%;
         background-size: cover!important;
         overflow: hidden;
+        position: relative;
         .yzp-swiper-inner {
           display: block;
           width: 100%;
@@ -363,6 +360,10 @@ onMounted(() => {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 0;
         }
       }
     }
