@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import BaseYzpHeader from '@/components/Base/YzpHeader.vue'
+import BaseYzpAside from '@/components/Base/YzpAside.vue'
+import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
+
 import api from '~~/api'
 const nuxtApp = useNuxtApp()
 const baseSettings = await api.getBaseSettings()
@@ -8,7 +12,7 @@ nuxtApp.provide('baseSettings', baseSettings || {})
 <template>
   <div class="yzp-wrapper">
     <!--顶部-->
-    <yzp-header></yzp-header>
+    <base-yzp-header></base-yzp-header>
     <!--end 顶部-->
 
     <!--内容部分-->
@@ -22,7 +26,7 @@ nuxtApp.provide('baseSettings', baseSettings || {})
         <!--end 正文-->
 
         <!--侧边栏-->
-        <yzp-aside></yzp-aside>
+        <base-yzp-aside></base-yzp-aside>
         <!--侧边栏-->
       </div>
 
@@ -30,7 +34,7 @@ nuxtApp.provide('baseSettings', baseSettings || {})
     <!--end 内容部分-->
 
     <!--页脚-->
-    <yzp-footer></yzp-footer>
+    <base-yzp-footer></base-yzp-footer>
     <!--end 页脚-->
   </div>
 </template>

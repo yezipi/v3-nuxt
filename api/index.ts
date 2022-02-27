@@ -44,4 +44,14 @@ export default new class Api extends Http {
   public getArticleDetil(id: number) {
     return this.get('/web/v1/article/' + id)
   }
+
+  /**
+   * 获取微语
+   * @param { Object } params
+   * @param { Number } params.size 页数
+   * @param { Number } params.page 页码
+   */
+  public getMoods(params?: { size?: number, page?: number }) {
+    return this.get('/web/v1/mood', params)
+  }
 }

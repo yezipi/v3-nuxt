@@ -1,12 +1,12 @@
+<script lang="ts" setup>
+
+</script>
+
 <template>
   <footer class="yzp-footer">
     <div class="yzp-footer-main max-w1200"></div>
   </footer>
 </template>
-
-<script lang="ts" setup>
-
-</script>
 
 <style scoped lang="less">
 .yzp-footer {

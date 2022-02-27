@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'Menlo';  /* Project id 2499550 */
+  src: url('../fonts/Menlo.ttf') format('truetype');
+}
 * { margin: 0;padding: 0;outline: none; }
 body::selection {background: #ff6700;color: #fff;}
 select {outline: 0;vertical-align: middle;-webkit-appearance: none;appearance: none;}
@@ -71,11 +75,11 @@ h1,h2,h3,h4,h5 {
   --text-primary: #ff6666;
   --bg-white: rgba(255,255,255,1);
   --bg-primary: #ff6666;
+  --text-link: #58b5e7;
   --border-1: #eeeeee;
   --border-2: #dddddd;
-  --font-default: 14px;
-  --font-s: 10px;
-  --font-m: 12px;
+  --font-s: 12px;
+  --font-m: 14px;
   --font-l: 16px;
   --font-xl: 18px;
   --font-xxl: 20px;

@@ -1,5 +1,4 @@
 // 封装请求，2022-1-15 yzp
-import { UseFetchOptions} from 'nuxt3/dist/app/composables/fetch'
 import { _AsyncData } from 'nuxt3/dist/app/composables/asyncData'
 
 export interface ResponseConfig {
@@ -13,7 +12,7 @@ export interface ValueConfig {
   [x: string]: any,
 }
 
-const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
+const fetch = (url: string, config?: any): Promise<any> => {
   const { $config, $router } = useNuxtApp()
   return new Promise((resolve, reject) => {
     useFetch($config.baseURL + url, { ...config }).then(({ data, error }: _AsyncData<any>) => {
@@ -32,6 +31,7 @@ const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
         resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
       }
     }).catch((err: any) => {
+      console.log(err)
       reject(err)
     })
   })
@@ -39,19 +39,19 @@ const fetch = (url: string, config?: UseFetchOptions<any>): Promise<any> => {
 
 export default class Http {
 
-  get(url: string, config?: UseFetchOptions<any>): Promise<any> {
+  get(url: string, config?: any): Promise<any> {
     return fetch(url, { method: 'get', ...config })
   }
 
-  post(url: string, config?: UseFetchOptions<any>): Promise<any> {
+  post(url: string, config?: any): Promise<any> {
     return fetch(url, { method: 'post', ...config })
   }
 
-  put(url: string, config?: UseFetchOptions<any>): Promise<any> {
+  put(url: string, config?: any): Promise<any> {
     return fetch(url, { method: 'put', ...config })
   }
 
-  delete(url: string, config?: UseFetchOptions<any>): Promise<any> {
+  delete(url: string, config?: any): Promise<any> {
     return fetch(url, { method: 'delete', ...config })
   }
 }

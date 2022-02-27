@@ -1,10 +1,15 @@
 
 <script lang="ts" setup>
-import api from '@/api'
+import BaseYzpSwiper from '@/components/Base/YzpSwiper.vue'
+import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
+import BaseYzEmpty from '@/components/Base/YzpEmpty.vue'
+import FeatureArticleList from '@/components/Feature/ArticleList.vue'
+import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
+
 import { setAticleLink } from '@/utils'
+import api from '@/api'
 
 const { $config } = useNuxtApp()
-
 const banners = await api.getBanners()
 const swipers = banners.value.map((e: any) => {
   return {
@@ -22,8 +27,9 @@ const articles = await api.getIndexArticle()
 <template>
   <div class="yzp-index">
     <div class="yzp-index-top mb15">
+
       <!--轮播图部分-->
-      <yzp-swiper :list="swipers" class="yzp-top-swiper">
+      <base-yzp-swiper :list="swipers" class="yzp-top-swiper">
         <template #swiperItem="{ item }">
           <nuxt-link
             v-if="item.type === 1 || item.type === 2"
@@ -35,27 +41,28 @@ const articles = await api.getIndexArticle()
           </nuxt-link>
           <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank"></a>
         </template>
-      </yzp-swiper>
+      </base-yzp-swiper>
       <!--end 轮播图部分-->
+
       <!--热门排行-->
-      <div :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot bg box">
-        <yzp-title icon="iconhuoyan" title="热门排行"></yzp-title>
+      <base-yzp-panel icon="iconhuoyan" title="热门排行" :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot">
         <div class="yzp-hot-wrap">
-          <ul v-if="hots && hots.length" class="yzp-hot-list p1015">
+          <ul v-if="hots && hots.length" class="yzp-hot-list">
             <li v-for="(el, i) in hots" :key="i" class="yzp-hot-item">
               <span class="yzp-hot-sort ft12">{{ parseInt(String(i + 1)) }}</span>
               <nuxt-link :to="setAticleLink(el.id, el.type)" class="yzp-hot-title" :title="el.title">{{ el.title }}</nuxt-link>
             </li>
           </ul>
-          <yzp-empty v-else></yzp-empty>
+          <base-yzp-empty v-else></base-yzp-empty>
         </div>
-      </div>
+      </base-yzp-panel>
       <!--end 热门排行-->
     </div>
 
     <!--文章列表-->
-    <article-list :list="articles.rows"></article-list>
+    <feature-article-list :list="articles.rows"></feature-article-list>
     <!--end 文章列表-->
+
   </div>
 </template>
 
@@ -89,7 +96,7 @@ const articles = await api.getIndexArticle()
       &:nth-of-type(4) .yzp-hot-sort { background: #cccccc }
       &:nth-of-type(5) .yzp-hot-sort { background: #dddddd }
       display: flex;
-      padding: 9px 0;
+      padding: 8px 0;
       .yzp-hot-sort {
         display: block;
         flex-shrink: 0;
