@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import BaseYzpTag from '@/components/Base/YzpTag.vue'
+
 import api from '@/api'
 import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
 
@@ -189,7 +191,7 @@ onMounted(() => {
 
       <!--文章标签-->
         <div v-if="tags && tags.length" class="yzp-article-tags pt30">
-          <yzp-tag v-for="(tag, k) in tags" :key="k" :color="tag.color">{{ tag.name }}</yzp-tag>
+          <base-yzp-tag v-for="(tag, k) in tags" :key="k" :color="tag.color">{{ tag.name }}</base-yzp-tag>
         </div>
       <!--end 文章标签-->
 

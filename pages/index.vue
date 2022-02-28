@@ -2,9 +2,8 @@
 <script lang="ts" setup>
 import BaseYzpSwiper from '@/components/Base/YzpSwiper.vue'
 import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
-import BaseYzEmpty from '@/components/Base/YzpEmpty.vue'
+import BaseYzpEmpty from '@/components/Base/YzpEmpty.vue'
 import FeatureArticleList from '@/components/Feature/ArticleList.vue'
-import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
 
 import { setAticleLink } from '@/utils'
 import api from '@/api'
