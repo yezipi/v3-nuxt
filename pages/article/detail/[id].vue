@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import FeatureArticleContent from '@/components/Feature/ArticleContent.vue'
-
 const route = useRoute()
 console.log(route.params)
 const { params } = route

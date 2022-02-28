@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import AsideYzpUser from '@/components/Aside/YzpUser.vue'
-import AsideYzpSearch from '@/components/Aside/YzpSearch.vue'
-import AsideYzpMood from '@/components/Aside/YzpMood.vue'
 </script>
 
 <template>

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
 </script>
 
 <template>

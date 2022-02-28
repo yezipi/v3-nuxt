@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpHeader from '@/components/Base/YzpHeader.vue'
-import BaseYzpAside from '@/components/Base/YzpAside.vue'
-import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
-
 import api from '~~/api'
 const nuxtApp = useNuxtApp()
 const baseSettings = await api.getBaseSettings()

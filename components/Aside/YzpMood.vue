@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
-
 import api from '@/api'
 const moods = await api.getMoods()
 console.log(moods)
