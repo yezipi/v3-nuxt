@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import AsideYzpUser from '@/components/Aside/YzpUser.vue'
-import AsideYzpSearch from '@/components/Aside/YzpSearch.vue'
-import AsideYzpMood from '@/components/Aside/YzpMood.vue'
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
 </script>
 
 <template>
@@ -11,7 +13,17 @@ import AsideYzpMood from '@/components/Aside/YzpMood.vue'
 
     <aside-yzp-search class="yzp-aside-panel" />
 
-    <aside-yzp-mood class="yzp-aside-panel" />
+    <!-- <aside-yzp-mood class="yzp-aside-panel" /> -->
+
+    <div :class="{ 'yzp-aside-fixed': isMounted }" class="yzp-aside-behind">
+      <aside-yzp-article class="yzp-aside-panel" />
+
+      <aside-yzp-comments class="yzp-aside-panel" />
+
+      <aside-yzp-tags class="yzp-aside-panel" />
+
+      <aside-yzp-blogroll class="yzp-aside-panel" />
+    </div>
 
   </aside>
 </template>
@@ -28,6 +40,14 @@ import AsideYzpMood from '@/components/Aside/YzpMood.vue'
     &:first-child {
       margin-top: 0;
     }
+  }
+  .yzp-aside-fixed {
+    position: sticky;
+    top: 70px;
+    z-index: 1;
+  }
+  .yzp-aside-behind {
+    margin-top: var(--space-15);
   }
 }
 </style>

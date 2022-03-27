@@ -1,10 +1,12 @@
+@import url(./var.css);
+
 @font-face {
   font-family: 'Menlo';  /* Project id 2499550 */
   src: url('../fonts/Menlo.ttf') format('truetype');
 }
 * { margin: 0;padding: 0;outline: none; }
-body::selection {background: #ff6700;color: #fff;}
-select {outline: 0;vertical-align: middle;-webkit-appearance: none;appearance: none;}
+body::selection { background: var(--color-primary); color: var(--color-white); }
+select { outline: 0; vertical-align: middle;-webkit-appearance: none;appearance: none; }
 input[type='submit'],
 input[type='text'],
 input[type='reset'],
@@ -14,26 +16,42 @@ input[type='radio'],
 input[type='checkbox'],
 input[type='password'] {-webkit-appearance: none;}
 input,
-textarea, .textarea {border: 1px solid #e5e5e5;box-sizing: border-box;box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.02);font-family: inherit;text-indent: 10px;transition: all 0.3s;-webkit-transition: all 0.3s;}
-button {border: none;cursor: pointer;border-radius: 3px;}
+textarea, .textarea {
+  border: 1px solid var(--border-1);
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  border-radius: var(--border-radius);
+  background: var(--color-white);
+  color: var(--color-dark);
+}
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
 input:focus,
-textarea:focus, .textarea:focus {border: #f56c6c 1px solid;box-shadow: 0 0 8px rgba(255, 103, 0, 0.6);}
+textarea:focus, .textarea:focus {
+  border: var(--color-primary) 1px solid;
+  box-shadow: 0 0 5px rgba(var(--rgb-primary), 0.5);
+}
 ul li {list-style: none;}
 a {text-decoration: none;color: inherit;}
 body {
   font-family: Microsoft YaHei,Menlo,Monaco,Consolas,Courier New,monospace;
   font-size: 14px;
-  line-height: 28px;
+  line-height: 24px;
   margin: 0;
   padding: 0;
   min-width: 320px;
-  color: #333333;
+  color: var(--color-dark);
   position: relative;
   -webkit-text-size-adjust: none;
   -webkit-touch-callout: none;
   -webkit-overflow-scrolling: touch;
   min-height: 768px;
-  background-image: linear-gradient(180deg,rgba(255,255,255,0) 60%,#ffffff),linear-gradient(70deg,#f7f9f1 32%,#faf7e8);
+  background-image: linear-gradient(180deg,rgba(255,255,255,0) 60%, #ffffff),linear-gradient(70deg,#f7f9f1 32%,#faf7e8);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -65,30 +83,6 @@ h1,h2,h3,h4,h5 {
   margin: 0;
   padding: 0;
 }
-
-:root {
-  --space-5: 5px;
-  --space-10: 10px;
-  --space-15: 15px;
-  --text-dark: #333333;
-  --text-gray: #999999;
-  --text-primary: #ff6666;
-  --bg-white: rgba(255,255,255,1);
-  --bg-primary: #ff6666;
-  --text-link: #58b5e7;
-  --border-1: #eeeeee;
-  --border-2: #dddddd;
-  --font-s: 12px;
-  --font-m: 14px;
-  --font-l: 16px;
-  --font-xl: 18px;
-  --font-xxl: 20px;
-  --font-xxx: 22px;
-  --font-xxxl: 24px;
-  --font-xxxxl: 26px;
-  --font-xxxxxl: 28px;
-}
-
 
 @keyframes scrollUp {
 	0% {

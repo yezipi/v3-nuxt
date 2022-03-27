@@ -12,21 +12,42 @@ export interface ValueConfig {
   [x: string]: any,
 }
 
-const fetch = (url: string, config?: any): Promise<any> => {
+const fetch = (url: string, options?: any): Promise<any> => {
   const { $config, $router } = useNuxtApp()
+  const reqUrl = $config.baseURL + url
+
+  if (options.method !== 'get') {
+    return new Promise((resolve, reject) => {
+      $fetch(reqUrl, { ...options }).then((res: ResponseConfig) => {
+        if (res.status !== 200) {
+          reject(res)
+        }else {
+          resolve(res)
+        }
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  }
+  
   return new Promise((resolve, reject) => {
-    useFetch($config.baseURL + url, { ...config }).then(({ data, error }: _AsyncData<any>) => {
+    useFetch(reqUrl, { ...options }).then(({ data, error }: _AsyncData<any>) => {
       if (error.value) {
         reject(error.value)
         return
       }
       const value = data.value
       if (!value.data || value.code !== 1) {
+        
         if (value.status !== 200) {
           console.log(value)
-          $router.replace('/error/' + value.status)
+          if (options.method === 'get') {
+            resolve(value.data)
+            $router.replace('/error/' + value.status)
+          } else {
+            reject(value)
+          }
         }
-        resolve(ref({}))
       } else {
         resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
       }
@@ -39,19 +60,19 @@ const fetch = (url: string, config?: any): Promise<any> => {
 
 export default class Http {
 
-  get(url: string, config?: any): Promise<any> {
-    return fetch(url, { method: 'get', ...config })
+  get(url: string, params?: any): Promise<any> {
+    return fetch(url, { method: 'get', params })
   }
 
-  post(url: string, config?: any): Promise<any> {
-    return fetch(url, { method: 'post', ...config })
+  post(url: string, body?: any): Promise<any> {
+    return fetch(url, { method: 'post', body })
   }
 
-  put(url: string, config?: any): Promise<any> {
-    return fetch(url, { method: 'put', ...config })
+  put(url: string, body?: any): Promise<any> {
+    return fetch(url, { method: 'put', body })
   }
 
-  delete(url: string, config?: any): Promise<any> {
-    return fetch(url, { method: 'delete', ...config })
+  delete(url: string, body?: any): Promise<any> {
+    return fetch(url, { method: 'delete', body })
   }
 }

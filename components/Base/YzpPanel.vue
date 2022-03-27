@@ -16,10 +16,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="yzp-panel-wrap bg box">
+  <div class="yzp-panel-wrap yzp-box">
     <div v-if="title" class="yzp-panel-title">
-      <i :class="icon" class="iconfont"></i>
-      <span>{{ title }}</span>
+      <div class="yzp-panel-title-left">
+        <i :class="icon" class="iconfont"></i>
+        <span>{{ title }}</span>
+      </div>
+      <slot name="titleRight"></slot>
     </div>
     <div :class="{ noPadding }" class="yzp-panel-main">
       <slot></slot>
@@ -29,20 +32,20 @@ const props = defineProps({
 
 <style scoped lang="less">
 .yzp-panel-wrap {
-  box-sizing: border-box;
   .yzp-panel-title {
     border-top: 0;
     border-left: 0;
     border-right: 0;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid var(--border-1);
     display: flex;
     align-items: center;
     padding: 0 var(--space-15);
     height: 45px;
-    color: var(--text-primary);
     font-size: var(--font-m);
+    display: flex;
+    justify-content: space-between;
     .iconfont {
-      margin-right: 10px;
+      margin-right: 5px;
     }
   }
   .yzp-panel-main {

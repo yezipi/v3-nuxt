@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import FeatureArticleContent from '@/components/Feature/ArticleContent.vue'
-
 const route = useRoute()
 console.log(route.params)
 const { params } = route
@@ -9,7 +7,7 @@ const { params } = route
 
 <template>
   <div class="yzp-article-detail">
-    <feature-article-content :id="Number(params.id)"></feature-article-content>
+    <feature-article-content :id="Number(params.id)" type="article"></feature-article-content>
   </div>
 </template>
 

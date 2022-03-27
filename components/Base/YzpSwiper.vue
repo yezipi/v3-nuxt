@@ -18,6 +18,7 @@ interface Props {
   showTitle?: boolean,
   showDots?: boolean,
   showArrow?: boolean,
+  clip?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   /**
    * 动画时长，毫秒
    */
-  duration: 300,
+  duration: 500,
 
   /**
    * 间隔时间，毫秒
@@ -62,6 +63,11 @@ const props = withDefaults(defineProps<Props>(), {
    */
   showArrow: true,
 
+  /**
+   * 裁剪效果
+   */
+  clip: false,
+
 })
 
 const emit = defineEmits([ 'change' ])
@@ -82,6 +88,7 @@ const translateX = computed(() => {
   return -width - (index * width)
 })
 const isMoreThanOne = computed(() => props.list.length &&  props.list.length > 1)
+const durationStart = ref(false)
 
 // 监听索引改变
 watch(() => swiperConfig.index, (index: number) => {
@@ -92,9 +99,19 @@ watch(() => swiperConfig.index, (index: number) => {
   const isPrevEnd = (index === len - 1) && direction === 'prev'
   let nextTimer = undefined
   let prevTimer = undefined
+  let durationTimer = undefined
   
   clearTimeout(nextTimer)
   clearTimeout(prevTimer)
+
+  if (props.clip) {
+    durationStart.value = true
+    durationTimer = setTimeout(() => {
+      durationStart.value = false
+    }, duration)
+    emit('change', index)
+    return
+  }
 
   // 滑动到最后一张判断
   if (isNextEnd) {
@@ -190,36 +207,42 @@ onMounted(() => {
     v-if="list.length"
     ref="swiperRefs"
     class="yzp-swiper-wrap"
+    :class="{ clip }"
     @mouseover="stop"
     @mouseout="start"
   >
     <ul
       :style="{
-        transform: `translate3d(${newSwiperX === -1 ? translateX : newSwiperX }px,0,0)`,
+        transform: clip ? 'none' : `translate3d(${newSwiperX === -1 ? translateX : newSwiperX }px,0,0)`,
         transition: noAnimated ? 'none' : `all ${duration / 1000}s`
       }"
       class="yzp-swiper-list"
     >
-      <li v-show="swiperConfig.width" class="yzp-swiper-item">
-        <div class="yzp-swiper-link">
-          <slot name="swiperItem" :item="list[list.length -1]"></slot>
-        </div>
-      </li>
+      <template v-if="!clip">
+        <li v-show="swiperConfig.width" :class="{ 'yzp-swiper-item-active': swiperConfig.index == list.length - 1 }" class="yzp-swiper-item">
+          <div class="yzp-swiper-link">
+            <slot name="swiperItem" :item="list[list.length - 1]" :index="list.length - 1"></slot>
+          </div>
+        </li>
+      </template>
       <li
         v-for="(item, index) in list"
-        :style="{ 'z-index': -index }"
         :key="index"
+        :style="{ 'z-index': -index }"
+        :class="{ 'yzp-swiper-item-active': swiperConfig.index == index }"
         class="yzp-swiper-item"
       >
         <div class="yzp-swiper-link">
-          <slot name="swiperItem" :item="item"></slot>
+          <slot name="swiperItem" :item="item" :index="index"></slot>
         </div>
       </li>
-      <li v-show="swiperConfig.width" class="yzp-swiper-item">
-        <div class="yzp-swiper-link">
-          <slot name="swiperItem" :item="list[0]"></slot>
-        </div>
-      </li>
+      <template v-if="!clip">
+        <li v-show="swiperConfig.width" :class="{ 'yzp-swiper-item-active': swiperConfig.index == 0 }" class="yzp-swiper-item">
+          <div class="yzp-swiper-link">
+            <slot name="swiperItem" :item="list[0]" :index="0"></slot>
+          </div>
+        </li>
+      </template>
     </ul>
     <!--swiper btn-->
     <div
@@ -277,6 +300,15 @@ onMounted(() => {
       }
     }
   }
+  &.clip {
+    .yzp-swiper-list {
+      .yzp-swiper-item {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
   .yzp-swiper-btn {
     > div {
       display: flex;
@@ -298,7 +330,7 @@ onMounted(() => {
         content: '';
         width: 1px;
         height: 12px;
-        background: #666666;
+        background: var(--color-gray);
         position: absolute;
         border-radius: 4px;
       }
@@ -344,6 +376,13 @@ onMounted(() => {
       flex-shrink: 0;
       width: 100%;
       height: 100%;
+      z-index: -1;
+      &.yzp-swiper-item-active {
+        z-index: 2!important;
+      }
+      &.durationStart {
+        animation: clip 0.5s ease;
+      }
       .yzp-swiper-link {
         display: block;
         width: 100%;
@@ -374,9 +413,9 @@ onMounted(() => {
     right: 0;
     bottom: 0;
     z-index: 2;
-    background: rgba(0,0,0,0.5);
+    background: rgba(var(--rgb-dark), 0.7);
     backdrop-filter: saturate(100%) blur(5px);
-    color: #ffffff;
+    color: var(--color-white);
     font-size: 12px;
     display: flex;
     align-items: center;
@@ -399,15 +438,23 @@ onMounted(() => {
         height: 5px;
         width: 10px;
         border-radius: 10px;
-        background: rgba(255,255,255,0.5);
+        background: rgba(var(--rbg-white),0.5);
         transition: all 0.3s;
         margin: 0 5px;
         &.active {
-          background: #ffffff;
+          background: var(--color-white);
           width: 20px;
         }
       }
     }
+  }
+}
+@keyframes clip {
+  0% {
+    clip-path: circle(0% at 0% 100%);
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
   }
 }
 </style>

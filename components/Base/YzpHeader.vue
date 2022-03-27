@@ -2,34 +2,26 @@
 <script lang="ts" setup>
 import api from '~~/api'
 import { scrollAnimation } from '~~/utils/index'
-const { $config, $baseSettings } = useNuxtApp()
+
+const route = useRoute()
+const { $baseSettings, $columns } = useNuxtApp()
+const { web_notice, web_logo } = $baseSettings.value
 
 const scroller = new scrollAnimation()
 
-const columns = ref<any>([])
 const navActiveIndex = ref(0)
 const navItemRefs = []
 const navActiveDiv = reactive({
   left: 0,
   width: 0,
 })
-const homeRoute = {
-  name: '首页',
-  url: '',
-  subcolumns: []
-}
+
 const scrolling = ref(false)
 
-const route = useRoute()
-
-watch(() => route.path, () => {
-  initActiveNav()
-})
+watch(() => route.path, () => initActiveNav())
 
 const setItemNavRefs = (el: any) => {
-  if (el) {
-    navItemRefs.push(el)
-  }
+  navItemRefs.push(el)
 }
 
 // 设置滑块位置
@@ -45,8 +37,7 @@ const setActiveNav = (flag: boolean, index: number) => {
 
 // 初始化选中的菜单位置
 const initActiveNav = () => {
-  console.log(route.name)
-  const urls = columns.value.map((e: any) => e.url).filter((e: any) => e)
+  const urls = $columns.value.map((e: any) => e.url).filter((e: any) => e)
   const columnIndex = urls.findIndex((e: any) => (route.name as string).indexOf(e) > -1)
   navActiveIndex.value = route.name === 'index' ? 0 : columnIndex + 1
   setActiveNav(true, navActiveIndex.value)
@@ -61,14 +52,10 @@ const showSubNav = (flag: boolean, index: number) => {
   }
 }
 
-// 获取栏目数据
-const navData = await api.getColumns()
-columns.value = [homeRoute, ...toRaw(navData.value)]
-
 onMounted(() => {
   initActiveNav()
   scroller.start({
-    list: $baseSettings.value.web_notice,
+    list: web_notice,
     intervalChange: () => {
       scrolling.value = true
     },
@@ -81,17 +68,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="yzp-header bg blur">
+  <header class="yzp-header blur">
     <div class="yzp-header-main max-w1200">
       <div class="yzp-header-left">
         <div class="yzp-header-logo">
-          <img :src="$baseSettings.web_logo" />
+          <img :src="web_logo" />
         </div>
         <!--滚动消息-->
-        <div v-if="$baseSettings.web_notice && $baseSettings.web_notice.length" class="yzp-header-notice">
+        <div v-if="web_notice && web_notice.length" class="yzp-header-notice">
           <i class="iconfont icongonggao"></i>
           <ul :class="{ scrolling }" class="yzp-notice-list">
-            <li v-for="(item, index) in $baseSettings.web_notice" :key="index">{{ item }}</li>
+            <li v-for="(item, index) in web_notice" :key="index">{{ item }}</li>
           </ul>
         </div>
         <!--end 滚动消息-->
@@ -100,7 +87,7 @@ onMounted(() => {
       <nav class="yzp-header-nav">
         <ul class="yzp-nav-list">
           <li
-            v-for="(item, index) in columns"
+            v-for="(item, index) in $columns"
             :key="index"
             :ref="setItemNavRefs"
             :class="{ active: navActiveIndex === index }"
@@ -110,16 +97,16 @@ onMounted(() => {
           >
             <nuxt-link
               :to="`${item.type === 'single' ? '/single/' : '/'}${item.url}`"
-              class="yzp-nav-link ft14"
+              class="yzp-nav-link"
             >
               <span class="yzp-nav-name">{{ item.name }}</span>
               <i v-if="item.subcolumns.length" class="iconfont iconico_open"></i>
             </nuxt-link>
             <!--下拉菜单-->
-            <div v-if="item.subcolumns.length" class="yzp-drop-nav">
-              <ul class="yzp-sub-list bg">
+            <div v-if="item.subcolumns && item.subcolumns.length" class="yzp-drop-nav">
+              <ul class="yzp-sub-list">
                 <li v-for="(sub, idx) in item.subcolumns" :key="idx" class="yzp-sub-item">
-                  <nuxt-link :to="`/${item.url}/${sub.url}`" class="yzp-sub-link ft14">
+                  <nuxt-link :to="`/${item.url}/${sub.url}`" class="yzp-sub-link">
                     <span class="yzp-sub-name">{{ sub.name }}</span>
                   </nuxt-link>
                 </li>
@@ -142,7 +129,7 @@ onMounted(() => {
 <style scoped lang="less">
 .yzp-header {
   position: fixed;
-  box-shadow: 0 0 10px #cccccc;
+  box-shadow: 0 0 10px var(--border-1);
   top: 0;
   right: 0;
   left: 0;
@@ -229,6 +216,7 @@ onMounted(() => {
       height: 100%;
       align-items: center;
       justify-content: center;
+      font-size: var(--font-m);
       .iconfont {
         display: inline-block;
         margin-left: 5px;
@@ -245,7 +233,7 @@ onMounted(() => {
   top: 70px;
   z-index: -1;
   transition: all 0.3s;
-  box-shadow: 0 10px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 8px rgba(var(--rgb-dark), .15);
   &:after,
   &:before {
     content: "";
@@ -261,18 +249,19 @@ onMounted(() => {
   &:after {
     top: 2px;
     border-width: 0 10px 10px;
-    border-color: transparent transparent #ffffff;
+    border-color: transparent transparent var(--color-white);
     z-index: 1;
   }
   &:before {
     top: 1px;
     z-index: 0;
     border-width: 0 11px 11px;
-    border-color: transparent transparent #dddddd;
+    border-color: transparent transparent var(--border-2);
   }
   .yzp-sub-list {
-    border: 1px solid #eeeeee;
-    border-radius: 5px;
+    border: 1px solid var(--border-1);
+    border-radius: var(--border-radius);
+    background: var(--color-white);
     overflow: hidden;
   }
   .yzp-sub-link {
@@ -280,8 +269,9 @@ onMounted(() => {
     padding: 10px 0;
     text-align: center;
     width: 100%;
+    font-size: var(--font-m);
     &:hover {
-      background: #eeeeee;
+      background: var(--border-1);
     }
   }
 }
@@ -290,7 +280,7 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   height: 40px;
-  background: #eeeeee;
+  background: var(--border-1);
   z-index: 0;
   width: 80px;
   left: 10px;

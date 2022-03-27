@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import BaseYzpHeader from '@/components/Base/YzpHeader.vue'
-import BaseYzpAside from '@/components/Base/YzpAside.vue'
-import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
 
-import api from '~~/api'
-const nuxtApp = useNuxtApp()
-const baseSettings = await api.getBaseSettings()
-nuxtApp.provide('baseSettings', baseSettings || {})
 </script>
 
 <template>
@@ -32,10 +25,6 @@ nuxtApp.provide('baseSettings', baseSettings || {})
 
     </article>
     <!--end 内容部分-->
-
-    <!--页脚-->
-    <base-yzp-footer></base-yzp-footer>
-    <!--end 页脚-->
   </div>
 </template>
 
@@ -47,7 +36,8 @@ nuxtApp.provide('baseSettings', baseSettings || {})
   background-repeat: no-repeat;
 }
 .yzp-container {
-  padding: 85px 0;
+  margin-top: 85px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
 }

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
 const { $config, $baseSettings } = useNuxtApp()
 </script>
 
@@ -8,7 +7,7 @@ const { $config, $baseSettings } = useNuxtApp()
   <base-yzp-panel noPadding>
     <div class="yzp-aside-info">
       <div class="yzp-aside-info-avatar">
-        <img class="yzp-aside-info-avatar-img" :src="$config.baseURL + $baseSettings.web_avatar" />
+        <img class="yzp-aside-info-avatar-img" :src="$baseSettings.web_avatar" />
       </div>
       <p class="yzp-aside-info-slogan">{{ $baseSettings.web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
@@ -52,8 +51,8 @@ const { $config, $baseSettings } = useNuxtApp()
   .yzp-aside-info-avatar {
     border-radius: 50%;
     overflow: hidden;
-    background: #ffffff;
-    border: 1px solid #eeeeee;
+    background: var(--color-white);
+    border: 1px solid var(--border-2);
     margin: auto;
     width: 70px;
     height: 70px;
@@ -74,7 +73,7 @@ const { $config, $baseSettings } = useNuxtApp()
   }
   .yzp-aside-info-slogan {
     text-align: center;
-    color: #999999;
+    color: var(--color-gray);
     margin: var(--space-10) 0;
     line-height: 20px;
     white-space: nowrap;
@@ -95,13 +94,14 @@ const { $config, $baseSettings } = useNuxtApp()
       font-size: 12px;
       min-width: 60px;
       cursor: pointer;
-      border: 1px solid #ffffff;
+      border: 1px solid var(--color-white);
       transition: all 0.3s;
       position: relative;
       z-index: 1;
+      line-height: 28px;
       &:hover {
         filter: saturate(120%);
-        border-radius: 5px;
+        border-radius: var(--border-radius);
       }
       .iconfont {
         display: inline-block;
@@ -109,20 +109,20 @@ const { $config, $baseSettings } = useNuxtApp()
       }
     }
     .yzp-aside-info-like-btn {
-      background: var(--bg-primary);
+      background: var(--color-primary);
       &:hover {
-        background: #ffffff;
-        color: var(--bg-primary);
-        border-color: var(--bg-primary);
+        background: var(--color-white);
+        color: var(--color-primary);
+        border-color: var(--color-primary);
       }
     }
     .yzp-aside-info-focus-btn {
-      background: #58b5e7;
+      background: var(--color-link);
       margin-left: var(--space-15);
       &:hover {
-        background: #ffffff;
-        color: #58b5e7;
-        border-color: #58b5e7;
+        background: var(--color-white);
+        color: var(--color-link);
+        border-color: var(--color-link);
         .yzp-aside-info-focus-img {
           display: block;
         }
@@ -150,20 +150,20 @@ const { $config, $baseSettings } = useNuxtApp()
       &:after {
         top: -9px;
         border-width: 0 10px 10px;
-        border-color: transparent transparent #ffffff;
+        border-color: transparent transparent var(--color-white);
         z-index: 2;
       }
       &:before {
         top: -10px;
         z-index: 1;
         border-width: 0 11px 11px;
-        border-color: transparent transparent #dddddd;
+        border-color: transparent transparent var(--border-1);
       }
       .yzp-aside-info-focus-img-box {
         width: 100px;
         padding: var(--space-5);
-        background: #ffffff;
-        border: 1px solid #dddddd;
+        background: var(--color-white);
+        border: 1px solid var(--border-1);
         border-radius: 5px;
       }
       img {
@@ -175,7 +175,7 @@ const { $config, $baseSettings } = useNuxtApp()
     display: flex;
     align-items: center;
     justify-content: --space-between;
-    margin-top: var(--space-10);
+    margin-top: var(--space-15);
     .yzp-aside-info-count-item {
       flex: 1;
       display: flex;
@@ -201,12 +201,12 @@ const { $config, $baseSettings } = useNuxtApp()
         }
       }
       .yzp-aside-info-count-num {
-        color: var(--text-dark);
+        color: var(--color-dark);
         font-size: var(--font-xl);
         font-weight: bold;
       }
       .yzp-aside-info-count-label {
-        color: var(--text-gray);
+        color: var(--color-gray);
         font-size: var(--font-m);
       }
     }

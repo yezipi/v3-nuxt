@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
 </script>
 
 <template>
@@ -19,23 +18,21 @@ import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
   align-items: center;
   justify-content: space-between;
   position: relative;
-  border-bottom: 1px solid #eeeeee;
-  height: 43px;
   .yzp-aside-search-input {
     flex: 1;
-    border: none;
     line-height: 43px;
-    &:focus {
-      box-shadow: none;
-    }
+    height: 43px;
+    border-radius: 22px;
+    padding: 0 var(--space-15);
   }
   .iconfont {
     font-size: var(--font-xl);
-    color: var(--text-gray);
+    color: var(--color-gray);
     display: inline-block;
-    margin-right: 10px;
+    position: absolute;
+    right: var(--space-15);
     &:hover {
-      color: var(--text-primary);
+      color: var(--color-primary);
     }
   }
 }

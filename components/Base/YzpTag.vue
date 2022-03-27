@@ -3,17 +3,21 @@ const props = defineProps({
   color: {
     type: String,
     default: 'cyan'
+  },
+  size: {
+    type: String,
+    default: 'normal' // small, normal
   }
 })
 </script>
 
 <template>
   <span
-    :class="color.indexOf('#') < 0 ? `yzp-tag-${color}` : 'custom-color'"
+    :class="[color.indexOf('#') < 0 ? `yzp-tag-${color}` : 'custom-color', size === 'small' ? 'yzp-tag-small' : '']"
     :style="color.indexOf('#') > -1 ? { 'background-color': color } : undefined"
-    class="yzp-tag ft12"
+    class="yzp-tag"
   >
-  <slot></slot>
+    <slot></slot>
   </span>
 </template>
 
@@ -23,12 +27,18 @@ const props = defineProps({
   box-sizing: border-box;
   display: inline-block;
   height: auto;
-  padding: 0 10px;
+  padding: 0 var(--space-10);
   white-space: nowrap;
   transition: all 0.3s;
-  margin-right: 10px;
+  margin-right: var(--space-10);
   border-radius: 4px;
   border: 1px solid #d9d9d9;
+  line-height: 24px;
+  font-size: 12px;
+  &.yzp-tag-small {
+    padding: 0 var(--space-5);
+    line-height: 18px;
+  }
 }
 .yzp-tag-pink {
   color: #c41d7f;

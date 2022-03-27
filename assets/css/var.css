@@ -1,0 +1,39 @@
+:root {
+
+  --rgb-primary: 255,102,102;
+  --rgb-white: 255,255,255;
+  --rgb-dark: 51, 51, 51;
+
+  --space-5: 5px;
+  --space-10: 10px;
+  --space-15: 15px;
+  --space-20: 20px;
+  --space-25: 25px;
+  --space-30: 30px;
+
+  --color-dark: rgb(var(--rgb-dark));
+  --color-white: rgb(var(--rgb-white));
+  --color-primary: rgb(var(--rgb-primary));
+  --color-gray: rgba(var(--rgb-dark), 0.6);
+  --color-primary-sub: rgba(var(--rgb-primary), 0.8);
+  --color-link: #33a3ff;
+
+  --bg-white: rgba(var(--rgb-white),1);
+  --bg-primary: rgba(var(--rgb-dark), 0.05);
+
+  --border-1: rgba(var(--rgb-dark), 0.1);
+  --border-2: rgba(var(--rgb-dark), 0.2);
+
+  --font-s: 12px;
+  --font-m: 14px;
+  --font-l: 16px;
+  --font-xl: 18px;
+  --font-xxl: 20px;
+  --font-xxxl: 22px;
+  --font-xxxxl: 24px;
+  --font-xxxxxl: 26px;
+  --font-xxxxxxl: 28px;
+  --font-xxxxxxxl: 30px;
+  --font-xxxxxxxxl: 32px;
+  --border-radius: 5px;
+}

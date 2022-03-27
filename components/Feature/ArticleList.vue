@@ -15,34 +15,34 @@ const { $config } = useNuxtApp()
 
 <template>
   <ul class="yzp-article-list">
-    <li v-for="(item, index) in list as any" :key="index" class="yzp-article-item p15 bg mb15 box">
-      <div class="yzp-article-cover mr15">
+    <li v-for="(item, index) in list as any" :key="index" class="yzp-article-item yzp-box">
+      <div class="yzp-article-cover">
         <!-- <div :style="{ background: `#eeeeee url(${$config.baseURL + item.cover}) no-repeat center` }" class="yzp-article-img"></div> -->
-        <img :src="$config.baseURL + item.cover" class="yzp-article-img" :alt="item.title" />
+        <img :src="item.cover || '/assets/img/nopic.jpg'" class="yzp-article-img" :alt="item.title" />
       </div>
       <div class="yzp-article-info">
         <div class="yzp-article-text">
-          <nuxt-link :to="'/article/detail/' + item.id" class="yzp-article-link ft20" :title="item.title">{{ item.title }}</nuxt-link>
+          <nuxt-link :to="'/article/detail/' + item.id" class="yzp-article-link" :title="item.title">{{ item.title }}</nuxt-link>
         </div>
-        <p class="yzp-article-desc">{{ item.description }}</p>
+        <!-- <p class="yzp-article-desc">{{ item.description }}</p> -->
         <div class="yzp-article-bottom">
-          <div class="yzp-article-icon mr15">
+          <div class="yzp-article-icon">
             <i class="iconfont iconshijian"></i>
             <span class="yzp-article-data">{{ timeAgao(item.created_at) }}</span>
           </div>
-          <div class="yzp-article-icon mr15">
+          <div class="yzp-article-icon">
             <i class="iconfont iconyanjing"></i>
             <span class="yzp-article-data">{{ item.view }}</span>
           </div>
-          <div class="yzp-article-icon mr15">
+          <div class="yzp-article-icon">
             <i class="iconfont iconxiaoxi3"></i>
             <span class="yzp-article-data">{{ item.comments_count }}</span>
           </div>
-          <div class="yzp-article-icon mr15">
+          <div class="yzp-article-icon">
             <i class="iconfont icon03"></i>
             <span class="yzp-article-data">{{ item.like }}</span>
           </div>
-          <div class="yzp-article-icon mr15">
+          <div class="yzp-article-icon">
             <i class="iconfont iconfenlei"></i>
             <span class="yzp-article-data">{{ item.subcolumn.name }}</span>
           </div>
@@ -58,6 +58,8 @@ const { $config } = useNuxtApp()
     display: flex;
     align-items: center;
     transition: all 0.3s;
+    padding: var(--space-15);
+    margin-bottom: var(--space-15);
     &:hover {
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       .yzp-article-img {
@@ -65,16 +67,22 @@ const { $config } = useNuxtApp()
         filter:contrast(150%)
       }
     }
-    .yzp-article-link:hover {
-      text-decoration: underline;
-      color: #ff6666;
+    .yzp-article-link {
+      line-height: 30px;
+      font-size: var(--font-xxxl);
+      &:hover {
+        text-decoration: underline;
+        color: var(--color-primary);
+      }
     }
     .yzp-article-cover {
-      width: 160px;
+      width: 170px;
       height: 90px;
       flex-shrink: 0;
       border-radius: 5px;
       overflow: hidden;
+      margin-right: var(--space-15);
+      background: var(--bg-primary);
       .yzp-article-img {
         transition: all 0.3s;
         width: 100%;
@@ -88,10 +96,11 @@ const { $config } = useNuxtApp()
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
+      flex: 1;
     }
     .yzp-article-desc {
       font-size: 12px;
-      color: #666666;
+      color: var(--color-gray);
       line-height: 18px;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -100,8 +109,11 @@ const { $config } = useNuxtApp()
     .yzp-article-bottom {
       display: flex;
       align-items: center;
-      color: #999999;
+      color: var(--color-gray);
       font-size: 12px;
+      .yzp-article-icon {
+        margin-right: var(--space-15)
+      }
       .iconfont {
         display: inline-block;
         margin-right: 5px;

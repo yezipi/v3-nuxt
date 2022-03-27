@@ -1,46 +1,14 @@
 .max-w1200 { max-width: 1200px; }
-.bg { background: #ffffff; }
-.box {
-  border-radius: 5px;
-  border: 1px solid #eeeeee;
+
+.yzp-box {
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-1);
   box-sizing: border-box;
+  background: var(--bg-white);
 }
-
-.p10 { padding: 10px; }
-.p15 { padding: 15px; }
-.p1015 { padding: 10px 15px; }
-.p20 { padding: 20px; }
-.pb15 { padding-bottom: 15px; }
-.pt15 { padding-top: 15px; }
-.p30 { padding: 30px; }
-.pb30 { padding-bottom: 30px; }
-.pt30 { padding-top: 30px; }
-
-.mt15 { margin-top: 15px; }
-.mt10 { margin-top: 10px; }
-.ml15 { margin-left: 15px; }
-.ml10 { margin-left: 10px; }
-.mr15 { margin-right: 15px; }
-.mr10 { margin-right: 10px; }
-.mb10 { margin-bottom: 10px; }
-.mb15 { margin-bottom: 15px; }
-.mb30 { margin-bottom: 30px; }
-.mt30 { margin-top: 30px; }
-.m15 { margin: 15px; }
-.m10 { margin: 10px; }
-.m150 { margin: 15px 0; }
-
-.ft12 { font-size: 12px; }
-.ft14 { font-size: 14px; }
-.ft16 { font-size: 16px; }
-.ft18 { font-size: 18px; }
-.ft20 { font-size: 20px; }
-.ft22 { font-size: 22px; }
-.ft24 { font-size: 24px; }
-.ft26 { font-size: 26px; }
-.ft28 { font-size: 28px; }
-
-.line28 { line-height: 28px; }
+.gray-page {
+  filter: grayscale(1);
+}
 
 .flex-between {
   display: flex;
@@ -54,11 +22,15 @@
 }
 
 .blur {
-  background:rgba(255,255,255,0.9);
+  background:rgba(var(--rgb-white), 0.9);
   backdrop-filter: saturate(100%) blur(10px);
 }
+
+.bg-white { background: var(--bg-white) }
+.bg-primary { background: var(--color-primary)}
+
 .color-primary {
-  color: #f56c6c
+  color: var(--color-primary)
 }
 .color-default {
   color: #333333

@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
-
 import api from '@/api'
-const moods = await api.getMoods()
+const moods = await api.getMoods({ page: 1, size: 5 })
 console.log(moods)
 </script>
 
 <template>
-  <!--搜索-->
-  <base-yzp-panel title="微语" icon="iconzuijin1">
+  <!--微语-->
+  <base-yzp-panel v-if="moods.rows && moods.rows.length" title="微语" icon="iconzuijin1">
     <ul class="yzp-aside-mood-wrap">
       <li v-for="(item, index) in moods.rows" :key="index" class="yzp-aside-mood-item">
         <div class="yzp-aside-mood-info">
@@ -19,7 +17,7 @@ console.log(moods)
       </li>
     </ul>
   </base-yzp-panel>
-  <!--end 搜索-->
+  <!--end 微语-->
 </template>
 
 <style lang="less" scoped>
@@ -30,15 +28,6 @@ console.log(moods)
    align-items: center;
    justify-content: space-between;
    padding: var(--space-5);
-   &:before {
-     content: '';
-     display: inline-block;
-     width: 10px;
-     height: 10px;
-     border-radius: 10px;
-     background: var(--bg-primary);
-     margin-right: 10px;
-   }
    &:nth-child(2)::before {
      opacity: 0.7;
    }
@@ -53,7 +42,7 @@ console.log(moods)
       .iconfont {
         display: inline-block;
         margin-right: 5px;
-        color: var(--text-link);
+        color: var(--color-link);
       }
       .yzp-aside-mood-title {
         display: inline-block;
@@ -61,14 +50,14 @@ console.log(moods)
         text-overflow: ellipsis;
         overflow: hidden;
         &:hover {
-          color: var(--text-primary);
+          color: var(--color-primary);
         }
         cursor: pointer;
       }
     }
     .yzp-aside-mood-date {
       font-size: var(--font-s);
-      color: var(--text-gray);
+      color: var(--color-gray);
       flex-shrink: 0;
     }
   }

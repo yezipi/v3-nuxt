@@ -1,21 +1,16 @@
 
 <script lang="ts" setup>
-import BaseYzpSwiper from '@/components/Base/YzpSwiper.vue'
-import BaseYzpPanel from '@/components/Base/YzpPanel.vue'
-import BaseYzEmpty from '@/components/Base/YzpEmpty.vue'
-import FeatureArticleList from '@/components/Feature/ArticleList.vue'
-import BaseYzpFooter from '@/components/Base/YzpFooter.vue'
-
 import { setAticleLink } from '@/utils'
 import api from '@/api'
 
 const { $config } = useNuxtApp()
+
 const banners = await api.getBanners()
 const swipers = banners.value.map((e: any) => {
   return {
     ...e,
     title: e.name,
-    url: e.cover ? $config.baseURL + e.cover : '/assets/img/nopic.jpg',
+    url: e.cover || '/assets/img/nopic.jpg',
   }
 })
 
@@ -26,7 +21,7 @@ const articles = await api.getIndexArticle()
 
 <template>
   <div class="yzp-index">
-    <div class="yzp-index-top mb15">
+    <div class="yzp-index-top">
 
       <!--轮播图部分-->
       <base-yzp-swiper :list="swipers" class="yzp-top-swiper">
@@ -48,15 +43,14 @@ const articles = await api.getIndexArticle()
       <!--end 轮播图部分-->
 
       <!--热门排行-->
-      <base-yzp-panel icon="iconhuoyan" title="热门排行" :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot">
+      <base-yzp-panel v-if="hots && hots.length" icon="iconhuoyan" title="热门排行" :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot">
         <div class="yzp-hot-wrap">
-          <ul v-if="hots && hots.length" class="yzp-hot-list">
+          <ul class="yzp-hot-list">
             <li v-for="(el, i) in hots" :key="i" class="yzp-hot-item">
-              <span class="yzp-hot-sort ft12">{{ parseInt(String(i + 1)) }}</span>
+              <span class="yzp-hot-sort">{{ parseInt(String(i + 1)) }}</span>
               <nuxt-link :to="setAticleLink(el.id, el.type)" class="yzp-hot-title" :title="el.title">{{ el.title }}</nuxt-link>
             </li>
           </ul>
-          <base-yzp-empty v-else></base-yzp-empty>
         </div>
       </base-yzp-panel>
       <!--end 热门排行-->
@@ -75,6 +69,7 @@ const articles = await api.getIndexArticle()
     display: flex;
     justify-content: space-between;
     height: 250px;
+    margin-bottom: var(--space-15);
     .yzp-top-swiper {
       height: 100%;
       flex: 1;
@@ -93,22 +88,23 @@ const articles = await api.getIndexArticle()
       }
     }
     .yzp-hot-item {
-      &:nth-of-type(1) .yzp-hot-sort { background: #ec5b5b }
-      &:nth-of-type(2) .yzp-hot-sort { background: #f78989 }
-      &:nth-of-type(3) .yzp-hot-sort { background: #f7acac }
-      &:nth-of-type(4) .yzp-hot-sort { background: #cccccc }
-      &:nth-of-type(5) .yzp-hot-sort { background: #dddddd }
+      &:nth-of-type(1) .yzp-hot-sort { background: var(--color-primary) }
+      &:nth-of-type(2) .yzp-hot-sort { background: rgba(var(--rgb-primary), 0.8) }
+      &:nth-of-type(3) .yzp-hot-sort { background: rgba(var(--rgb-primary), 0.6) }
+      &:nth-of-type(4) .yzp-hot-sort { background: rgba(var(--rgb-primary), 0.4) }
+      &:nth-of-type(5) .yzp-hot-sort { background: rgba(var(--rgb-primary), 0.2) }
       display: flex;
       padding: 8px 0;
       .yzp-hot-sort {
         display: block;
         flex-shrink: 0;
-        color: #ffffff;
+        color: var(--color-white);
         border-radius:6px;
         width: 18px;
         height: 18px;
         text-align: center;
         line-height: 18px;
+        font-size: var(--font-s);
       }
       .yzp-hot-title {
         line-height: 18px;
@@ -119,7 +115,7 @@ const articles = await api.getIndexArticle()
         text-overflow: ellipsis;
         overflow: hidden;
         &:hover {
-          color: #000;
+          color: var(--color-primary);
           text-decoration: underline;
         }
       }

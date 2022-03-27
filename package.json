@@ -9,7 +9,7 @@
     "@nuxt/types": "^2.15.8",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
-    "nuxt3": "latest"
+    "nuxt3": "^3.0.0-27470218.7c1a8ae"
   },
   "dependencies": {
     "dayjs": "^1.10.7"
