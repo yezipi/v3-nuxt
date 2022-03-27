@@ -14,6 +14,10 @@ export default defineNuxtConfig({
     '@/assets/css/reset.css',
     '@/assets/css/main.less',
   ],
+  components: {
+    global: true,
+    dirs: ['~/components']
+  },
   build: {
     extractCSS: true,
   },

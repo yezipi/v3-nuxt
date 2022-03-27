@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import BaseYzpTag from '@/components/Base/YzpTag.vue'
+
 import api from '@/api'
 import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
 
