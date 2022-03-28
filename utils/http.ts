@@ -38,15 +38,15 @@ const fetch = (url: string, options?: any): Promise<any> => {
       }
       const value = data.value
       if (!value.data || value.code !== 1) {
-        
         if (value.status !== 200) {
-          console.log(value)
           if (options.method === 'get') {
-            resolve(value.data)
+            resolve(ref<any>(value.data))
             $router.replace('/error/' + value.status)
           } else {
             reject(value)
           }
+        } else {
+          resolve(ref<any>(value.data))
         }
       } else {
         resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
