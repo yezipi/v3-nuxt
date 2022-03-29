@@ -106,7 +106,7 @@ if (props.type !== 'feedback') {
       </ul>
     </div>
 
-    <base-yzp-empty v-else />
+    <base-yzp-empty v-else desc="暂无评论，快抢沙发吧"  />
 
   </div>
 </template>

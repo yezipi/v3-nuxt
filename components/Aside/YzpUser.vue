@@ -207,7 +207,7 @@ const { $config, $baseSettings } = useNuxtApp()
       }
       .yzp-aside-info-count-label {
         color: var(--color-gray);
-        font-size: var(--font-m);
+        font-size: var(--font-s);
       }
     }
   }

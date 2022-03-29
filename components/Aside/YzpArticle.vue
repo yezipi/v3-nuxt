@@ -65,7 +65,7 @@ const articles = [
                   </div>
                   <div class="yzp-aside-article-item-data">
                     <i :class="tabs[index].icon" class="iconfont"></i>
-                    <span class="yzp-aside-article-item-num color-primary">{{ index === 1 ? item.comments_count : item.like }}</span>
+                    <span class="yzp-aside-article-item-num">{{ index === 1 ? item.comments_count : item.like }}</span>
                   </div>
                 </div>
               </div>
@@ -206,6 +206,7 @@ const articles = [
               .iconfont {
                 display: inline-block;
                 margin-right: 5px;
+                color: rgba(var(--rgb-dark), 0.3);
               }
             }
           }

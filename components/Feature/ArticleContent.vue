@@ -9,7 +9,7 @@ interface ArticleFields {
   title?: string,
   content?: string,
   type?: string,
-  sub_column_id?: number | string,
+  subcolumn_id?: number | string,
   comments_count?: number,
   column_id?: number,
   keywords?: string,
@@ -96,14 +96,12 @@ const checkHljsIsLoad = () => {
       // @ts-ignore
       hljs.highlightAll()
       console.log('hljs已加载')
-      return
     }
+  } catch (e) {
     timer.value = setTimeout(() => {
-      console.log('hljs未加载')
       count.value ++
       checkHljsIsLoad()
     })
-  } catch (e) {
     console.log('hljs加载失败')
   }
 }

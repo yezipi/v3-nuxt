@@ -1,7 +1,8 @@
 :root {
 
-  --rgb-primary: 255,102,102;
-  --rgb-white: 255,255,255;
+  /* --rgb-primary: 255,102,102; */
+  --rgb-primary: 54, 164, 108;
+  --rgb-white: 255, 255, 255;
   --rgb-dark: 51, 51, 51;
 
   --space-5: 5px;

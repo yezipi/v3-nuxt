@@ -8,22 +8,22 @@ const comments = result.value ? result.value.rows : []
 const commentType = {
   article: {
     name: '文章',
-    color: 'blue',
+    color: 'orange',
     url: '/article/detail/',
   },
   mood: {
     name: '微语',
-    color: 'pink',
+    color: 'cyan',
     url: '/mood/detail/',
   },
   album: {
     name: '相册',
-    color: 'cyan',
+    color: 'blue',
     url: '/album/detail/',
   },
   case: {
     name: '案例',
-    color: 'orange',
+    color: 'pink',
     url: '/case/detail/',
   },
 }
@@ -60,8 +60,8 @@ const getCommentLink = (item: any) => {
         <nuxt-link :to="getCommentLink(item)" class="yzp-aside-comment-item-link">
           <div class="yzp-aside-comment-item-user">
             <div class="yzp-aside-comment-item-top">
-              <span class="yzp-aside-comment-item-nickname color-primary">{{ item.nickname }}</span>
-              <span class="yzp-aside-comment-item-ua">{{ item.ua }}</span>
+              <span class="yzp-aside-comment-item-nickname">{{ item.nickname }}</span>
+              <span class="yzp-aside-comment-item-ua color-primary">{{ item.ua }}</span>
             </div>
             <span class="yzp-aside-comment-item-date">{{ timeAgao(item.createdAt) }}</span>
           </div>
@@ -129,7 +129,6 @@ const getCommentLink = (item: any) => {
         justify-content: space-between;
       }
       .yzp-aside-comment-item-ua {
-        color: var(--color-gray);
         display: inline-block;
         margin-left: 10px;
       }

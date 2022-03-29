@@ -18,6 +18,15 @@ interface CommentsGetType {
   album_id?: number,
 }
 
+interface ArticleListCondition {
+  size?: number,
+  page?: number,
+  subcolumn_id?: number,
+  keywords?: string,
+  title?: string,
+  type?: string,
+}
+
 export default new class Api extends Http {
 
   /**
@@ -57,9 +66,15 @@ export default new class Api extends Http {
 
   /**
    * 获取首页文章， 文章列表
+   * @param { Object } params
+   * @param { Number } params.size 页数
+   * @param { Number } params.page 页码
+   * @param { Number } params.subcolumn_id 二级分类id
+   * @param { String } params.title 文章标题
+   * @param { String } params.type 类型
    */
-  public getIndexArticle() {
-    return this.get('/app/v1/article')
+  public getArticles(params?: ArticleListCondition) {
+    return this.get('/app/v1/article', params)
   }
 
   /**

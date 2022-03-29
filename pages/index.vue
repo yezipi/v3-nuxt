@@ -15,7 +15,7 @@ const swipers = banners.value.map((e: any) => {
 })
 
 const hots = await api.getHotArticle()
-const articles = await api.getIndexArticle()
+const articles = await api.getArticles({ type: 'article' })
 
 </script>
 
@@ -57,7 +57,7 @@ const articles = await api.getIndexArticle()
     </div>
 
     <!--文章列表-->
-    <feature-article-list :list="articles.rows"></feature-article-list>
+    <feature-article-list :data="articles"></feature-article-list>
     <!--end 文章列表-->
 
   </div>

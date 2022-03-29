@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import api from '@/api'
+
 interface ColumnItem {
   name: string,
   id: string,
@@ -7,8 +9,6 @@ interface ColumnItem {
   url: string,
   subcolumns: any[]
 }
-
-import api from '@/api'
 
 const route = useRoute()
 const { provide } = useNuxtApp()
@@ -41,6 +41,7 @@ const { web_name, web_title, web_description, web_keywords } = baseSettings.valu
 provide('baseSettings', baseSettings || {})
 provide('personalizeSettings', personalizeSettings || {})
 provide('columns', columns || [])
+provide('flatColumns', flatColumns || [])
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []

@@ -3,7 +3,7 @@
 import { scrollAnimation } from '~~/utils/index'
 
 const route = useRoute()
-const { $baseSettings, $columns } = useNuxtApp()
+const { $baseSettings, $columns, $flatColumns } = useNuxtApp()
 const { web_notice, web_logo } = $baseSettings.value
 
 const scroller = new scrollAnimation()
@@ -17,6 +17,7 @@ const timer = ref(undefined)
 const scrolling = ref(false)
 const currIndex = ref(0) // 当前页面的菜单索引
 const activeIndex = ref(0) // 滑动菜单的索引
+const currSubcolumn = ref<any>({}) // 当前二级分类
 
 const setItemNavRefs = (el: any) => {
   navItemRefs.push(el)
@@ -36,6 +37,8 @@ const setActiveNav = (index: number) => {
 const getCurrNavIndex = () => {
   const urls = $columns.value.map((e: any) => e.url).filter((e: any) => e)
   const columnIndex = urls.findIndex((e: any) => (route.name as string).indexOf(e) > -1)
+  currSubcolumn.value = $flatColumns.find((e: any) => e.url == route.params.id)
+  console.log(currSubcolumn.value)
   currIndex.value = route.name === 'index' ? 0 : columnIndex + 1
   activeIndex.value = currIndex.value 
 }
@@ -66,6 +69,9 @@ onMounted(() => {
       scrolling.value = false
     },
   })
+  window.onresize = function() {
+    initActiveIndex()
+  }
 })
 
 </script>
@@ -108,9 +114,9 @@ onMounted(() => {
             <!--下拉菜单-->
             <div v-if="item.subcolumns && item.subcolumns.length" class="yzp-drop-nav">
               <ul class="yzp-sub-list">
-                <li v-for="(sub, idx) in item.subcolumns" :key="idx" class="yzp-sub-item">
-                  <nuxt-link :to="`/${item.url}/${sub.url}`" class="yzp-sub-link">
-                    <span class="yzp-sub-name">{{ sub.name }}</span>
+                <li v-for="(sub, idx) in item.subcolumns" :key="idx" :class="{ 'yzp-sub-item-active': currSubcolumn && currSubcolumn.id === sub.id }" class="yzp-sub-item">
+                  <nuxt-link :to="`/${item.url}/${sub.url}`" class="yzp-sub-item-link">
+                    <span class="yzp-sub-item-name">{{ sub.name }}</span>
                   </nuxt-link>
                 </li>
               </ul>
@@ -163,7 +169,6 @@ onMounted(() => {
       justify-content: center;
       img {
         max-width: 100%;
-        object-fit: cover;
         height: auto;
       }
     }
@@ -271,15 +276,22 @@ onMounted(() => {
     border-radius: var(--border-radius);
     background: var(--color-white);
     overflow: hidden;
+    .yzp-sub-item-active {
+      .yzp-sub-item-link {
+         color: #ffffff;
+        background: var(--color-primary);
+      }
+    }
   }
-  .yzp-sub-link {
+  .yzp-sub-item-link {
     display: block;
     padding: 10px 0;
     text-align: center;
     width: 100%;
     font-size: var(--font-m);
     &:hover {
-      background: var(--border-1);
+      color: #ffffff;
+      background: var(--color-primary);
     }
   }
 }
