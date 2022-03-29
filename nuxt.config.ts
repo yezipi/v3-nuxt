@@ -1,11 +1,8 @@
 import { defineNuxtConfig } from 'nuxt3'
-const baseURL = 'http://localhost:7001'
+const baseURL = 'http://localhost:7002'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  server: {
-    port: 4000,
-  },
   alias: {
     '/public/': baseURL + '/public/'
   },
@@ -31,12 +28,12 @@ export default defineNuxtConfig({
       strictPort: false,
       proxy: {
         '^/api/.*': {
-          target: 'http://localhost:7001',
+          target: baseURL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         },
         '^/public/.*': {
-          target: 'http://localhost:7001/public',
+          target: `${baseURL}/public`,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/public/, '')
         },

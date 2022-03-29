@@ -1,6 +1,5 @@
 <!-- 顶部导航组件 2022-01-15 yzp -->
 <script lang="ts" setup>
-import api from '~~/api'
 import { scrollAnimation } from '~~/utils/index'
 
 const route = useRoute()
@@ -9,51 +8,55 @@ const { web_notice, web_logo } = $baseSettings.value
 
 const scroller = new scrollAnimation()
 
-const navActiveIndex = ref(0)
 const navItemRefs = []
 const navActiveDiv = reactive({
   left: 0,
   width: 0,
 })
-
+const timer = ref(undefined)
 const scrolling = ref(false)
-
-watch(() => route.path, () => initActiveNav())
+const currIndex = ref(0) // 当前页面的菜单索引
+const activeIndex = ref(0) // 滑动菜单的索引
 
 const setItemNavRefs = (el: any) => {
   navItemRefs.push(el)
 }
 
 // 设置滑块位置
-const setActiveNav = (flag: boolean, index: number) => {
+const setActiveNav = (index: number) => {
   const navCurrEle = navItemRefs[index]
   if (!navCurrEle) {
     return
   }
   const { offsetLeft = 0, clientWidth = 0 } = navItemRefs[index]
   navActiveDiv.left = offsetLeft
-  navActiveDiv.width = flag ? clientWidth : 0
+  navActiveDiv.width = clientWidth
 }
 
-// 初始化选中的菜单位置
-const initActiveNav = () => {
+const getCurrNavIndex = () => {
   const urls = $columns.value.map((e: any) => e.url).filter((e: any) => e)
   const columnIndex = urls.findIndex((e: any) => (route.name as string).indexOf(e) > -1)
-  navActiveIndex.value = route.name === 'index' ? 0 : columnIndex + 1
-  setActiveNav(true, navActiveIndex.value)
+  currIndex.value = route.name === 'index' ? 0 : columnIndex + 1
+  activeIndex.value = currIndex.value 
+}
+
+const initActiveIndex = () => {
+  getCurrNavIndex()
+  setActiveNav(currIndex.value)
 }
 
 // 鼠标移动显示滑块
 const showSubNav = (flag: boolean, index: number) => {
-  if (!flag) {
-    setActiveNav(true, navActiveIndex.value)
-  } else {
-    setActiveNav(flag, index)
-  }
+  clearTimeout(timer.value)
+  setActiveNav(flag ? index : currIndex.value)
+  timer.value = setTimeout(() => {
+    activeIndex.value = flag ? index : currIndex.value
+  }, 150)
 }
+watch(() => route.path, () => initActiveIndex())
 
 onMounted(() => {
-  initActiveNav()
+  initActiveIndex()
   scroller.start({
     list: web_notice,
     intervalChange: () => {
@@ -90,7 +93,7 @@ onMounted(() => {
             v-for="(item, index) in $columns"
             :key="index"
             :ref="setItemNavRefs"
-            :class="{ active: navActiveIndex === index }"
+            :class="{ 'yzp-nav-link-active': index === activeIndex }"
             class="yzp-nav-item"
             @mouseenter="showSubNav(true, index)"
             @mouseleave="showSubNav(false, index)"
@@ -118,7 +121,7 @@ onMounted(() => {
         <div
           v-show="navActiveDiv.width > 0"
           :style="{ transform: `translateX(${navActiveDiv.left}px) scale(${navActiveDiv.width ? 1 : 0})` }"
-          class="yzp-nav-active"
+          class="yzp-nav-slider-active"
         ></div>
       </nav>
       <!--end 导航菜单-->
@@ -222,6 +225,11 @@ onMounted(() => {
         margin-left: 5px;
       }
     }
+    &.yzp-nav-link-active {
+      .yzp-nav-link {
+        color: #ffffff;
+      }
+    }
   }
 }
 .yzp-drop-nav {
@@ -275,12 +283,12 @@ onMounted(() => {
     }
   }
 }
-.yzp-nav-active {
+.yzp-nav-slider-active {
   position: absolute;
   top: 0;
   bottom: 0;
   height: 40px;
-  background: var(--border-1);
+  background: var(--color-primary);
   z-index: 0;
   width: 80px;
   left: 10px;

@@ -8,7 +8,7 @@ interface ColumnItem {
   subcolumns: any[]
 }
 
-import api from '~~/api'
+import api from '@/api'
 
 const route = useRoute()
 const { provide } = useNuxtApp()
