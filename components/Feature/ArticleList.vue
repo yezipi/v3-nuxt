@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { timeAgao } from '@/utils/index'
+import { timeAgao, setAticleLink } from '@/utils/index'
 
 const props = defineProps({
 
@@ -28,49 +28,67 @@ const props = defineProps({
       }
     },
   },
+
+  /**
+   * 是否搜索
+   */
+  keywords: {
+    type: String,
+    default: '',
+  },
 })
+
 </script>
 
 <template>
   <div class="yzp-article-list">
-    <div v-if="column.id" class="yzp-article-list-head flex-between yzp-box">
+    <div v-if="column.id || keywords" class="yzp-article-list-head flex-between yzp-box">
       <div class="yzp-article-list-head-left">
         共有 <span class="color-primary">{{ data.count }}</span> 条
       </div>
-      <div class="yzp-article-list-head-right">
+      <div v-if="!keywords" class="yzp-article-list-head-right">
         <i class="iconfont iconleimupinleifenleileibie2-copy"></i>
         <span class="color-primary">{{ column.name }}</span>
       </div>
+      <div v-else class="yzp-article-list-head-right">
+        关键词：
+        <span class="color-primary">{{ keywords }}</span>
+      </div>
     </div>
     <ul class="yzp-article-ul">
-      <li v-for="(item, index) in data.rows as any" :key="index" class="yzp-article-item yzp-box">
-        <div class="yzp-article-cover">
-          <!-- <div :style="{ background: `#eeeeee url(${$config.baseURL + item.cover}) no-repeat center` }" class="yzp-article-img"></div> -->
-          <img :src="item.cover || '/assets/img/nopic.jpg'" class="yzp-article-img" :alt="item.title" />
+      <li v-for="(item, index) in data.rows" :key="item.id" class="yzp-article-item yzp-box">
+        <div class="yzp-article-item-cover">
+          <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/assets/img/nopic.jpg'" />
         </div>
-        <div class="yzp-article-info">
+        <div class="yzp-article-item-info">
           <div class="yzp-article-text">
-            <nuxt-link :to="'/article/detail/' + item.id" class="yzp-article-link" :title="item.title">{{ item.title }}</nuxt-link>
+            <nuxt-link :to="setAticleLink(item.id, item.type)" target="_blank" class="yzp-article-item-link color-primary" :title="item.title">
+              <span v-if="!keywords" class="yzp-article-item-title">{{ item.title }}</span>
+              <span v-else v-for="(txt, i) in item.title" :index="i" class="yzp-article-item-title">
+                <strong v-if="keywords.indexOf(txt.toLocaleLowerCase()) > -1" style="color: red">{{ txt }}</strong>
+                <i v-else style="font-style: normal">{{ txt }}</i>
+              </span>
+            </nuxt-link>
           </div>
-          <!-- <p class="yzp-article-desc">{{ item.description }}</p> -->
-          <div class="yzp-article-bottom">
-            <div class="yzp-article-icon">
+          <p class="yzp-article-item-desc">{{ item.description }}</p>
+          <div class="yzp-article-item-bottom">
+            <div class="yzp-article-item-icon">
               <i class="iconfont iconshijian"></i>
-              <span class="yzp-article-data">{{ timeAgao(item.created_at) }}</span>
+              <span class="yzp-article-item-data">{{ timeAgao(item.created_at) }}</span>
             </div>
-            <div class="yzp-article-icon">
+            <div class="yzp-article-item-icon">
               <i class="iconfont iconyanjing"></i>
-              <span class="yzp-article-data">{{ item.view }}</span>
+              <span class="yzp-article-item-data">{{ item.view }}</span>
             </div>
-            <div class="yzp-article-icon">
+            <div class="yzp-article-item-icon">
               <i class="iconfont iconxiaoxi3"></i>
-              <span class="yzp-article-data">{{ item.comments_count }}</span>
+              <span class="yzp-article-item-data">{{ item.comments_count }}</span>
             </div>
-            <div class="yzp-article-icon">
+            <div class="yzp-article-item-icon">
               <i class="iconfont icon03"></i>
               <span class="yzp-article-data">{{ item.like }}</span>
             </div>
-            <div class="yzp-article-icon">
+            <div class="yzp-article-item-icon">
               <i class="iconfont iconfenlei"></i>
               <span class="yzp-article-data">{{ item.subcolumn.name }}</span>
             </div>
@@ -111,15 +129,14 @@ const props = defineProps({
           filter:contrast(150%)
         }
       }
-      .yzp-article-link {
+      .yzp-article-item-link {
         line-height: 30px;
-        font-size: var(--font-xxxl);
+        font-size: var(--font-xl);
         &:hover {
           text-decoration: underline;
-          color: var(--color-primary);
         }
       }
-      .yzp-article-cover {
+      .yzp-article-item-cover {
         width: 170px;
         height: 90px;
         flex-shrink: 0;
@@ -127,14 +144,14 @@ const props = defineProps({
         overflow: hidden;
         margin-right: var(--space-15);
         background: var(--bg-primary);
-        .yzp-article-img {
+        .yzp-article-item-img {
           transition: all 0.3s;
           width: 100%;
           height: 100%;
           background-size: cover!important;
         }
       }
-      .yzp-article-info {
+      .yzp-article-item-info {
         height: 90px;
         display: flex;
         flex-direction: column;
@@ -142,7 +159,7 @@ const props = defineProps({
         overflow: hidden;
         flex: 1;
       }
-      .yzp-article-desc {
+      .yzp-article-item-desc {
         font-size: 12px;
         color: var(--color-gray);
         line-height: 18px;
@@ -150,12 +167,12 @@ const props = defineProps({
         text-overflow: ellipsis;
         overflow: hidden;
       }
-      .yzp-article-bottom {
+      .yzp-article-item-bottom {
         display: flex;
         align-items: center;
         color: var(--color-gray);
         font-size: 12px;
-        .yzp-article-icon {
+        .yzp-article-item-icon {
           margin-right: var(--space-15)
         }
         .iconfont {

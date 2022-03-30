@@ -248,7 +248,7 @@ onMounted(() => {
         <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item">
           <a :href="`/article/detail/${ele.id}`">
             <div class="yzp-article-similar-cover yzp-box">
-              <img :src="ele.cover" />
+              <img :src="ele.cover" onerror="this.src='/assets/img/nopic.jpg'" />
             </div>
             <span class="yzp-article-similar-title">{{ ele.title }}</span>
           </a>

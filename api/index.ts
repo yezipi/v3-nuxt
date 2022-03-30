@@ -21,9 +21,9 @@ interface CommentsGetType {
 interface ArticleListCondition {
   size?: number,
   page?: number,
+  column_id?: number,
   subcolumn_id?: number,
   keywords?: string,
-  title?: string,
   type?: string,
 }
 
@@ -69,8 +69,9 @@ export default new class Api extends Http {
    * @param { Object } params
    * @param { Number } params.size 页数
    * @param { Number } params.page 页码
+   * @param { Number } params.column_id 一级级分类id
    * @param { Number } params.subcolumn_id 二级分类id
-   * @param { String } params.title 文章标题
+   * @param { String } params.keywords 关键词
    * @param { String } params.type 类型
    */
   public getArticles(params?: ArticleListCondition) {

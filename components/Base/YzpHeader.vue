@@ -54,7 +54,7 @@ const showSubNav = (flag: boolean, index: number) => {
   setActiveNav(flag ? index : currIndex.value)
   timer.value = setTimeout(() => {
     activeIndex.value = flag ? index : currIndex.value
-  }, 150)
+  }, 100)
 }
 watch(() => route.path, () => initActiveIndex())
 
@@ -279,7 +279,7 @@ onMounted(() => {
     .yzp-sub-item-active {
       .yzp-sub-item-link {
          color: #ffffff;
-        background: var(--color-primary);
+        background: rgba(var(--rgb-primary), 0.5);
       }
     }
   }
@@ -291,7 +291,7 @@ onMounted(() => {
     font-size: var(--font-m);
     &:hover {
       color: #ffffff;
-      background: var(--color-primary);
+      background: rgba(var(--rgb-primary), 0.5);
     }
   }
 }

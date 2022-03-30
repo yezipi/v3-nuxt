@@ -1,13 +1,24 @@
 <script lang="ts" setup>
+const router = useRouter()
+
+const keywords = ref<any>('')
+const toSearch = () => {
+  router.push({
+    name: 'search',
+    query: {
+      keywords: keywords.value,
+    }
+  })
+}
 </script>
 
 <template>
   <!--搜索-->
   <base-yzp-panel title="搜索" icon="iconsousuo">
-    <div class="yzp-aside-search-wrap">
-      <input class="yzp-aside-search-input" type="text" placeholder="请输入关键字" />
-      <i class="iconfont iconsousuo"></i>
-    </div>
+    <form id="yzp-search" class="yzp-aside-search-wrap" onsubmit="return false">
+      <input v-model="keywords" class="yzp-aside-search-input" type="text" name="keywords" placeholder="请输入关键字" @enter="toSearch" />
+      <i class="iconfont iconsousuo" @click="toSearch"></i>
+    </form>
   </base-yzp-panel>
   <!--end 搜索-->
 </template>

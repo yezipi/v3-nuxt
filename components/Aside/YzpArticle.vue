@@ -54,7 +54,7 @@ const articles = [
           <li v-for="(item, i) in el.rows" :key="i" class="yzp-aside-article-item">
             <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-aside-article-item-link">
               <div class="yzp-aside-article-item-pic">
-                <img class="yzp-aside-article-item-img" :src="item.cover || '/assets/img/nopic.jpg'" />
+                <img class="yzp-aside-article-item-img" :src="item.cover || '/assets/img/nopic.jpg'" onerror="this.src='/assets/img/nopic.jpg'" />
               </div>
               <div class="yzp-aside-article-item-info">
                 <span class="yzp-aside-article-item-title">{{ item.title }}</span>
@@ -172,7 +172,7 @@ const articles = [
         .yzp-aside-article-item-pic {
           flex-shrink: 0;
           width: 100px;
-          height: 70px;
+          height: 65px;
           border-radius: var(--border-radius);
           overflow: hidden;
           margin-right: 10px;
