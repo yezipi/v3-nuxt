@@ -42,6 +42,7 @@ const toSearch = () => {
     display: inline-block;
     position: absolute;
     right: var(--space-15);
+    cursor: pointer;
     &:hover {
       color: var(--color-primary);
     }

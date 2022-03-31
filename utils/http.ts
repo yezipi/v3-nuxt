@@ -37,6 +37,7 @@ const fetch = (url: string, options?: any): Promise<any> => {
         return
       }
       const value = data.value
+      console.log(reqUrl, !!value)
       if (!value.data || value.code !== 1) {
         if (value.status !== 200) {
           if (options.method === 'get') {

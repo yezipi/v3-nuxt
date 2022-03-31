@@ -24,6 +24,11 @@
 
     </article>
     <!--end 内容部分-->
+
+    <!--页脚-->
+    <base-yzp-footer></base-yzp-footer>
+    <!--end 页脚-->
+
   </div>
 </template>
 
@@ -36,7 +41,7 @@
 }
 .yzp-container {
   margin-top: 85px;
-  margin-bottom: 15px;
+  margin-bottom: var(--space-15);
   display: flex;
   justify-content: center;
 }
@@ -47,7 +52,6 @@
 }
 .yzp-section {
   flex: 1;
-  max-width: 820px;
   min-height: calc(100vh - 170px);
 }
 </style>
