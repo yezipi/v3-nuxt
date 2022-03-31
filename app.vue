@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import api from '@/api'
 
 interface ColumnItem {
   name: string,
@@ -26,11 +25,11 @@ const homeRoute = {
 }
 
 // 获取栏目数据
-const navData = await api.getColumns()
-const personalizeSettings = await api.getPersonalizeSettings()
-const baseSettings = await api.getBaseSettings()
+const navData = await getColumns()
+const personalizeSettings = await getPersonalizeSettings()
+const baseSettings = await getBaseSettings()
 
-columns.value = [ homeRoute, ...toRaw(navData.value) ]
+columns.value = [ homeRoute, ...navData.value ]
 // console.log(columns.value)
 
 // 数组打平

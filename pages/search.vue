@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import api from '@/api'
+  
 
   const route = useRoute()
   const keywords = ref<any>(route.query.keywords.toString())
@@ -7,7 +7,7 @@
   const articles = ref<any>({})
 
   const getArticles = async () => {
-    const result = await api.getArticles({ keywords: keywords.value })
+    const result = await getArticles({ keywords: keywords.value })
     articles.value = result.value
   }
 

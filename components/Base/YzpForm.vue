@@ -1,6 +1,6 @@
 <!--评论表单, 2022-3-25 yzp-->
 <script lang="ts" setup>
-import api from '@/api'
+
 
 const props = defineProps({
   type: {
@@ -117,10 +117,10 @@ const submit = async () => {
       avatar: `/public/avatar/${localStorage.getItem('avatar') || 2}.jpg`
     }
     if (props.type !== 'feedback') {
-      const { msg } = await api.saveComment(params)
+      const { msg } = await saveComment(params)
       alert(msg)
     } else {
-       const { msg } = await api.saveFeedback(params)
+       const { msg } = await saveFeedback(params)
       alert(msg)
     }
     form.content = ''

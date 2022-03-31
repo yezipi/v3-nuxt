@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import api from '@/api'
+
 import { timeAgao } from '@/utils/index'
 
-const result = await api.getComments({ page: 1, size: 5 })
+const result = await getComments({ page: 1, size: 5 })
 const comments = result.value ? result.value.rows : []
 
 const commentType = {

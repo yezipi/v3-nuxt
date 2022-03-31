@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { setRandomTag } from '@/utils/index'
-import api from '@/api'
 
-const result = await api.getTags({ page: 1, size: 50 })
+
+const result = await getTags({ page: 1, size: 50 })
 const tags = ref(result.value && result.value.rows ? result.value.rows : [] )
 tags.value = tags.value.map((e: any) => {
   return {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import api from '@/api'
+
 import { timeAgao, setAticleLink } from '@/utils/index'
 
 const tabs = reactive([
@@ -19,7 +19,7 @@ const setTabRefs = (el: any) => {
   tabRefs.push(el)
 }
 
-const result = await api.getMostLikeAndMostComment()
+const result = await getMostLikeAndMostComment()
 const { mostComment, mostLike } = result.value
 const articles = [
   { rows: mostLike },

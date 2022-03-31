@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import api from '@/api'
 
-const result = await api.getBlogroll({ page: 1, size: 50, recommend: 1 })
+
+const result = await getBlogroll({ page: 1, size: 50, recommend: 1 })
 const blogroll = ref(result.value && result.value.rows ? result.value.rows : [] )
 </script>
 

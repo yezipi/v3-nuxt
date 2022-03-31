@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import api from '@/api'
+
 import { timeAgao } from '@/utils/index'
 
 const { $baseSettings } = useNuxtApp()
@@ -29,10 +29,10 @@ const list = ref<any>({ count: 0, rows: [] as any })
 
 if (props.type !== 'feedback') {
   condition.value[parentType[props.type]] = props.parentId  
-  const result = await api.getComments(condition.value)
+  const result = await getComments(condition.value)
   list.value = result.value
 } else {
-  const result = await api.getFeedbacks(condition.value)
+  const result = await getFeedbacks(condition.value)
   list.value = result.value
 }
 

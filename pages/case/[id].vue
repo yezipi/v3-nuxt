@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-  import api from '@/api'
+  
 
   const { $flatColumns } = useNuxtApp()
   const route = useRoute()
   
   const subcolumn = $flatColumns.find((e: any) => route.params.id === e.url)
 
-  const articles = await api.getArticles({ subcolumn_id: subcolumn.id, type: 'case' })
+  const articles = await getArticles({ subcolumn_id: subcolumn.id, type: 'case' })
 </script>
 
 <template>

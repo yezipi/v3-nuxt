@@ -20,12 +20,12 @@ const fetch = (url: string, options?: any): Promise<any> => {
     return new Promise((resolve, reject) => {
       $fetch(reqUrl, { ...options }).then((res: ResponseConfig) => {
         if (res.status !== 200) {
-          reject(res)
+          reject(ref<any>(res))
         }else {
-          resolve(res)
+          resolve(ref<any>(res))
         }
       }).catch((err) => {
-        reject(err)
+        reject(ref<any>(err))
       })
     })
   }
@@ -37,28 +37,29 @@ const fetch = (url: string, options?: any): Promise<any> => {
         return
       }
       const value = data.value
+      const result = value.data
       if (!value.data || value.code !== 1) {
         if (value.status !== 200) {
           if (options.method === 'get') {
-            resolve(ref<any>(value.data))
+            resolve(ref<any>(result))
             $router.replace('/error/' + value.status)
           } else {
-            reject(value)
+            reject(ref<any>(result))
           }
         } else {
-          resolve(ref<any>(value.data))
+          resolve(ref<any>(result))
         }
       } else {
-        resolve(Array.isArray(value.data) ? ref<Array<any>>(value.data) : ref<any>(value.data))
+        resolve(ref<any>(result))
       }
     }).catch((err: any) => {
       console.log(err)
-      reject(err)
+      reject(ref<any>(err))
     })
   })
 }
 
-export default class Http {
+export default new class Http {
 
   get(url: string, params?: any): Promise<any> {
     return fetch(url, { method: 'get', params })

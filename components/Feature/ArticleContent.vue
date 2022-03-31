@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import BaseYzpTag from '@/components/Base/YzpTag.vue'
-
-import api from '@/api'
 import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
 
 interface ArticleFields {
@@ -9,7 +6,7 @@ interface ArticleFields {
   title?: string,
   content?: string,
   type?: string,
-  subcolumn_id?: number | string,
+  sub_column_id?: number | string,
   comments_count?: number,
   column_id?: number,
   keywords?: string,
@@ -67,7 +64,7 @@ const tags = ref<any>([])
 const timer = ref()
 const count = ref(0)
 
-const info: ArticleFields = await api.getArticleDetil(Number(props.id))
+const info: ArticleFields = await getArticleDetil(Number(props.id))
 
 const onDashangTypeChange = (index: number) => {
   dashangTabIndex.value = index
@@ -96,12 +93,14 @@ const checkHljsIsLoad = () => {
       // @ts-ignore
       hljs.highlightAll()
       console.log('hljs已加载')
+      return
     }
-  } catch (e) {
     timer.value = setTimeout(() => {
+      console.log('hljs未加载')
       count.value ++
       checkHljsIsLoad()
     })
+  } catch (e) {
     console.log('hljs加载失败')
   }
 }
@@ -121,10 +120,10 @@ useMeta({
     }
   ],
   link: [
-    { rel: 'stylesheet', type: 'text/css', href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark-reasonable.min.css' }
+    { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.5.0/styles/atom-one-dark-reasonable.min.css' }
   ],
   script: [
-    { type: 'text/javascript', src: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js' },
+    { type: 'text/javascript', src: 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.5.0/highlight.min.js' },
   ]
   // link: [
   //   { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-tomorrow.min.css' }
@@ -248,7 +247,7 @@ onMounted(() => {
         <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item">
           <a :href="`/article/detail/${ele.id}`">
             <div class="yzp-article-similar-cover yzp-box">
-              <img :src="ele.cover" onerror="this.src='/assets/img/nopic.jpg'" />
+              <img :src="ele.cover" />
             </div>
             <span class="yzp-article-similar-title">{{ ele.title }}</span>
           </a>

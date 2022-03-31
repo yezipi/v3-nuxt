@@ -1,11 +1,8 @@
 
 <script lang="ts" setup>
 import { setAticleLink } from '@/utils'
-import api from '@/api'
 
-const { $config } = useNuxtApp()
-
-const banners = await api.getBanners()
+const banners = await getBanners()
 const swipers = banners.value.map((e: any) => {
   return {
     ...e,
@@ -14,8 +11,8 @@ const swipers = banners.value.map((e: any) => {
   }
 })
 
-const hots = await api.getHotArticle()
-const articles = await api.getArticles({ type: 'article' })
+const hots = await getHotArticle()
+const articles = await getArticles({ type: 'article' })
 
 </script>
 
