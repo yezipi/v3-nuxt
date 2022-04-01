@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const { $baseSettings } = useNuxtApp()
+const { $baseSettings  } = useNuxtApp()
+const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value : {} as any
 </script>
 
 <template>
@@ -7,13 +8,13 @@ const { $baseSettings } = useNuxtApp()
   <base-yzp-panel noPadding>
     <div class="yzp-aside-info">
       <div class="yzp-aside-info-avatar">
-        <img class="yzp-aside-info-avatar-img" :src="$baseSettings.web_avatar" onerror="this.src='/img/default-avatar.png'" />
+        <img class="yzp-aside-info-avatar-img" :src="web_avatar" onerror="this.src='/img/default-avatar.png'" />
       </div>
-      <p class="yzp-aside-info-slogan">{{ $baseSettings.web_slogan || '欢迎来到本站' }}</p>
+      <p class="yzp-aside-info-slogan">{{ web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
         <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn">
           <i class="iconfont iconicon-test"></i>
-          <span>{{ $baseSettings.web_like }}</span>
+          <span>{{ web_like }}</span>
         </div>
         <div class="yzp-aside-info-btn-item yzp-aside-info-focus-btn">
           <i class="iconfont iconjiahao"></i>

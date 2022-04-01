@@ -15,7 +15,7 @@ tags.value = tags.value.map((e: any) => {
 
 <template>
   <!--标签-->
-  <base-yzp-panel title="标签" icon="iconbiaoqian">
+  <base-yzp-panel v-if="tags && tags.length" title="标签" icon="iconbiaoqian">
     <base-yzp-tag3d :data="tags">
       <template #item="{ item } ">
         <base-yzp-tag :color="item.color" style="margin-right: 0;">{{ item.name }}</base-yzp-tag>

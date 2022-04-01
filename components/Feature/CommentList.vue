@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import { timeAgao } from '@/utils/index'
 
 const { $baseSettings } = useNuxtApp()
@@ -22,19 +21,31 @@ const parentType = {
   almun: 'album_id'
 }
 
+const page = ref(1)
+
 const typeText = props.type !== 'feedback' ? '评论' : '留言'
 
-const condition = ref<any>({ size: 10, page: 1 })
+const condition = reactive<any>({ size: 10, page: 1 })
 const list = ref<any>({ count: 0, rows: [] as any })
 
-if (props.type !== 'feedback') {
-  condition.value[parentType[props.type]] = props.parentId  
-  const result = await useComments(condition.value)
-  list.value = result.value
-} else {
-  const result = await useFeedbacks(condition.value)
-  list.value = result.value
+condition[parentType[props.type]] = props.parentId
+
+const initList = async () => {
+  if (props.type !== 'feedback') {
+    const result = await useComments(condition)
+    list.value = result.value
+  } else {
+    const result = await useFeedbacks(condition)
+    list.value = result.value
+  }
 }
+
+const onPageChange = (page: number) => {
+  condition.page = page
+  initList()
+}
+
+await initList()
 
 </script>
 
@@ -105,6 +116,10 @@ if (props.type !== 'feedback') {
         </li>
       </ul>
     </div>
+    
+    <!--分页-->
+    <base-yzp-pagination v-if="list && list.count" :data="list" :noLink="true" @change="onPageChange"></base-yzp-pagination>
+    <!--end 分页-->
 
     <base-yzp-empty v-else desc="暂无评论，快抢沙发吧"  />
 
@@ -114,6 +129,9 @@ if (props.type !== 'feedback') {
 <style scoped lang="less">
 .yzp-comment-wrap {
   margin-bottom: var(--space-15);
+  .yzp-comment-box {
+    margin-bottom: var(--space-15);
+  }
   .iconfont {
     display: inline-block;
     margin-right: 5px;
@@ -175,6 +193,7 @@ if (props.type !== 'feedback') {
         }
         .yzp-comment-item-content {
           padding: var(--space-10) 0;
+          white-space: pre-line;
         }
         .yzp-comment-item-reply {
           display: flex;
@@ -203,6 +222,7 @@ if (props.type !== 'feedback') {
           }
           .yzp-comment-item-reply-content {
             padding: var(--space-10) 0;
+            white-space: pre-line;
           }
         }
       }

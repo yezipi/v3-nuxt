@@ -40,6 +40,9 @@ const setActiveNav = (index: number) => {
 }
 
 const getCurrNavIndex = () => {
+  if (!$columns) {
+    return
+  }
   const columnIndex = $columns.value.findIndex((e: any) => e.url && String(route.path).indexOf(e.url) > -1)
   currSubcolumn.value = $flatColumns.find((e: any) => e.url == route.params.id)
   currIndex.value = route.name === 'index' ? 0 : columnIndex
@@ -119,7 +122,7 @@ onMounted(() => {
               class="yzp-nav-link"
             >
               <span class="yzp-nav-name">{{ item.name }}</span>
-              <i v-if="item.subcolumns.length" class="iconfont iconico_open"></i>
+              <i v-if="item.subcolumns && item.subcolumns.length" class="iconfont iconico_open"></i>
             </nuxt-link>
             <!--下拉菜单-->
             <div v-if="item.subcolumns && item.subcolumns.length" class="yzp-drop-nav">
@@ -134,14 +137,16 @@ onMounted(() => {
             <!--end 菜单-->
           </li>
         </ul>
-        <div
-          v-show="navItemRefs.length"
-          :style="{
-            transform: `translate(${navActiveDiv.left}px, ${navActiveDiv.top}px) scale(${navActiveDiv.width ? 1 : 0})`,
-          }"
-          class="yzp-nav-slider-active"
-        >
-        </div>
+        <template v-if="$columns">
+          <div
+            v-show="navItemRefs.length"
+            :style="{
+              transform: `translate(${navActiveDiv.left}px, ${navActiveDiv.top}px) scale(${navActiveDiv.width ? 1 : 0})`,
+            }"
+            class="yzp-nav-slider-active"
+          >
+          </div>
+        </template>
       </nav>
       <!--end 导航菜单-->
     </div>

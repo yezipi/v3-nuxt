@@ -1,6 +1,11 @@
 import Http from '@/utils/http'
 
-interface CommentConfig {
+interface ListConfig {
+  size?: number,
+  page?: number,
+}
+
+interface CommentConfig  extends ListConfig {
   nickname: string,
   site: string,
   email: string,
@@ -11,16 +16,12 @@ interface CommentConfig {
 }
 
 interface CommentsGetType {
-  size?: number,
-  page?: number,
   article_id?: number,
   mood_id?: number,
   album_id?: number,
 }
 
-interface ArticleListCondition {
-  size?: number,
-  page?: number,
+interface ArticleListCondition extends ListConfig {
   column_id?: number,
   subcolumn_id?: number,
   keywords?: string,
@@ -76,7 +77,7 @@ export const useArticleDetil = (id: number) => Http.get('/app/v1/article/detail/
  * @param { Number } params.size 页数
  * @param { Number } params.page 页码
  */
-export const useMoods = (params?: { size?: number, page?: number }) => Http.get('/app/v1/mood', params)
+export const useMoods = (params?: ListConfig) => Http.get('/app/v1/mood', params)
 
 /**
  * 获取最新评论
@@ -121,17 +122,16 @@ export const useMostLikeAndMostComment = () => Http.get('/app/v1/article/mostLik
 
 /**
  * 获取标签
+ * @param { Object } params
+ * @param { Number } params.size 页数
+ * @param { Number } params.page 页码
  */
-export const useTags = (params?: { size?: number, page?: number }) => {
-  return Http.get('/app/v1/tags', params)
-}
+export const useTags = (params?: ListConfig) => Http.get('/app/v1/tags', params)
 
 /**
  * 获取标签
  */
-export const useBlogroll = (params?: { size?: number, page?: number, recommend?: number }) => {
-  return Http.get('/app/v1/blogroll', params)
-}
+export const useBlogroll = (params?: { recommend?: number }) => Http.get('/app/v1/blogroll', params)
 
 /**
  * 获取留言列表
@@ -139,6 +139,4 @@ export const useBlogroll = (params?: { size?: number, page?: number, recommend?:
  * @param { Number } params.size 页数
  * @param { Number } params.page 页码
  */
-export const useFeedbacks = (params?: { size?: number, page?: number }) => {
-  return Http.get('/app/v1/feedback', params)
-}
+export const useFeedbacks = (params?: ListConfig) => Http.get('/app/v1/feedback', params)
