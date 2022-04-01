@@ -182,7 +182,7 @@ onMounted(() => {
       </div>
       <div class="yzp-form-button">
         <button class="yzp-form-submit" :class="{ disabled: loading }" :disabled="loading" @click="submit">
-          <img v-if="loading" src="@/assets/img/btn-loading.gif" />
+          <img v-if="loading" src="/img/btn-loading.gif" />
           <span>{{ loading ? '提交中...' : '立即提交' }}</span>
         </button>
       </div>

@@ -76,7 +76,7 @@ await getArticles()
     <ul class="yzp-article-ul">
       <li v-for="(item) in articles.rows" :key="item.id" class="yzp-article-item yzp-box">
         <div class="yzp-article-item-cover">
-          <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/assets/img/nopic.jpg'" />
+          <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/img/nopic.jpg'" />
         </div>
         <div class="yzp-article-item-info">
           <div class="yzp-article-text">
@@ -88,7 +88,7 @@ await getArticles()
               </span>
             </nuxt-link>
           </div>
-          <div v-if="item.description" class="yzp-article-item-desc">{{ item.description.substring(0, 45) }}...</div>
+          <!-- <div v-if="item.description" class="yzp-article-item-desc">{{ item.description.substring(0, 45) }}...</div> -->
           <div class="yzp-article-item-bottom">
             <div class="yzp-article-item-icon">
               <i class="iconfont iconshijian"></i>

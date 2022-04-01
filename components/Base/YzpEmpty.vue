@@ -10,7 +10,7 @@ const props = defineProps({
 
 <template>
   <div class="yzp-empty">
-    <img src="/assets/img/icon/icon_empty.png" />
+    <img src="/img/icon_empty.png" />
     <span v-if="desc" class="yzp-empty-desc">{{ desc }}</span>
   </div>
 </template>

@@ -55,7 +55,7 @@ if (props.type !== 'feedback') {
       <ul class="yzp-comment-list">
         <li v-for="(item, index) in list.rows" :key="index" class="yzp-comment-item yzp-box">
           <a href="" class="yzp-comment-item-avatar">
-            <img :src="item.avatar" />
+            <img :src="item.avatar" onerror="this.src='/img/default-avatar.png'" />
           </a>
           <div class="yzp-comment-item-info">
 

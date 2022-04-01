@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     server: {
       host: '0.0.0.0',
       port: 1000,
-      strictPort: false,
+      strictPort: true,
       proxy: {
         '^/api/.*': {
           target: baseURL,

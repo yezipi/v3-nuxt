@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { $config, $baseSettings } = useNuxtApp()
+const { $baseSettings } = useNuxtApp()
 </script>
 
 <template>
@@ -7,7 +7,7 @@ const { $config, $baseSettings } = useNuxtApp()
   <base-yzp-panel noPadding>
     <div class="yzp-aside-info">
       <div class="yzp-aside-info-avatar">
-        <img class="yzp-aside-info-avatar-img" :src="$baseSettings.web_avatar" />
+        <img class="yzp-aside-info-avatar-img" :src="$baseSettings.web_avatar" onerror="this.src='/img/default-avatar.png'" />
       </div>
       <p class="yzp-aside-info-slogan">{{ $baseSettings.web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">

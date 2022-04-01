@@ -1,7 +1,7 @@
 <template>
   <div class="yzp-not-found" style="width: 420px">
     <div>
-      <img src="@/assets/img/404.gif" alt="" style="width:100%" />
+      <img src="/img/404.gif" alt="" style="width:100%" />
     </div>
     <nuxt-link class="defaultTextColor ft16" to="/">返回首页</nuxt-link>
   </div>
