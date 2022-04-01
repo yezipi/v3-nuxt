@@ -180,7 +180,7 @@ onMounted(() => onTabChange(0))
         .yzp-aside-article-item-pic {
           flex-shrink: 0;
           width: 100px;
-          height: 65px;
+          height: 60px;
           border-radius: var(--border-radius);
           overflow: hidden;
           margin-right: 10px;
@@ -196,9 +196,9 @@ onMounted(() => onTabChange(0))
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: space-around;
+          justify-content: space-between;
           .yzp-aside-article-item-title {
-            line-height: 20px;
+            line-height: 18px;
             display: block;
             font-size: 12px;
           }
