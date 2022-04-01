@@ -1,10 +1,28 @@
 import { defineNuxtConfig } from 'nuxt3'
-const baseURL = 'http://localhost:7002'
+
+const BASE_URL = 'http://localhost:7002'
+const SERVER_CONFIG = {
+  host: '0.0.0.0',
+  port: 4000,
+  strictPort: true,
+  proxy: {
+    '^/api/.*': {
+      target: BASE_URL,
+      changeOrigin: true,
+      rewrite: (path: string) => path.replace(/^\/api/, '')
+    },
+    '^/public/.*': {
+      target: `${BASE_URL}/public`,
+      changeOrigin: true,
+      rewrite: (path: string) => path.replace(/^\/public/, '')
+    },
+  },
+}
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   alias: {
-    '/public/': baseURL + '/public/'
+    '/public/': BASE_URL + '/public/'
   },
   css: [
     '@/assets/fonts/iconfont.css',
@@ -19,25 +37,10 @@ export default defineNuxtConfig({
     extractCSS: true,
   },
   publicRuntimeConfig: {
-    baseURL,
+    baseURL: BASE_URL,
   },
   vite: {
-    server: {
-      host: '0.0.0.0',
-      port: 1000,
-      strictPort: true,
-      proxy: {
-        '^/api/.*': {
-          target: baseURL,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        },
-        '^/public/.*': {
-          target: `${baseURL}/public`,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/public/, '')
-        },
-      },
-    },
+    server: SERVER_CONFIG,
+    preview: SERVER_CONFIG,
   }
 })
