@@ -29,10 +29,10 @@ const list = ref<any>({ count: 0, rows: [] as any })
 
 if (props.type !== 'feedback') {
   condition.value[parentType[props.type]] = props.parentId  
-  const result = await getComments(condition.value)
+  const result = await useComments(condition.value)
   list.value = result.value
 } else {
-  const result = await getFeedbacks(condition.value)
+  const result = await useFeedbacks(condition.value)
   list.value = result.value
 }
 

@@ -2,7 +2,7 @@
 
 import { timeAgao } from '@/utils/index'
 
-const result = await getComments({ page: 1, size: 5 })
+const result = await useComments({ page: 1, size: 5 })
 const comments = result.value ? result.value.rows : []
 
 const commentType = {

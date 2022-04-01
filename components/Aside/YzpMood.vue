@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-const moods = await getMoods({ page: 1, size: 5 })
+const moods = await useMoods({ page: 1, size: 5 })
 console.log(moods)
 </script>
 

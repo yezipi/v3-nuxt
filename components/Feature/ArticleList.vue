@@ -1,19 +1,14 @@
 <script lang="ts" setup>
-import { timeAgao, setAticleLink } from '@/utils/index'
+import { timeAgao, setAticleLink } from '~~/utils/index'
 
 const props = defineProps({
 
   /**
-   * 列表数据
+   * 筛选条件
    */
-  data: {
+  condition: {
     type: Object,
-    default: () => { 
-      return {
-        rows: [],
-        count: 0,
-      }
-    }
+    default: () => {}
   },
 
   /**
@@ -38,13 +33,36 @@ const props = defineProps({
   },
 })
 
+const route = useRoute()
+
+const filter = ref<any>(props.condition)
+
+const articles = ref<any>({ count: 0, rows: [] as any })
+
+const getArticles = async () => {
+  const data = await useArticles({ ...filter.value, ...route.query })
+  articles.value = data.value
+}
+
+watch(() => route.query, () => {
+  getArticles()
+})
+
+watch(() => props.condition, () => {
+  filter.value = props.condition
+  getArticles()
+})
+
+// 组件里加载不这样写顶级await会报警告
+await getArticles()
+
 </script>
 
 <template>
   <div class="yzp-article-list">
     <div v-if="column.id || keywords" class="yzp-article-list-head flex-between yzp-box">
       <div class="yzp-article-list-head-left">
-        共有 <span class="color-primary">{{ data.count }}</span> 条
+        共有 <span class="color-primary">{{ articles.count }}</span> 条
       </div>
       <div v-if="!keywords" class="yzp-article-list-head-right">
         <i class="iconfont iconleimupinleifenleileibie2-copy"></i>
@@ -56,7 +74,7 @@ const props = defineProps({
       </div>
     </div>
     <ul class="yzp-article-ul">
-      <li v-for="(item, index) in data.rows" :key="item.id" class="yzp-article-item yzp-box">
+      <li v-for="(item) in articles.rows" :key="item.id" class="yzp-article-item yzp-box">
         <div class="yzp-article-item-cover">
           <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/assets/img/nopic.jpg'" />
         </div>
@@ -70,7 +88,7 @@ const props = defineProps({
               </span>
             </nuxt-link>
           </div>
-          <p class="yzp-article-item-desc">{{ item.description }}</p>
+          <div v-if="item.description" class="yzp-article-item-desc">{{ item.description.substring(0, 45) }}...</div>
           <div class="yzp-article-item-bottom">
             <div class="yzp-article-item-icon">
               <i class="iconfont iconshijian"></i>
@@ -96,6 +114,11 @@ const props = defineProps({
         </div>
       </li>
     </ul>
+
+    <!--分页-->
+    <base-yzp-pagination v-if="articles.count" :data="articles"></base-yzp-pagination>
+    <!--end 分页-->
+    <base-yzp-empty v-else desc="暂无内容" />
   </div>
 </template>
 
@@ -163,7 +186,7 @@ const props = defineProps({
         font-size: 12px;
         color: var(--color-gray);
         line-height: 18px;
-        white-space: nowrap;
+        height: 18px;
         text-overflow: ellipsis;
         overflow: hidden;
       }

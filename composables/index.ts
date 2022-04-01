@@ -30,27 +30,27 @@ interface ArticleListCondition {
 /**
  * 获取栏目
  */
-export const getColumns = () => Http.get('/app/v1/column')
+export const useColumns = () => Http.get('/app/v1/column')
 
 /**
  * 获取基本设置
  */
-export const getBaseSettings = () => Http.get('/app/v1/settings/base')
+export const useBaseSettings = () => Http.get('/app/v1/settings/base')
 
 /**
  * 获取个性化
  */
-export const getPersonalizeSettings = () => Http.get('/app/v1/settings/personalize')
+export const usePersonalizeSettings = () => Http.get('/app/v1/settings/personalize')
 
 /**
  * 获取轮播图
  */
-export const getBanners = () => Http.get('/app/v1/banner')
+export const useBanners = () => Http.get('/app/v1/banner')
 
 /**
  * 获取热门文章
  */
-export const getHotArticle = () => Http.get('/app/v1/article/hotView')
+export const useHotArticle = () => Http.get('/app/v1/article/hotView')
 
 /**
  * 获取首页文章， 文章列表
@@ -62,13 +62,13 @@ export const getHotArticle = () => Http.get('/app/v1/article/hotView')
  * @param { String } params.keywords 关键词
  * @param { String } params.type 类型
  */
-export const getArticles = (params?: ArticleListCondition) => Http.get('/app/v1/article', params)
+export const useArticles = (params?: ArticleListCondition) => Http.get('/app/v1/article', params)
 
 /**
  * 获取文章详情
  * @param { Number } id 文章id
  */
-export const getArticleDetil = (id: number) => Http.get('/app/v1/article/detail/' + id)
+export const useArticleDetil = (id: number) => Http.get('/app/v1/article/detail/' + id)
 
 /**
  * 获取微语
@@ -76,7 +76,7 @@ export const getArticleDetil = (id: number) => Http.get('/app/v1/article/detail/
  * @param { Number } params.size 页数
  * @param { Number } params.page 页码
  */
-export const getMoods = (params?: { size?: number, page?: number }) => Http.get('/app/v1/mood', params)
+export const useMoods = (params?: { size?: number, page?: number }) => Http.get('/app/v1/mood', params)
 
 /**
  * 获取最新评论
@@ -87,7 +87,7 @@ export const getMoods = (params?: { size?: number, page?: number }) => Http.get(
  * @param { Number } params.size 页数
  * @param { Number } params.page 页码
  */
-export const getComments = (params?: CommentsGetType) => Http.get('/app/v1/comment', params)
+export const useComments = (params?: CommentsGetType) => Http.get('/app/v1/comment', params)
 
 /**
  * 保存评论
@@ -117,19 +117,19 @@ export const saveFeedback = (params?: CommentConfig) => Http.post('/app/v1/feedb
 /**
  * 获取前5条最多点赞和最多评论的文章
  */
-export const getMostLikeAndMostComment = () => Http.get('/app/v1/article/mostLikeAndMostComment')
+export const useMostLikeAndMostComment = () => Http.get('/app/v1/article/mostLikeAndMostComment')
 
 /**
  * 获取标签
  */
-export const getTags = (params?: { size?: number, page?: number }) => {
+export const useTags = (params?: { size?: number, page?: number }) => {
   return Http.get('/app/v1/tags', params)
 }
 
 /**
  * 获取标签
  */
-export const getBlogroll = (params?: { size?: number, page?: number, recommend?: number }) => {
+export const useBlogroll = (params?: { size?: number, page?: number, recommend?: number }) => {
   return Http.get('/app/v1/blogroll', params)
 }
 
@@ -139,6 +139,6 @@ export const getBlogroll = (params?: { size?: number, page?: number, recommend?:
  * @param { Number } params.size 页数
  * @param { Number } params.page 页码
  */
-export const getFeedbacks = (params?: { size?: number, page?: number }) => {
+export const useFeedbacks = (params?: { size?: number, page?: number }) => {
   return Http.get('/app/v1/feedback', params)
 }

@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import { setAticleLink } from '@/utils'
 
-const banners = await getBanners()
+const banners = await useBanners()
 const swipers = banners.value.map((e: any) => {
   return {
     ...e,
@@ -11,8 +11,7 @@ const swipers = banners.value.map((e: any) => {
   }
 })
 
-const hots = await getHotArticle()
-const articles = await getArticles({ type: 'article' })
+const hots = await useHotArticle()
 
 </script>
 
@@ -54,7 +53,7 @@ const articles = await getArticles({ type: 'article' })
     </div>
 
     <!--文章列表-->
-    <feature-article-list :data="articles"></feature-article-list>
+    <feature-article-list :condition="{ type: 'article' }"></feature-article-list>
     <!--end 文章列表-->
 
   </div>

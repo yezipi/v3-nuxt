@@ -2,7 +2,7 @@
 import { setRandomTag } from '@/utils/index'
 
 
-const result = await getTags({ page: 1, size: 50 })
+const result = await useTags({ page: 1, size: 50 })
 const tags = ref(result.value && result.value.rows ? result.value.rows : [] )
 tags.value = tags.value.map((e: any) => {
   return {

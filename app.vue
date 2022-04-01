@@ -25,9 +25,9 @@ const homeRoute = {
 }
 
 // 获取栏目数据
-const navData = await getColumns()
-const personalizeSettings = await getPersonalizeSettings()
-const baseSettings = await getBaseSettings()
+const navData = await useColumns()
+const personalizeSettings = await usePersonalizeSettings()
+const baseSettings = await useBaseSettings()
 
 columns.value = [ homeRoute, ...navData.value ]
 // console.log(columns.value)

@@ -64,7 +64,7 @@ const tags = ref<any>([])
 const timer = ref()
 const count = ref(0)
 
-const info: ArticleFields = await getArticleDetil(Number(props.id))
+const info: ArticleFields = await useArticleDetil(Number(props.id))
 
 const onDashangTypeChange = (index: number) => {
   dashangTabIndex.value = index

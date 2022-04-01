@@ -12,19 +12,21 @@ const tabRefs = []
 
 const onTabChange = (index: number) => {
   tabIndex.value = index
-  tabActiveLeft.value = tabRefs[index].offsetLeft
+  tabActiveLeft.value = tabRefs[index].childNodes[0].offsetLeft - 5
 }
 
 const setTabRefs = (el: any) => {
   tabRefs.push(el)
 }
 
-const result = await getMostLikeAndMostComment()
+const result = await useMostLikeAndMostComment()
 const { mostComment, mostLike } = result.value
 const articles = [
   { rows: mostLike },
   { rows: mostComment }
 ]
+
+onMounted(() => onTabChange(0))
 
 </script>
 
@@ -38,15 +40,17 @@ const articles = [
             v-for="(item, index) in tabs"
             :ref="setTabRefs"
             :index="index"
-            :class="{ active: tabIndex === index }"
+            :class="{ 'yzp-aside-article-tab-item-active': tabIndex === index }"
             class="yzp-aside-article-tab-item"
             @click="onTabChange(index)"
           >
-            <i :class="item.icon" class="iconfont"></i>
-            <span>{{ item.name }}</span>
+            <div class="yzp-aside-article-tab-item-text">
+              <i :class="item.icon" class="iconfont"></i>
+              <span>{{ item.name }}</span>
+            </div>
           </div>
         </div>
-        <div :style="{ left: tabActiveLeft + 'px' }" class="yzp-aside-article-tab-active"></div>
+        <div v-if="tabActiveLeft > 0" :style="{ transform: `translateX(${tabActiveLeft}px)` }" class="yzp-aside-article-tab-active"></div>
       </div>
 
       <div lass="yzp-aside-article-most">
@@ -105,11 +109,12 @@ const articles = [
       color: var(--color-white);
       position: absolute;
       left: 0;
-      top: 0;
-      height: 100%;
-      width: 50%;
+      bottom: 0;
+      height: 3px;
+      width: 25%;
       transition: all 0.3s;
       z-index: 0;
+      border-radius: var(--border-radius);
     }
     .yzp-aside-article-tab-item {
       flex: 1;
@@ -119,13 +124,16 @@ const articles = [
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      color: var(--color-primary);
+      color: var(--color-gray);
+      transition: all 0.3s;
       &:hover {
         background: var(--bg-primary);
       }
-      &.active {
-        color: #ffffff;
-        background: none;
+      &.yzp-aside-article-tab-item-active {
+        color: var(--color-primary);
+      }
+      .yzp-aside-article-tab-item-text {
+        display: inline-block;
       }
       .iconfont {
         display: inline-block;

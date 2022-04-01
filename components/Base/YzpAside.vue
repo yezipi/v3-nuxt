@@ -31,7 +31,7 @@ onMounted(() => {
 <style scoped lang="less">
 .yzp-aside {
   flex: 0.43;
-  margin-left: 15px;
+  margin-left: var(--space-15);
   height: 100%;
   flex-shrink: 0;
   max-width: 365px;

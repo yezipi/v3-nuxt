@@ -12,11 +12,12 @@ const navItemRefs = []
 const navActiveDiv = reactive({
   left: 0,
   width: 0,
+  top: -70,
 })
 const timer = ref(undefined)
 const scrolling = ref(false)
-const currIndex = ref(0) // 当前页面的菜单索引
-const activeIndex = ref(0) // 滑动菜单的索引
+const currIndex = ref(-1) // 当前页面的菜单索引
+const activeIndex = ref(-1) // 滑动菜单的索引
 const currSubcolumn = ref<any>({}) // 当前二级分类
 
 const setItemNavRefs = (el: any) => {
@@ -27,20 +28,22 @@ const setItemNavRefs = (el: any) => {
 const setActiveNav = (index: number) => {
   const navCurrEle = navItemRefs[index]
   if (!navCurrEle) {
+    navActiveDiv.width = 0
+    navActiveDiv.top = 0
     return
   }
-  const { offsetLeft = 0, clientWidth = 0 } = navItemRefs[index]
+  const { offsetLeft = 0, clientWidth = 0 } = navCurrEle
   navActiveDiv.left = offsetLeft
   navActiveDiv.width = clientWidth
+  navActiveDiv.top = 0
+  return navCurrEle
 }
 
 const getCurrNavIndex = () => {
-  const urls = $columns.value.map((e: any) => e.url).filter((e: any) => e)
-  const columnIndex = urls.findIndex((e: any) => (route.name as string).indexOf(e) > -1)
+  const columnIndex = $columns.value.findIndex((e: any) => e.url && String(route.path).indexOf(e.url) > -1)
   currSubcolumn.value = $flatColumns.find((e: any) => e.url == route.params.id)
-  console.log(currSubcolumn.value)
-  currIndex.value = route.name === 'index' ? 0 : columnIndex + 1
-  activeIndex.value = currIndex.value 
+  currIndex.value = route.name === 'index' ? 0 : columnIndex
+  activeIndex.value = currIndex.value
 }
 
 const initActiveIndex = () => {
@@ -50,13 +53,20 @@ const initActiveIndex = () => {
 
 // 鼠标移动显示滑块
 const showSubNav = (flag: boolean, index: number) => {
+  const idx = flag ? index : currIndex.value
   clearTimeout(timer.value)
-  setActiveNav(flag ? index : currIndex.value)
+  setActiveNav(idx)
+  // navActiveDiv.width = flag ? 0 : ele.clientWidth
   timer.value = setTimeout(() => {
-    activeIndex.value = flag ? index : currIndex.value
-  }, 100)
+    activeIndex.value = idx
+  }, currIndex.value === -1 ? 0 : 100)
 }
-watch(() => route.path, () => initActiveIndex())
+watch(() => route.path, () => {
+  initActiveIndex()
+  if (process.client) {
+    window.scrollTo(0, 0)
+  }
+})
 
 onMounted(() => {
   initActiveIndex()
@@ -125,10 +135,13 @@ onMounted(() => {
           </li>
         </ul>
         <div
-          v-show="navActiveDiv.width > 0"
-          :style="{ transform: `translateX(${navActiveDiv.left}px) scale(${navActiveDiv.width ? 1 : 0})` }"
+          v-show="navItemRefs.length"
+          :style="{
+            transform: `translate(${navActiveDiv.left}px, ${navActiveDiv.top}px) scale(${navActiveDiv.width ? 1 : 0})`,
+          }"
           class="yzp-nav-slider-active"
-        ></div>
+        >
+        </div>
       </nav>
       <!--end 导航菜单-->
     </div>
@@ -198,6 +211,7 @@ onMounted(() => {
   .yzp-header-nav {
     margin-left: 10px;
     height: 100%;
+    position: relative;
   }
 }
 .yzp-nav-list {
