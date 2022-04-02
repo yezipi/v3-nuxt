@@ -1,5 +1,19 @@
 <script setup lang="ts">
-const moods = await useMoods()
+
+const route = useRoute()
+
+const moods = ref<Array<any>>([])
+
+const getMoods = async () => {
+  const result = await useMoods(route.query)
+  moods.value = result.value
+}
+
+await getMoods()
+
+watch(() => route.query, () => {
+  getMoods()
+})
 </script>
 
 <template>

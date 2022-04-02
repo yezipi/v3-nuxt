@@ -108,21 +108,21 @@ const props = defineProps({
       flex-wrap: wrap;
       .yzp-mood-item-img-cell {
         margin-right: 2%;
-        flex: auto;
         img {
           width: 100%;
           height: 100%;
           border-radius: var(--border-radius);
           object-fit: cover;
+          cursor: zoom-in;
         }
         &.one {
-          width: 100%;
-          height: 350px;
+          width: 30%;
+          height: auto;
           margin: 0;
         }
         &.two {
-          width: 48%;
-          height: 300px;
+          width: 30%;
+          height: 200px;
           &:last-child {
             margin-right: 0;
           }
@@ -130,6 +130,7 @@ const props = defineProps({
         &.three {
           width: 31%;
           height: 200px;
+          flex: auto;
           &:last-child {
             margin-right: 0;
           }
@@ -137,6 +138,7 @@ const props = defineProps({
         &.four {
           width: 25%;
           height: 200px;
+          flex: auto;
           margin-bottom: var(--space-15);
           &:nth-child(3n) {
             margin-right: 0;
