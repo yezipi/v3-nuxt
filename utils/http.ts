@@ -20,12 +20,12 @@ const fetch = (url: string, options?: any): Promise<any> => {
     return new Promise((resolve, reject) => {
       $fetch(reqUrl, { ...options }).then((res: ResponseConfig) => {
         if (res.status !== 200) {
-          reject(ref<any>(res))
+          reject(res)
         }else {
           resolve(ref<any>(res))
         }
       }).catch((err) => {
-        reject(ref<any>(err))
+        reject(err)
       })
     })
   }
@@ -37,12 +37,12 @@ const fetch = (url: string, options?: any): Promise<any> => {
         return
       }
       const value = data.value
-      const result = value.data
-      if (!value.data || value.code !== 1) {
+      const result = value && value.data
+      if (!result || value.code !== 1) {
         if (value.status !== 200) {
           if (options.method === 'get') {
             resolve(ref<any>(result))
-            $router.replace('/error/' + value.status)
+            $router.replace('/reject/' + value.status)
           } else {
             reject(ref<any>(result))
           }
@@ -54,7 +54,7 @@ const fetch = (url: string, options?: any): Promise<any> => {
       }
     }).catch((err: any) => {
       console.log(err)
-      reject(ref<any>(err))
+      reject(err)
     })
   })
 }

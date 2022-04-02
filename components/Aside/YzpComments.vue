@@ -45,7 +45,7 @@ const getCommentLink = (item: any) => {
 
 <template>
   <!--最新评论-->
-  <base-yzp-panel v-if="comments.length" title="最新评论" noPadding icon="iconxiaoxi3">
+  <base-yzp-panel v-if="comments && comments.length" title="最新评论" noPadding icon="iconxiaoxi3">
     <ul class="yzp-aside-comment-wrap">
       <li v-for="(item, index) in comments" :key="index" class="yzp-aside-comment-item">
         <a

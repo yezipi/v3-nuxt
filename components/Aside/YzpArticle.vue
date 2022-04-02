@@ -9,6 +9,7 @@ const tabs = reactive([
 const tabIndex = ref(0)
 const tabActiveLeft = ref(0)
 const tabRefs = []
+const articles = ref<any>([])
 
 const onTabChange = (index: number) => {
   tabIndex.value = index
@@ -21,7 +22,7 @@ const setTabRefs = (el: any) => {
 
 const result = await useMostLikeAndMostComment()
 const { mostComment, mostLike } = result.value
-const articles = [
+articles.value = [
   { rows: mostLike },
   { rows: mostComment }
 ]
@@ -32,7 +33,7 @@ onMounted(() => onTabChange(0))
 
 <template>
   <!--人气文章-->
-  <base-yzp-panel v-if="mostLike.length || mostComment.length" noPadding icon="iconxiaoxi3">
+  <base-yzp-panel v-if="articles && articles.length" noPadding icon="iconxiaoxi3">
     <div class="yzp-aside-article-wrap">
       <div class="yzp-aside-article-tab">
         <div class="yzp-aside-article-tab-box">

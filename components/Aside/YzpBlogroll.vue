@@ -7,7 +7,7 @@ const blogroll = ref(result.value && result.value.rows ? result.value.rows : [] 
 
 <template>
   <!--搜索-->
-  <base-yzp-panel v-if="blogroll.length" title="友情链接" icon="iconlianjie">
+  <base-yzp-panel v-if="blogroll && blogroll.length" title="友情链接" icon="iconlianjie">
     <template #titleRight>
       <nuxt-link to="/" class="yzp-aside-blogroll-apply color-primary">+ 申请</nuxt-link>
     </template>

@@ -48,11 +48,6 @@ watch(() => route.query, () => {
   getArticles()
 })
 
-watch(() => props.condition, () => {
-  filter.value = props.condition
-  getArticles()
-})
-
 // 组件里加载不这样写顶级await会报警告
 await getArticles()
 
@@ -73,7 +68,7 @@ await getArticles()
         <span class="color-primary">{{ keywords }}</span>
       </div>
     </div>
-    <ul class="yzp-article-ul">
+    <ul v-if="articles && articles.rows" class="yzp-article-ul">
       <li v-for="(item) in articles.rows" :key="item.id" class="yzp-article-item yzp-box">
         <div class="yzp-article-item-cover">
           <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/img/nopic.jpg'" />
@@ -116,7 +111,7 @@ await getArticles()
     </ul>
 
     <!--分页-->
-    <base-yzp-pagination v-if="articles.count" :data="articles"></base-yzp-pagination>
+    <base-yzp-pagination v-if="articles && articles.count" :data="articles"></base-yzp-pagination>
     <!--end 分页-->
     <base-yzp-empty v-else desc="暂无内容" />
   </div>

@@ -12,7 +12,17 @@ const props = defineProps({
       }
     }
   },
+
+  /**
+   * 分页不进行跳转，只做请求，例如，文章评论分页不用跳转链接
+   */
+  noLink: {
+    type: Boolean,
+    default: false,
+  }
 })
+
+const emit = defineEmits(['change'])
 
 const route = useRoute()
 
@@ -20,9 +30,21 @@ const page = ref<any>(+route.query.page || 1)
 const size = ref(10)
 
 const num = computed(() => Math.ceil(props.data.count / size.value))
+const routePath = computed(() => route.path === '/' ? '/article' : route.path)
+
+const goPage = (index: number) => {
+  if (index === page) {
+    return
+  }
+  page.value = index
+  emit('change', index)
+}
 
 watch(() => route.query, (query: { page: any }) => {
   page.value = +query.page
+  if (process.client) {
+    window.scrollTo(0, 0)
+  }
 })
 
 </script>
@@ -37,9 +59,12 @@ watch(() => route.query, (query: { page: any }) => {
         <div v-if="page === 1" to="/" class="yzp-pagination-item-link">
           <i class="iconfont iconright"></i>
         </div>
-        <nuxt-link v-else :to="`${route.path}?page=${page - 1}`" class="yzp-pagination-item-link">
-          <i class="iconfont iconright"></i>
-        </nuxt-link>
+        <template v-else>
+          <span v-if="noLink" class="yzp-pagination-item-link" @click="goPage(page - 1)"><i class="iconfont iconright"></i></span>
+          <nuxt-link v-else :to="`${routePath}?page=${page - 1}`" class="yzp-pagination-item-link">
+            <i class="iconfont iconright"></i>
+          </nuxt-link>
+        </template>
       </li>
       <li
         v-for="item in num"
@@ -48,17 +73,23 @@ watch(() => route.query, (query: { page: any }) => {
         class="yzp-pagination-item yzp-box"
       >
         <span v-if="item === page" class="yzp-pagination-item-link">{{ item }}</span>
-        <nuxt-link v-else :to="`${route.path}?page=${item}`" class="yzp-pagination-item-link">
-          {{ item }}
-        </nuxt-link>
+        <template v-else>
+          <span v-if="noLink" class="yzp-pagination-item-link" @click="goPage(item)">{{ item }}</span>
+          <nuxt-link v-else :to="`${routePath}?page=${item}`" class="yzp-pagination-item-link">
+            {{ item }}
+          </nuxt-link>
+        </template>
       </li>
       <li index="page_next" :class="{ 'yzp-pagination-item-disabled': page === num }" class="yzp-pagination-item yzp-pagination-next yzp-box">
         <div v-if="page === num" class="yzp-pagination-item-link">
           <i class="iconfont iconright"></i>
         </div>
-        <nuxt-link v-else :to="`${route.path}?page=${page + 1}`" class="yzp-pagination-item-link">
-          <i class="iconfont iconright"></i>
-        </nuxt-link>
+        <template v-else>
+          <span v-if="noLink" class="yzp-pagination-item-link" @click="goPage(page + 1)"><i class="iconfont iconright"></i></span>
+          <nuxt-link v-else :to="`${routePath}?page=${page + 1}`" class="yzp-pagination-item-link">
+            <i class="iconfont iconright"></i>
+          </nuxt-link>
+        </template>
       </li>
     </ul>
   </div>
@@ -81,6 +112,7 @@ watch(() => route.query, (query: { page: any }) => {
         line-height: 30px;
         margin-right: var(--space-10);
         overflow: hidden;
+        cursor: pointer;
         &:last-child {
           margin-right: 0;
         }
