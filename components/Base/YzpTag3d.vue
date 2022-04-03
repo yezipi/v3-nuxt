@@ -47,7 +47,7 @@ class Tag {
     const left = this.x + CX.value - this.ele.offsetWidth / 2 + 'px'
     const top = this.y + CY.value - this.ele.offsetHeight / 2 + 'px'
     const transform = `translate(${left}, ${top}) scale(${scale})`
-    this.ele.style.opacity = alpha + 0.5
+    this.ele.style.opacity = alpha + 0.3
     this.ele.style.zIndex = parseInt(String(scale * 100))
     this.ele.style.transform = transform
     this.ele.style.webkitTransform = transform
@@ -106,7 +106,7 @@ const setRandomColor = () => parseInt(String(Math.random() * 255))
 const init = () => {
   const { offsetWidth, offsetLeft, offsetTop } = tagsBoxRef.value
   const len = tags.value.length
-  const offsetHeight = offsetWidth / 1.5
+  const offsetHeight = offsetWidth / 2
 
   tagsBoxRef.value.style.height = offsetHeight + 'px'
   tagsBoxRef.value.style.position = 'reactive'

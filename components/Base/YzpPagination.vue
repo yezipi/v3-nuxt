@@ -42,9 +42,6 @@ const goPage = (index: number) => {
 
 watch(() => route.query, (query: { page: any }) => {
   page.value = +query.page
-  if (process.client) {
-    window.scrollTo(0, 0)
-  }
 })
 
 </script>

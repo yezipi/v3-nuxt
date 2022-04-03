@@ -22,7 +22,7 @@ const fetch = (url: string, options?: any): Promise<any> => {
         if (res.status !== 200) {
           reject(res)
         }else {
-          resolve(ref<any>(res))
+          resolve(res)
         }
       }).catch((err) => {
         reject(err)

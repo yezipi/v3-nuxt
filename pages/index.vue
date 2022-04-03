@@ -29,10 +29,10 @@ const hots = await useHotArticle()
             class="yzp-swiper-a"
             target="_blank"
           >
-            <img :src="item.url" class="yzp-swiper-img" onerror="this.src='/img/nopic.jpg'" />
+            <base-yzp-image class="yzp-swiper-img" :src="item.url"></base-yzp-image>
           </nuxt-link>
           <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank">
-            <img :src="item.url" class="yzp-swiper-img" onerror="this.src='/img/nopic.jpg'" />
+            <base-yzp-image class="yzp-swiper-img" :src="item.url"></base-yzp-image>
           </a>
         </template>
       </base-yzp-swiper>
@@ -70,11 +70,10 @@ const hots = await useHotArticle()
       height: 100%;
       flex: 1;
       border-radius: 5px;
-      flex-shrink: 0;
     }
     .yzp-top-hot {
       margin-left: 15px;
-      flex: 0.42;
+      flex: 0.6;
       &.noSwiper {
         flex: 1
       }

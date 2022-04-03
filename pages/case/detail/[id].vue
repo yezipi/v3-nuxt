@@ -6,7 +6,7 @@ const { params } = route
 
 <template>
   <div class="yzp-article-detail">
-    <feature-article-content :id="Number(params.id)" type="article"></feature-article-content>
+    <feature-article-content :id="Number(params.id)" type="case"></feature-article-content>
   </div>
 </template>
 

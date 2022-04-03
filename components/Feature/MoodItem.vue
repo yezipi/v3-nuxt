@@ -54,6 +54,20 @@ const props = defineProps({
           <img :src="img" onerror="this.src='/img/default-avatar.png'" />
         </div>
       </div>
+      <div class="yzp-mood-item-btn">
+        <div class="yzp-mood-item-btn-cell">
+          <i class="iconfont iconfenxiang"></i>
+          <span>0</span>
+        </div>
+        <nuxt-link :to="`/mood/${item.id}`" class="yzp-mood-item-btn-cell">
+          <i class="iconfont iconxiaoxi3"></i>
+          <span>{{ item.comments_count }}</span>
+        </nuxt-link>
+        <div class="yzp-mood-item-btn-cell">
+          <i class="iconfont iconzan"></i>
+          <span>{{ item.like || 0 }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -144,6 +158,25 @@ const props = defineProps({
             margin-right: 0;
           }
         }
+      }
+    }
+  }
+  .yzp-mood-item-btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-15);
+    .yzp-mood-item-btn-cell {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--border-1);
+      &:hover {
+        cursor: pointer;
+        color: var(--color-primary);
+      }
+      &:last-child {
+        border: 0;
       }
     }
   }

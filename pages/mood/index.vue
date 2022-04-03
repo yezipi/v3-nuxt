@@ -2,7 +2,7 @@
 
 const route = useRoute()
 
-const moods = ref<Array<any>>([])
+const moods = ref<any>({})
 
 const getMoods = async () => {
   const result = await useMoods(route.query)

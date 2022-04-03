@@ -17,8 +17,9 @@ const props = defineProps({
 
 const parentType = {
   article: 'article_id',
+  case: 'article_id',
   mood: 'mood_id',
-  almun: 'album_id'
+  album: 'album_id'
 }
 
 const page = ref(1)

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import { timeAgao } from '@/utils/index'
+import { timeAgao, setAticleLink } from '@/utils/index'
 
 const result = await useComments({ page: 1, size: 5 })
 const comments = result.value ? result.value.rows : []
@@ -31,6 +31,9 @@ const getCommentLink = (item: any) => {
   let parentId = ''
   const type = item.type
   if (type === 'article') {
+    parentId = item.article_id
+  }
+  if (type === 'case') {
     parentId = item.article_id
   }
   if (type === 'mood') {

@@ -1,7 +1,5 @@
 <!--评论表单, 2022-3-25 yzp-->
 <script lang="ts" setup>
-
-
 const props = defineProps({
   type: {
     type: String,
@@ -24,10 +22,9 @@ const form = reactive({
 
 const verifyCode = ref(undefined)
 const checkCode = ref(undefined)
-
 const loading = ref(false)
-
 const codeRef = ref()
+const message = ref()
 
 const drawNumber = (ctx: any, number: number | string, index: number) => {
   ctx.font = '20px normal bold'
@@ -68,46 +65,44 @@ const drawVerifyCode = () => {
 // 提交评论
 const submit = async () => {
   const patternName = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/
-  const patternContent = /[`#$%^*()+<>{},\;']/im
-  const patternEmail =  /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
-  const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/
+const patternContent = /[`#$%^*()+<>{},\;']/im
+const patternEmail =  /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
+const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/
 
   if (!props.parentId && props.type === 'comment') {
-    return alert('缺少id')
+    return message.value.warning('缺少id')
   }
 
   if (!form.nickname || form.nickname.length < 2) {
-    return alert('昵称不能为空或者太短哦~')
+    return message.value.warning('昵称不能为空或者太短哦~')
   }
   if (!patternName.test(form.nickname)) {
-    return alert('亲，非法昵称~')
+    return message.value.warning('亲，非法昵称~')
   }
   if (!patternEmail.test(form.email)) {
-    return alert('亲，非法邮箱~')
+    return message.value.warning('亲，非法邮箱~')
   }
   if (form.site && !patternSite.test(form.site)) {
-    return alert('亲，非法网址~')
+    return message.value.warning('亲，非法网址~')
   }
   if (!form.content || form.content.length < 4) {
-    return alert('内容不能为空或者太短哦~')
+    return message.value.warning('内容不能为空或者太短哦~')
   }
   if (props.type === 'blogroll' && !form.site) {
-    return alert('亲，请填写网址~')
+    return message.value.warning('亲，请填写网址~')
   }
   if (patternContent.test(form.content)) {
-    return alert('内容包含非法字符哦~')
+    return message.value.warning('内容包含非法字符哦~')
   }
   if (!verifyCode.value) {
-    return alert('请填写验证码哦~')
+    return message.value.warning('请填写验证码哦~')
   }
   if (verifyCode.value.toUpperCase() !== checkCode.value) {
     drawVerifyCode()
-    return alert('验证码错误~')
+    return message.value.warning('验证码错误~')
   }
 
   loading.value = true
-
-  console.log(form)
 
   try {
     const params = {
@@ -116,17 +111,20 @@ const submit = async () => {
       type: props.type,
       avatar: `/public/avatar/${localStorage.getItem('avatar') || 2}.jpg`
     }
-    if (props.type !== 'feedback') {
-      const { msg } = await saveComment(params)
-      alert(msg)
+    let res: any = {}
+    if (props.type === 'feedback') {
+      res = await saveFeedback(params)
+    } else if (props.type === 'blogroll') {
+      res = await saveBlogroll(params)
     } else {
-       const { msg } = await saveFeedback(params)
-      alert(msg)
+      res = await saveComment(params)
     }
+    message.value.success(res.msg)
     form.content = ''
+    emit('success', params)
   } catch (e) {
     console.log(e)
-    alert(e.msg || '提交失败，请稍后再试')
+    message.value.error(e.msg || '提交失败，请稍后再试')
   } finally {
     drawVerifyCode()
     loading.value = false
@@ -171,7 +169,14 @@ onMounted(() => {
       <!--内容-->
       <!-- <div class="edit-div textarea" :contenteditable="true" placeholder="说点什么吧"></div> -->
       <div class="yzp-form-item" style="max-width: none;">
-        <textarea v-model="form.content" class="yzp-form-item-textarea" placeholder="说点什么吧" name="content" rows="5"></textarea>
+        <textarea
+          v-model="form.content"
+          :placeholder="type === 'blogroll' ? '请填写申请原因' : '说点什么吧...'"
+          class="yzp-form-item-textarea"
+          name="content"
+          rows="5"
+        >
+        </textarea>
       </div>
 
       <!--验证码-->
@@ -187,6 +192,9 @@ onMounted(() => {
         </button>
       </div>
     </form>
+
+    <base-yzp-message ref="message"></base-yzp-message>
+
   </div>
 </template>
 

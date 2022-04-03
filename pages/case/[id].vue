@@ -8,9 +8,9 @@
 </script>
 
 <template>
-  <div class="yzp-article-category">
+  <div class="yzp-article-case">
     <!--文案例列表-->
-    <feature-article-list :condition="condition" :column="subcolumn"></feature-article-list>
+    <feature-case-list :condition="condition" :column="subcolumn"></feature-case-list>
     <!--end 案例列表-->
   </div>
 </template>

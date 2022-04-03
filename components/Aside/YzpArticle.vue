@@ -59,7 +59,7 @@ onMounted(() => onTabChange(0))
           <li v-for="(item, i) in el.rows" :key="i" class="yzp-aside-article-item">
             <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-aside-article-item-link">
               <div class="yzp-aside-article-item-pic">
-                <img class="yzp-aside-article-item-img" :src="item.cover || '/img/nopic.jpg'" onerror="this.src='/img/nopic.jpg'" />
+                <base-yzp-image class="yzp-aside-article-item-img" :src="item.cover"></base-yzp-image>
               </div>
               <div class="yzp-aside-article-item-info">
                 <span class="yzp-aside-article-item-title">{{ item.title }}</span>

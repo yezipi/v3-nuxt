@@ -11,13 +11,17 @@ const props = defineProps({
   noPadding: {
     type: Boolean,
     default: false
+  },
+  noBg: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
 
 <template>
-  <div class="yzp-panel-wrap yzp-box">
-    <div v-if="title" class="yzp-panel-title">
+  <div :class="{ 'yzp-box': !noBg }" class="yzp-panel-wrap">
+    <div v-if="title" :class="{ 'yzp-box': noBg }" class="yzp-panel-title">
       <div class="yzp-panel-title-left">
         <i :class="icon" class="iconfont"></i>
         <span>{{ title }}</span>
@@ -30,12 +34,9 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-panel-wrap {
   .yzp-panel-title {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
     border-bottom: 1px solid var(--border-1);
     display: flex;
     align-items: center;

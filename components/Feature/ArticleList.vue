@@ -71,19 +71,17 @@ await getArticles()
     <ul v-if="articles && articles.rows" class="yzp-article-ul">
       <li v-for="(item) in articles.rows" :key="item.id" class="yzp-article-item yzp-box">
         <div class="yzp-article-item-cover">
-          <img :src="item.cover" class="yzp-article-item-img" onerror="this.src='/img/nopic.jpg'" />
+          <base-yzp-image class="yzp-article-item-img" :src="item.cover"></base-yzp-image>
         </div>
         <div class="yzp-article-item-info">
-          <div class="yzp-article-text">
-            <nuxt-link :to="setAticleLink(item.id, item.type)" target="_blank" class="yzp-article-item-link color-primary" :title="item.title">
-              <span v-if="!keywords" class="yzp-article-item-title">{{ item.title }}</span>
-              <span v-else v-for="(txt, i) in item.title" :index="i" class="yzp-article-item-title">
-                <strong v-if="keywords.indexOf(txt.toLocaleLowerCase()) > -1" style="color: red">{{ txt }}</strong>
-                <i v-else style="font-style: normal">{{ txt }}</i>
-              </span>
-            </nuxt-link>
-          </div>
-          <!-- <div v-if="item.description" class="yzp-article-item-desc">{{ item.description.substring(0, 45) }}...</div> -->
+          <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-article-item-link color-primary" :title="item.title">
+            <span v-if="!keywords" class="yzp-article-item-title">{{ item.title }}</span>
+            <span v-else v-for="(txt, i) in item.title" :index="i" class="yzp-article-item-title">
+              <strong v-if="keywords.indexOf(txt.toLocaleLowerCase()) > -1" style="color: red">{{ txt }}</strong>
+              <i v-else style="font-style: normal">{{ txt }}</i>
+            </span>
+          </nuxt-link>
+          <div class="yzp-article-item-desc">{{ item.content }}...</div>
           <div class="yzp-article-item-bottom">
             <div class="yzp-article-item-icon">
               <i class="iconfont iconshijian"></i>
@@ -136,19 +134,21 @@ await getArticles()
   .yzp-article-ul {
     .yzp-article-item {
       display: flex;
-      align-items: center;
       transition: all 0.3s;
       padding: var(--space-15);
       margin-bottom: var(--space-15);
+      transition: all 0.3s;
+      min-height: 90px;
       &:hover {
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        .yzp-article-img {
-          transform: scale(1.5) rotate(-15deg);
-          filter:contrast(150%)
+        .yzp-article-item-cover {
+          .yzp-article-item-img {
+            transform: scale(1.2);
+            filter: saturate(200%);
+          }
         }
       }
-      .yzp-article-item-link {
-        line-height: 30px;
+      .yzp-article-item-title {
         font-size: var(--font-xl);
         &:hover {
           text-decoration: underline;
@@ -170,7 +170,7 @@ await getArticles()
         }
       }
       .yzp-article-item-info {
-        height: 90px;
+        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -178,12 +178,12 @@ await getArticles()
         flex: 1;
       }
       .yzp-article-item-desc {
-        font-size: 12px;
+        font-size: var(--font-m);
         color: var(--color-gray);
-        line-height: 18px;
-        height: 18px;
+        line-height: 20px;
         text-overflow: ellipsis;
         overflow: hidden;
+        margin: var(--space-5) 0;
       }
       .yzp-article-item-bottom {
         display: flex;

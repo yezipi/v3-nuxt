@@ -2,6 +2,7 @@
 import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
 
 interface ArticleFields {
+  id?: number,
   value: any,
   title?: string,
   content?: string,
@@ -242,12 +243,12 @@ onMounted(() => {
     <!--end-->
 
     <!--相似文章-->
-    <div v-if="info.similar && info.similar.length" class="yzp-article-similar">
-      <ul>
-        <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item">
+    <div class="yzp-article-similar">
+      <ul v-if="info.similar && info.similar.length">
+        <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item yzp-box">
           <a :href="`/article/detail/${ele.id}`">
-            <div class="yzp-article-similar-cover yzp-box">
-              <img :src="ele.cover" />
+            <div class="yzp-article-similar-cover">
+              <base-yzp-image class="yzp-article-similar-img" :src="ele.cover"></base-yzp-image>
             </div>
             <span class="yzp-article-similar-title">{{ ele.title }}</span>
           </a>
@@ -257,11 +258,11 @@ onMounted(() => {
     <!--end-->
 
     <!--评论列表-->
-    <feature-comment-list :type="type" :parent-id="id"></feature-comment-list>
+    <feature-comment-list v-if="info && info.id" :type="type" :parent-id="id"></feature-comment-list>
     <!--end评论列表-->
 
     <!--评论表单-->
-    <base-yzp-form :type="type" :parent-id="id" />
+    <base-yzp-form v-if="info && info.id" :type="type" :parent-id="id" />
     <!--end 评论表单-->
 
   </div>
@@ -318,6 +319,7 @@ onMounted(() => {
   .yzp-article-edittime {
     color: var(--color-gray);
     font-size: var(--font-s);
+    margin-top: var(--space-15);
   }
   .yzp-article-btn {
     display: flex;
@@ -502,10 +504,11 @@ onMounted(() => {
     color: var(--color-gray);
   }
 }
-.yzp-article-similar {
-  margin-bottom: var(--space-15);
-  ul {
-    margin-left: -2%;
+  .yzp-article-similar {
+    margin-bottom: var(--space-15);
+    ul {
+      margin-left: -2%;
+    }
     &:after {
       content: '';
       display: block;
@@ -519,12 +522,14 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       transition: all 0.3s;
+      overflow: hidden;
       &:hover {
+        box-shadow: 0 0 5px rgba(var(--rgb-primary), 0.5);
+        border-color: var(--color-primary);
         .yzp-article-similar-cover {
-          border-color: var(--color-primary);
-          img {
-            transform: scale(1.15) rotate(5deg);
-            filter: contrast(1.5);
+          .yzp-article-similar-img {
+            transform: scale(1.2);
+            filter: saturate(200%);
           }
         }
         .yzp-article-similar-title {
@@ -543,7 +548,9 @@ onMounted(() => {
         background: var(--bg-primary);
         border: 1px solid rgba(255,255,255,0);
         box-sizing: border-box;
-        img {
+        border-top-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
+        .yzp-article-similar-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
@@ -552,14 +559,13 @@ onMounted(() => {
       }
       .yzp-article-similar-title {
         text-align: center;
-        margin-top: 5px;
         display: block;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         font-size: var(--font-m);
+        padding: var(--space-5) var(--space-15);
       }
     }
-  }
 }
 </style>
