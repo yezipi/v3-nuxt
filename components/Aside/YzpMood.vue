@@ -20,7 +20,7 @@ console.log(moods)
   <!--end 微语-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .yzp-aside-mood-wrap {
   margin: -5px 0;
  .yzp-aside-mood-item {

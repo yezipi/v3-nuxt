@@ -15,7 +15,7 @@ interface CommentConfig  extends ListConfig {
   avatar: string,
 }
 
-interface CommentsGetType {
+interface CommentsGetType extends ListConfig {
   article_id?: number,
   mood_id?: number,
   album_id?: number,
@@ -125,7 +125,7 @@ export const useTags = (params?: ListConfig) => Http.get('/app/v1/tags', params)
 /**
  * 获取标签
  */
-export const useBlogroll = (params?: { recommend?: number }) => Http.get('/app/v1/blogroll', params)
+export const useBlogroll = (params?: { recommend?: number, page?: number, size?: number }) => Http.get('/app/v1/blogroll', params)
 
 /**
  * 获取留言列表

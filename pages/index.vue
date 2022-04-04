@@ -59,7 +59,7 @@ const hots = await useHotArticle()
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 
   .yzp-index-top {
     display: flex;

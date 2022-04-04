@@ -10,7 +10,7 @@ interface ColumnItem {
 }
 
 const route = useRoute()
-const { provide } = useNuxtApp()
+const { provide, $db } = useNuxtApp()
 
 const columns = ref<Array<ColumnItem>>([])
 const pageTitle = ref('')
@@ -48,7 +48,9 @@ const setPageTitle = (val: string) => {
   pageTitle.value = currCoulmn ? currCoulmn.name : ''
 }
 
-watch(() => route.path, (val: string) => setPageTitle(val))
+watch(() => route.path, (val: string) => {
+  setPageTitle(val)
+})
 
 
 setPageTitle(route.path)
@@ -70,14 +72,14 @@ useMeta({
 })
 
 onMounted(() => {
-  if (!localStorage.getItem('avatar')) {
-    localStorage.setItem('avatar', String(parseInt(String(Math.random() * 45))))
+  if (!$db.get('avatar')) {
+    $db.set('avatar', parseInt(String(Math.random() * 45)))
   }
   if (personalizeSettings.value.gray) {
     document.body.style.filter = 'grayscale(1)'
   }
+  $db.set('entryTime', new Date().getTime())
 })
-
 </script>
 
 <template>

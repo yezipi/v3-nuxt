@@ -28,7 +28,7 @@ onMounted(() => {
   </aside>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-aside {
   flex: 0.43;
   margin-left: var(--space-15);

@@ -137,9 +137,32 @@ const setRandomTag = () => {
   const index = parseInt(String(Math.random() * arr.length + 1))
   return arr[index]
 }
+
+/**
+ * @name 本地存储方法
+ */
+ const db = {
+  set: (key: string, data: any): void => {
+    localStorage.setItem(key, JSON.stringify({ type: typeof data, data }))
+  },
+
+  get: (key: string) => {
+    const str = localStorage.getItem(key)
+    if (!str) {
+      return str
+    }
+    try {
+      const data = JSON.parse(str)
+      return data.data
+    } catch(e) {}
+  },
+
+  del: (key: string) => localStorage.removeItem(key)
+}
  
 export {
   scrollAnimation,
+  db,
   setAticleLink,
   setRandomTag,
   timeAgao,

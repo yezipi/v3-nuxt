@@ -15,7 +15,7 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-empty {
   position: relative;
   left: 0;

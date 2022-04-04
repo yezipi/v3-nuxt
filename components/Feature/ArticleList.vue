@@ -115,7 +115,7 @@ await getArticles()
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-article-list {
   .yzp-article-list-head {
     padding: var(--space-15);

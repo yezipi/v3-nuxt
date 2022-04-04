@@ -40,8 +40,8 @@
   background-repeat: no-repeat;
 }
 .yzp-container {
-  margin-top: 85px;
-  margin-bottom: var(--space-15);
+  padding-top: 85px;
+  padding-bottom: var(--space-15);
   display: flex;
   justify-content: center;
 }

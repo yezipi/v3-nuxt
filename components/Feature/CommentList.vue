@@ -127,7 +127,7 @@ await initList()
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-comment-wrap {
   margin-bottom: var(--space-15);
   .yzp-comment-box {

@@ -92,7 +92,7 @@ await getList()
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-album-list {
   margin-bottom: var(--space-15);
   .yzp-album-list-head {

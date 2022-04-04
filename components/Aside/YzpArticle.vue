@@ -84,7 +84,7 @@ onMounted(() => onTabChange(0))
   <!--end 人气文章-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .yzp-aside-article-wrap {
   .yzp-aside-article-tab {
     

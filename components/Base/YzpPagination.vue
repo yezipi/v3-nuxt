@@ -92,7 +92,7 @@ watch(() => route.query, (query: { page: any }) => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
   .yzp-pagination-wrap {
     display: flex;
     align-items: center;

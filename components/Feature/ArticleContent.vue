@@ -268,7 +268,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-article-main {
   padding: var(--space-30);
   .yzp-article-header {

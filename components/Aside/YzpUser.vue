@@ -1,6 +1,19 @@
 <script lang="ts" setup>
-const { $baseSettings  } = useNuxtApp()
+const { $baseSettings, $message, $db  } = useNuxtApp()
 const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value : {} as any
+
+const likeNum = ref(web_like || 0)
+
+const onLike = () => {
+  if (!$db.get('isLikedWeb')) {
+    $db.set('isLikedWeb', true)
+    $message.success('点赞成功')
+    likeNum.value += 1
+  } else {
+    $message.warning('您已经点过赞了')
+  }
+}
+
 </script>
 
 <template>
@@ -12,9 +25,9 @@ const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value
       </div>
       <p class="yzp-aside-info-slogan">{{ web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
-        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn">
+        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn" @click="onLike">
           <i class="iconfont iconicon-test"></i>
-          <span>{{ web_like }}</span>
+          <span>{{ likeNum }}</span>
         </div>
         <div class="yzp-aside-info-btn-item yzp-aside-info-focus-btn">
           <i class="iconfont iconjiahao"></i>
@@ -45,7 +58,7 @@ const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value
   <!--end 博主信息-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .yzp-aside-info {
   height: 218px;
   padding: var(--space-15);
@@ -66,8 +79,8 @@ const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value
       transform: rotate(360deg);
     }
     img {
-      width: 60px;
-      height: 60px;
+      width: 80%;
+      height: 80%;
       border-radius: 50%;
       padding: 10px;
     }

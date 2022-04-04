@@ -12,6 +12,7 @@ const navItemRefs = []
 const navActiveDiv = reactive({
   left: 0,
   width: 0,
+  height: 0,
   top: -70,
 })
 const timer = ref(undefined)
@@ -28,13 +29,15 @@ const setItemNavRefs = (el: any) => {
 const setActiveNav = (index: number) => {
   const navCurrEle = navItemRefs[index]
   if (!navCurrEle) {
+    navActiveDiv.height = 0
     navActiveDiv.width = 0
     navActiveDiv.top = 0
     return
   }
-  const { offsetLeft = 0, clientWidth = 0 } = navCurrEle
+  const { offsetLeft = 0, clientWidth = 0, clientHeight = 0 } = navCurrEle
   navActiveDiv.left = offsetLeft
   navActiveDiv.width = clientWidth
+  navActiveDiv.height = clientHeight
   navActiveDiv.top = 0
   return navCurrEle
 }
@@ -142,6 +145,7 @@ onMounted(() => {
             v-show="navItemRefs.length"
             :style="{
               transform: `translate(${navActiveDiv.left}px, ${navActiveDiv.top}px) scale(${navActiveDiv.width ? 1 : 0})`,
+              width: navActiveDiv.width + 'px'
             }"
             class="yzp-nav-slider-active"
           >
@@ -153,7 +157,7 @@ onMounted(() => {
   </header>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-header {
   position: fixed;
   box-shadow: 0 0 10px var(--border-1);
@@ -321,8 +325,8 @@ onMounted(() => {
   height: 40px;
   background: var(--color-primary);
   z-index: 0;
-  width: 80px;
-  left: 10px;
+  width: 0;
+  left: 0;
   margin: auto;
   border-radius: 50px;
   transition: all 0.3s;

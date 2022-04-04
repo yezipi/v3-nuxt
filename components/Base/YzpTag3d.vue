@@ -162,7 +162,7 @@ onMounted(() => init())
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .tags-wrap {
   .tags-item {
     cursor: pointer;

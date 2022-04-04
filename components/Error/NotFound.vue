@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
   .yzp-not-found {
     position: fixed;
     left: 0;

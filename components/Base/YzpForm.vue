@@ -13,6 +13,8 @@ const props = defineProps({
 
 const emit = defineEmits(['success'])
 
+const { $message } = useNuxtApp()
+
 const form = reactive({
   nickname: undefined,
   email: undefined,
@@ -24,7 +26,6 @@ const verifyCode = ref(undefined)
 const checkCode = ref(undefined)
 const loading = ref(false)
 const codeRef = ref()
-const message = ref()
 
 const drawNumber = (ctx: any, number: number | string, index: number) => {
   ctx.font = '20px normal bold'
@@ -65,41 +66,41 @@ const drawVerifyCode = () => {
 // 提交评论
 const submit = async () => {
   const patternName = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/
-const patternContent = /[`#$%^*()+<>{},\;']/im
-const patternEmail =  /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
-const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/
+  const patternContent = /[`#$%^*()+<>{},\;']/im
+  const patternEmail =  /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
+  const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/
 
   if (!props.parentId && props.type === 'comment') {
-    return message.value.warning('缺少id')
+    return $message.warning('缺少id')
   }
 
   if (!form.nickname || form.nickname.length < 2) {
-    return message.value.warning('昵称不能为空或者太短哦~')
+    return $message.warning('昵称不能为空或者太短哦~')
   }
   if (!patternName.test(form.nickname)) {
-    return message.value.warning('亲，非法昵称~')
+    return $message.warning('亲，非法昵称~')
   }
   if (!patternEmail.test(form.email)) {
-    return message.value.warning('亲，非法邮箱~')
+    return $message.warning('亲，非法邮箱~')
   }
   if (form.site && !patternSite.test(form.site)) {
-    return message.value.warning('亲，非法网址~')
+    return $message.warning('亲，非法网址~')
   }
   if (!form.content || form.content.length < 4) {
-    return message.value.warning('内容不能为空或者太短哦~')
+    return $message.warning('内容不能为空或者太短哦~')
   }
   if (props.type === 'blogroll' && !form.site) {
-    return message.value.warning('亲，请填写网址~')
+    return $message.warning('亲，请填写网址~')
   }
   if (patternContent.test(form.content)) {
-    return message.value.warning('内容包含非法字符哦~')
+    return $message.warning('内容包含非法字符哦~')
   }
   if (!verifyCode.value) {
-    return message.value.warning('请填写验证码哦~')
+    return $message.warning('请填写验证码哦~')
   }
   if (verifyCode.value.toUpperCase() !== checkCode.value) {
     drawVerifyCode()
-    return message.value.warning('验证码错误~')
+    return $message.warning('验证码错误~')
   }
 
   loading.value = true
@@ -119,12 +120,12 @@ const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,6
     } else {
       res = await saveComment(params)
     }
-    message.value.success(res.msg)
+    $message.success(res.msg)
     form.content = ''
     emit('success', params)
   } catch (e) {
     console.log(e)
-    message.value.error(e.msg || '提交失败，请稍后再试')
+    $message.error(e.msg || '提交失败，请稍后再试')
   } finally {
     drawVerifyCode()
     loading.value = false
@@ -193,12 +194,10 @@ onMounted(() => {
       </div>
     </form>
 
-    <base-yzp-message ref="message"></base-yzp-message>
-
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-form-item {
   display: flex;
   align-items: center;

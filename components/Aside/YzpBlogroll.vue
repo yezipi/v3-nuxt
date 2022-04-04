@@ -26,7 +26,7 @@ const blogroll = ref(result.value && result.value.rows ? result.value.rows : [] 
   <!--end 搜索-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .yzp-aside-blogroll-wrap {
   margin-right: -10px;
   .yzp-aside-blogroll-item {

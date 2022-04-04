@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   css: [
     '@/assets/fonts/iconfont.css',
     '@/assets/css/reset.css',
+    '@/assets/css/media.less',
     '@/assets/css/main.less',
   ],
   components: {

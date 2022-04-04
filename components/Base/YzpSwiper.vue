@@ -199,6 +199,9 @@ onMounted(() => {
       start()
     }, 100)
   }
+  window.onresize = function() {
+    swiperConfig.width = swiperRefs.value.clientWidth
+  }
 })
 </script>
 
@@ -283,7 +286,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-swiper-wrap {
   height: 100%;
   overflow: hidden;

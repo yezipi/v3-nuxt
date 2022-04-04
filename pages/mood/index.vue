@@ -30,7 +30,7 @@ watch(() => route.query, () => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-mood-wrap {
   .yzp-mood-list {
     margin-bottom: var(--space-15);

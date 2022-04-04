@@ -25,5 +25,5 @@ tags.value = tags.value.map((e: any) => {
   <!--end 标签-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 </style>

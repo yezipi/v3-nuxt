@@ -21,7 +21,7 @@ const props = defineProps({
   </span>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-tag {
   color: #ffffff;
   box-sizing: border-box;

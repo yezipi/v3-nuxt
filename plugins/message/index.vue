@@ -6,13 +6,15 @@ interface MessageProps {
   type?: MessageType,
   visible?: boolean,
   duration?: number,
+  id?: string,
 }
 
 const props = withDefaults(defineProps<MessageProps>(), {
   tips: '',
   type: 'default',
   visible: false,
-  duration: 3000
+  duration: 3000,
+  id: 'yzp-message'
 })
 
 const state = ref(false)
@@ -24,7 +26,6 @@ const timer2 = ref(undefined)
 
 watch(() => props.visible, (val: boolean) => {
   state.value = val
-  console.log(111)
   show()
 })
 
@@ -35,6 +36,7 @@ const hide = () =>{
 
   timer2.value = setTimeout(() => {
     state.value = false
+    document.body.removeChild(document.querySelector('#' + props.id))
   }, props.duration)
 }
 
@@ -52,30 +54,6 @@ const show = () => {
   hide()
 }
 
-const success = (txt: string) => {
-  status.value = 'success'
-  title.value = txt
-  show()
-}
-
-const warning = (txt: string) => {
-  status.value = 'warning'
-  title.value = txt
-  show()
-}
-
-const error = (txt: string) => {
-  status.value = 'error'
-  title.value = txt
-  show()
-}
-
-defineExpose({
-  success,
-  warning,
-  error,
-})
-
 onMounted(() => show())
 
 </script>
@@ -89,7 +67,7 @@ onMounted(() => show())
   </div>
 </template>
 
-<style lang="less">
+<style scoped lang="less">
 .yzp-message-wrap {
   position: fixed;
   left: 0;

@@ -45,7 +45,7 @@ const blogrolls = await useBlogroll()
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-blogroll-list {
   margin-left: -2%;
   margin-top: var(--space-15);

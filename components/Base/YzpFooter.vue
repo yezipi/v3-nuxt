@@ -8,7 +8,7 @@
   </footer>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-footer {
   background: rgba(var(--rgb-dark), 1);
   display: flex;

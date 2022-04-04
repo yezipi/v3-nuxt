@@ -72,7 +72,7 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 .yzp-mood-item {
   padding: var(--space-15);
   margin-bottom: var(--space-15);

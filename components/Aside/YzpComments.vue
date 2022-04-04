@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import { timeAgao, setAticleLink } from '@/utils/index'
+import { timeAgao } from '@/utils/index'
 
 const result = await useComments({ page: 1, size: 5 })
 const comments = result.value ? result.value.rows : []
@@ -79,7 +79,7 @@ const getCommentLink = (item: any) => {
   <!--end 最新评论-->
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .yzp-aside-comment-wrap {
   .yzp-aside-comment-item {
     display: flex;
