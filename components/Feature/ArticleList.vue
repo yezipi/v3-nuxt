@@ -33,6 +33,8 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['load'])
+
 const route = useRoute()
 
 const filter = ref<any>(props.condition)
@@ -42,6 +44,7 @@ const articles = ref<any>({ count: 0, rows: [] as any })
 const getArticles = async () => {
   const data = await useArticles({ ...filter.value, ...route.query })
   articles.value = data.value
+  emit('load', articles)
 }
 
 watch(() => route.query, () => {

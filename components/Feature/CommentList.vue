@@ -22,6 +22,8 @@ const parentType = {
   album: 'album_id'
 }
 
+const emit = defineEmits(['load'])
+
 const page = ref(1)
 
 const typeText = props.type !== 'feedback' ? '评论' : '留言'
@@ -39,6 +41,7 @@ const initList = async () => {
     const result = await useFeedbacks(condition)
     list.value = result.value
   }
+  emit('load', list)
 }
 
 const onPageChange = (page: number) => {

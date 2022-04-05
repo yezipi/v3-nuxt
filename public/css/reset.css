@@ -1,4 +1,3 @@
-@import url(./var.css);
 
 @font-face {
   font-family: 'Menlo';  /* Project id 2499550 */
@@ -51,7 +50,8 @@ body {
   -webkit-touch-callout: none;
   -webkit-overflow-scrolling: touch;
   min-height: 768px;
-  background-image: linear-gradient(180deg,rgba(255,255,255,0) 60%, #ffffff),linear-gradient(70deg,#f7f9f1 32%,#faf7e8);
+  /* background-image: linear-gradient(180deg,rgba(255,255,255,0) 60%, #ffffff),linear-gradient(70deg,#f7f9f1 32%,#faf7e8); */
+  background: var(--bg-primary);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;

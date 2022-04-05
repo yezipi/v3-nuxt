@@ -24,9 +24,17 @@ export default defineNuxtConfig({
   alias: {
     '/public/': BASE_URL + '/public/'
   },
+  meta: {
+    meta: [
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ],
+    link: [
+      { rel: 'stylesheet', href: '/css/var.css' },
+      { rel: 'stylesheet', href: '/css/reset.css' },
+      { rel: 'stylesheet', href: '/fonts/iconfont.css' },
+    ],
+  },
   css: [
-    '@/assets/fonts/iconfont.css',
-    '@/assets/css/reset.css',
     '@/assets/css/media.less',
     '@/assets/css/main.less',
   ],

@@ -308,7 +308,7 @@ onMounted(() => {
   }
   .yzp-sub-item-link {
     display: block;
-    padding: 10px 0;
+    padding: var(--space-10) 0;
     text-align: center;
     width: 100%;
     font-size: var(--font-m);

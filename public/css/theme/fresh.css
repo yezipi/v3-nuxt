@@ -1,0 +1,7 @@
+.fresh .yzp-box {
+  backdrop-filter: saturate(100%) blur(10px);
+  background: rgba(var(--rgb-white),.5);
+}
+.fresh .yzp-panel-wrap .yzp-panel-title {
+  background: rgba(var(--rgb-white),.5);
+}

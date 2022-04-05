@@ -24,18 +24,53 @@ const homeRoute = {
   subcolumns: []
 }
 
-// 获取栏目数据
-const navData = await useColumns()
 const personalizeSettings = await usePersonalizeSettings()
 const baseSettings = await useBaseSettings()
+const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 
+const custome: any = personalizeSettings ? personalizeSettings.value : {}
+
+const metaConfig = {
+  title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: web_description || '',
+    },
+    {
+      hid: 'keywords',
+      name: 'keywords',
+      content: web_keywords || '',
+    }
+  ],
+  htmlAttrs: {
+    style: custome.gray ? 'filter: grayscale(1)' : ''
+  },
+  bodyAttrs: {
+    class: custome.style,
+    style: `background-image: url(${custome.background})`
+  },
+  link: [] as any
+}
+
+if (custome.style !== 'simple') {
+  metaConfig.link.push({
+    hid: 'theme',
+    id: 'theme',
+    rel: 'stylesheet',
+    href: `/css/theme/${custome.style}.css`
+  })
+}
+
+useMeta(metaConfig)
+
+// 获取栏目数据
+const navData = await useColumns()
 columns.value = [ homeRoute, ...navData.value ]
-// console.log(columns.value)
 
 // 数组打平
 const flatColumns = columns.value.map((e: ColumnItem) => [ e, ...e.subcolumns ]).flat()
-
-const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 
 provide('baseSettings', baseSettings || {})
 provide('personalizeSettings', personalizeSettings || {})
@@ -52,31 +87,11 @@ watch(() => route.path, (val: string) => {
   setPageTitle(val)
 })
 
-
 setPageTitle(route.path)
-
-useMeta({
-  title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
-  meta: [
-    {
-      hid: 'description',
-      name: 'description',
-      content: web_description || '',
-    },
-    {
-      hid: 'keywords',
-      name: 'keywords',
-      content: web_keywords || '',
-    }
-  ],
-})
 
 onMounted(() => {
   if (!$db.get('avatar')) {
     $db.set('avatar', parseInt(String(Math.random() * 45)))
-  }
-  if (personalizeSettings.value.gray) {
-    document.body.style.filter = 'grayscale(1)'
   }
   $db.set('entryTime', new Date().getTime())
 })

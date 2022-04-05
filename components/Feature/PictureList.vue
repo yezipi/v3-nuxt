@@ -21,11 +21,19 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['load'])
+
 const route = useRoute()
 
 const filter = ref<any>(props.condition)
 
 const albums = ref<any>({ count: 0, rows: [] as any })
+const info = ref<any>({})
+
+if (props.condition.album_id) {
+  const res = await useAlbumeDetil(props.condition.album_id)
+  info.value = res.value
+}
 
 const getList = async () => {
   const params = { ...filter.value, ...route.query }
@@ -36,6 +44,7 @@ const getList = async () => {
     const data = await useAlbums(params)
     albums.value = data.value
   }
+  emit('load', albums)
 }
 
 watch(() => route.query, () => {
@@ -53,6 +62,10 @@ await getList()
     <div class="yzp-album-list-head flex-between yzp-box">
       <div class="yzp-album-list-head-left">
         共有 <span class="color-primary">{{ albums.count }}</span> 条
+      </div>
+      <div v-if="condition && condition.album_id" class="yzp-case-list-head-right">
+        <i class="iconfont iconleimupinleifenleileibie2-copy"></i>
+        <span class="color-primary">{{ info.title }}</span>
       </div>
     </div>
 
@@ -99,6 +112,16 @@ await getList()
     padding: var(--space-15);
     margin-bottom: var(--space-15);
     .yzp-album-list-head-right {
+      .iconfont {
+        display: inline-block;
+        margin-right: 5px;
+        color: var(--color-gray);
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .yzp-case-list-head-right {
       .iconfont {
         display: inline-block;
         margin-right: 5px;

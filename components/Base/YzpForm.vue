@@ -144,19 +144,19 @@ onMounted(() => {
       <!--昵称-->
       <div class="yzp-form-item">
         <i class="icongeren iconfont"></i>
-        <input v-model="form.nickname" class="yzp-form-item-input" type="text" name="nickname" maxlength="16" placeholder="您的称呼（必填）">
+        <input v-model="form.nickname" class="yzp-form-item-input yzp-box" type="text" name="nickname" maxlength="16" placeholder="您的称呼（必填）">
       </div>
 
       <!--邮箱-->
       <div class="yzp-form-item">
         <i class="iconyouxiang iconfont"></i>
-        <input v-model="form.email" class="yzp-form-item-input" type="text" name="email" maxlength="100" placeholder="您的邮箱（必填）">
+        <input v-model="form.email" class="yzp-form-item-input yzp-box" type="text" name="email" maxlength="100" placeholder="您的邮箱（必填）">
       </div>
 
       <!--网址-->
       <div class="yzp-form-item">
         <i class="iconwangzhan iconfont"></i>
-        <input v-model="form.site" class="yzp-form-item-input" type="text" name="site" maxlength="100" :placeholder="type==='blogroll' ? '您的网站（必填)' : '您的网站（选填)'">
+        <input v-model="form.site" class="yzp-form-item-input yzp-box" type="text" name="site" maxlength="100" :placeholder="type==='blogroll' ? '您的网站（必填)' : '您的网站（选填)'">
       </div>
 
       <!--表情-->
@@ -173,7 +173,7 @@ onMounted(() => {
         <textarea
           v-model="form.content"
           :placeholder="type === 'blogroll' ? '请填写申请原因' : '说点什么吧...'"
-          class="yzp-form-item-textarea"
+          class="yzp-form-item-textarea yzp-box"
           name="content"
           rows="5"
         >
@@ -183,7 +183,7 @@ onMounted(() => {
       <!--验证码-->
       <div class="yzp-form-item">
         <i class="iconxinxi iconfont"></i>
-        <input v-model="verifyCode" class="yzp-form-item-input" type="text" placeholder="验证码">
+        <input v-model="verifyCode" class="yzp-form-item-input yzp-box" type="text" placeholder="验证码">
         <canvas id="yzp-form-code" ref="codeRef" height="39" width="100" @click="drawVerifyCode">不支持canvas</canvas>
       </div>
       <div class="yzp-form-button">

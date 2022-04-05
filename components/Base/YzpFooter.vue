@@ -10,7 +10,7 @@
 
 <style lang="less">
 .yzp-footer {
-  background: rgba(var(--rgb-dark), 1);
+  background: #333333;
   display: flex;
   align-items: center;
   justify-content: center;

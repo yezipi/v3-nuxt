@@ -144,6 +144,12 @@ export const useFeedbacks = (params?: ListConfig) => Http.get('/app/v1/feedback'
  export const useAlbums = (params?: ListConfig) => Http.get('/app/v1/album', params)
 
  /**
+  * 获取相册详情
+  * @param { Number } id 文章id
+  */
+  export const useAlbumeDetil = (id: number) => Http.get('/app/v1/album/' + id)
+
+ /**
  * 获取图片列表
  * @param { Object } params
  * @param { Number } params.size 页数

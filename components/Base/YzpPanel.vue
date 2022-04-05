@@ -45,6 +45,7 @@ const props = defineProps({
     font-size: var(--font-m);
     display: flex;
     justify-content: space-between;
+    background: var(--color-white);
     .iconfont {
       margin-right: 5px;
     }
