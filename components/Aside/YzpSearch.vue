@@ -16,7 +16,7 @@ const toSearch = () => {
   <!--搜索-->
   <base-yzp-panel title="搜索" icon="iconsousuo">
     <form id="yzp-search" class="yzp-aside-search-wrap" onsubmit="return false">
-      <input v-model="keywords" class="yzp-aside-search-input" type="text" name="keywords" placeholder="请输入关键字" @enter="toSearch" />
+      <input v-model="keywords" class="yzp-aside-search-input yzp-box" type="text" name="keywords" placeholder="请输入关键字" @enter="toSearch" />
       <i class="iconfont iconsousuo" @click="toSearch"></i>
     </form>
   </base-yzp-panel>
