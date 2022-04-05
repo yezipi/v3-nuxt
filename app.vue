@@ -49,7 +49,7 @@ const metaConfig = {
   },
   bodyAttrs: {
     class: custome.style,
-    style: `background-image: url(${custome.background})`
+    style: custome.style === 'fresh' && custome.background ? `background-image: url(${custome.background})` : ''
   },
   link: [] as any
 }
