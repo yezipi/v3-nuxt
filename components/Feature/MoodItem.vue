@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { timeAgao } from '@/utils/index'
-const { $baseSettings  } = useNuxtApp()
+const { $baseSettings, $lightbox  } = useNuxtApp()
 const { web_avatar, web_name } = $baseSettings ? $baseSettings.value : {} as any
 
 const props = defineProps({
@@ -9,6 +9,15 @@ const props = defineProps({
     default: () => { }
   },
 })
+
+const previewImage = (src: string) => {
+  const imgs = props.item.images.map((e: string) => {
+    return {
+      url: e.replace('thumb_path', 'origin_path'),
+    }
+  })
+  $lightbox.preview(src, imgs, 'url')
+}
 
 </script>
 
@@ -51,7 +60,7 @@ const props = defineProps({
           :class="{ one: item.images.length === 1, two: item.images.length === 2, three: item.images.length === 3, four: item.images.length > 3 }"
           class="yzp-mood-item-img-cell"
         >
-          <img :src="img" onerror="this.src='/img/default-avatar.png'" />
+           <base-yzp-image class="yzp-mood-item-img-main" :src="img" @click.native="previewImage(img)"></base-yzp-image>
         </div>
       </div>
       <div class="yzp-mood-item-btn">
@@ -122,7 +131,7 @@ const props = defineProps({
       flex-wrap: wrap;
       .yzp-mood-item-img-cell {
         margin-right: 2%;
-        img {
+        .yzp-mood-item-img-main {
           width: 100%;
           height: 100%;
           border-radius: var(--border-radius);
