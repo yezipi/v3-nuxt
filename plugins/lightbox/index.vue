@@ -19,12 +19,12 @@ const props = withDefaults(defineProps<LightboxProps>(), {
 
 const urls = computed(() => props.rows.map((e: any) => e[props.urlKey]))
 const state = ref(props.visible)
-const index = ref(0)
-const isLoadEnd = ref(false)
+const index = ref(urls.value.findIndex((e: any) => e === props.current))
 const active = ref(props.current)
+const list = ref<any>(props.rows)
 
 const imgChange = (flag: boolean) => {
-  isLoadEnd.value = false
+
   if (flag) {
     if (index.value === props.rows.length - 1) {
       return false
@@ -36,12 +36,17 @@ const imgChange = (flag: boolean) => {
     }
     index.value--
   }
+  console.log(index.value)
   active.value = urls.value[index.value]
-  console.log(active.value)
 }
 
 const imgLoad = () => {
-  isLoadEnd.value = true
+  list.value = list.value.map((e: any, i: number) => {
+    if (i === index.value) {
+      e.load = true
+    }
+    return e
+  })
 }
 
 const changeState = (flag: boolean) => {
@@ -62,8 +67,8 @@ watch(() => props.visible, (res: boolean) => {
 <template>
   <div v-if="state" class="yzp-lightbox-main" @click="changeState(false)">
     <i class="yzp-lightbox-btn-left iconfont" @click.stop="imgChange(false)">&#xe60a;</i>
-    <img v-show="isLoadEnd" class="yzp-lightbox-img zoomIn" :src="active" @load="imgLoad" />
-    <img v-show="!isLoadEnd" class="yzp-lightbox-loading" src="/img/btn-loading.gif" />
+    <img v-show="list[index].load" class="yzp-lightbox-img zoomIn" :src="active" @load="imgLoad" />
+    <img v-show="!list[index].load" class="yzp-lightbox-loading" src="/img/btn-loading.gif" />
     <i class="yzp-lightbox-btn-right iconfont" @click.stop="imgChange(true)">&#xe60a;</i>
     <i class="yzp-lightbox-btn-close iconfont" @click.stop="changeState(false)">&#xe65f;</i>
     <p class="yzp-lightbox-description">{{ rows[index].description || '暂无描述' }}</p>
@@ -89,6 +94,7 @@ watch(() => props.visible, (res: boolean) => {
   .yzp-lightbox-img {
     min-width: 50px;
     max-width: 80%;
+    max-height: 80%;
     border-radius: 5px;
   }
   .yzp-lightbox-description {

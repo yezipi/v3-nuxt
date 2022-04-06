@@ -13,10 +13,10 @@ const props = defineProps({
 const previewImage = (src: string) => {
   const imgs = props.item.images.map((e: string) => {
     return {
-      url: e.replace('thumb_path', 'origin_path'),
+      url: e.replace('thumb', 'origin'),
     }
   })
-  $lightbox.preview(src, imgs, 'url')
+  $lightbox.preview(src.replace('thumb', 'origin'), imgs, 'url')
 }
 
 </script>
