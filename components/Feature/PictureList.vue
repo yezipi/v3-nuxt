@@ -23,6 +23,8 @@ const props = defineProps({
 
 const emit = defineEmits(['load'])
 
+const { $lightbox } = useNuxtApp()
+
 const route = useRoute()
 
 const filter = ref<any>(props.condition)
@@ -45,6 +47,12 @@ const getList = async () => {
     albums.value = data.value
   }
   emit('load', albums)
+}
+
+const previewImage = (item: any) => {
+  if (props.isPicture) {
+    $lightbox.preview(item.origin_path, albums.value.rows, 'origin_path')
+  }
 }
 
 watch(() => route.query, () => {
@@ -71,9 +79,9 @@ await getList()
 
     <ul v-if="albums && albums.rows" class="yzp-album-ul">
       <li v-for="(item) in albums.rows" :key="item.id" class="yzp-album-item">
-        <nuxt-link :to="`/album/${item.id}`" class="yzp-album-item-block">
+        <nuxt-link :to="isPicture ? 'javascript:void(0)' : `/album/${item.id}`" class="yzp-album-item-block">
           <div class="yzp-album-item-cover">
-            <base-yzp-image class="yzp-album-item-img" :src="item.cover || item.thumb_path"></base-yzp-image>
+            <base-yzp-image class="yzp-album-item-img" :src="item.cover || item.thumb_path" @click.native="previewImage(item)"></base-yzp-image>
           </div>
           <div class="yzp-album-item-info yzp-box">
             <span :style="{ 'text-align' : item.thumb_path ? 'center' : 'left'  }" class="yzp-album-item-title color-primary">{{ item.title }}</span>

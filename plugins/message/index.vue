@@ -6,7 +6,7 @@ interface MessageProps {
   type?: MessageType,
   visible?: boolean,
   duration?: number,
-  id?: string,
+  el?: undefined,
 }
 
 const props = withDefaults(defineProps<MessageProps>(), {
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<MessageProps>(), {
   type: 'default',
   visible: false,
   duration: 3000,
-  id: 'yzp-message'
+  id: undefined
 })
 
 const state = ref(false)
@@ -36,7 +36,7 @@ const hide = () =>{
 
   timer2.value = setTimeout(() => {
     state.value = false
-    document.body.removeChild(document.querySelector('#' + props.id))
+    document.body.removeChild(props.el)
   }, props.duration)
 }
 

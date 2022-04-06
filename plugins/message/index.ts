@@ -29,7 +29,7 @@ const Ele = function(props: MessageProps) {
 
     container.id = id
 
-    const vm = createVNode(Message,  { id, ...props })
+    const vm = createVNode(Message,  { el: container, ...props })
 
     render(vm, container)
 
