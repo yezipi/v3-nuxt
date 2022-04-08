@@ -16,20 +16,6 @@ const fetch = (url: string, options?: any): Promise<any> => {
   const { $config, $router } = useNuxtApp()
   const reqUrl = $config.baseURL + url
 
-  if (options.method !== 'get') {
-    return new Promise((resolve, reject) => {
-      $fetch(reqUrl, { ...options }).then((res: ResponseConfig) => {
-        if (res.status !== 200) {
-          reject(res)
-        }else {
-          resolve(res)
-        }
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  }
-  
   return new Promise((resolve, reject) => {
     useFetch(reqUrl, { ...options }).then(({ data, error }: _AsyncData<any>) => {
       if (error.value) {
@@ -39,18 +25,10 @@ const fetch = (url: string, options?: any): Promise<any> => {
       const value = data.value
       const result = value && value.data
       if (!result || value.code !== 1) {
-        if (value.status !== 200) {
-          if (options.method === 'get') {
-            resolve(ref<any>(result))
-            $router.replace('/reject/' + value.status)
-          } else {
-            reject(ref<any>(result))
-          }
-        } else {
-          resolve(ref<any>(result))
-        }
-      } else {
         resolve(ref<any>(result))
+        $router.replace('/reject/' + value.status)
+      } else {
+        resolve(ref<any>(options.method === 'get' ? result : value))
       }
     }).catch((err: any) => {
       console.log(err)

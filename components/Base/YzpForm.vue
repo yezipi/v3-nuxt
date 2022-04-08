@@ -120,7 +120,7 @@ const submit = async () => {
     } else {
       res = await saveComment(params)
     }
-    $message.success(res.msg)
+    $message.success(res.value.msg)
     form.content = ''
     emit('success', params)
   } catch (e) {
