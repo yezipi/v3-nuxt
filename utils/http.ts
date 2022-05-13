@@ -1,5 +1,5 @@
 // 封装请求，2022-1-15 yzp
-import { _AsyncData } from 'nuxt3/dist/app/composables/asyncData'
+import { _AsyncData } from 'nuxt/dist/app/composables/asyncData'
 
 export interface ResponseConfig {
   code: number,
@@ -17,7 +17,7 @@ const fetch = (url: string, options?: any): Promise<any> => {
   const reqUrl = $config.baseURL + url
 
   return new Promise((resolve, reject) => {
-    useFetch(reqUrl, { ...options }).then(({ data, error }: _AsyncData<any>) => {
+    useFetch(reqUrl, { ...options }).then(({ data, error }: _AsyncData<any, any>) => {
       if (error.value) {
         reject(error.value)
         return
