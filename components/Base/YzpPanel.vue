@@ -46,6 +46,8 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     background: var(--color-white);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
     .iconfont {
       margin-right: 5px;
     }

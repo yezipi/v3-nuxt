@@ -59,17 +59,6 @@ body {
   background-position: center;
   /*background: #faf7e8 url('../images/bgImg/overlay.png') repeat fixed;*/
 }
-body:after {
-  content: '';
-  display: block;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: -1;
-  opacity: .5;
-}
 
 code {
   font-family: Lucida Console,Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace!important;

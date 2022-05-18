@@ -1,7 +1,18 @@
-.fresh .yzp-box {
+.yzp-theme-fresh::after{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,0.3);
+  z-index: -2;
+}
+.yzp-theme-fresh .yzp-box {
   backdrop-filter: saturate(100%) blur(10px);
   background: rgba(var(--rgb-white),.5);
 }
-.fresh .yzp-panel-wrap .yzp-panel-title {
+.yzp-theme-fresh .yzp-panel-wrap .yzp-panel-title {
   background: rgba(var(--rgb-white),.5);
 }

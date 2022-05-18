@@ -1,0 +1,4 @@
+ <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+  <!--S命令：平滑贝塞尔曲线(自动对称一个控制点) (x2,y2,x,y) x2,y2控制点 x,y结束点-->
+  <path d='M100 300 S250 200 400 300' style="stroke:#666666;stroke-width:8;fill: transparent;"></path>
+</svg>

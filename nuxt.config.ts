@@ -29,12 +29,12 @@ export default defineNuxtConfig({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
-      { rel: 'stylesheet', href: '/css/var.css' },
-      { rel: 'stylesheet', href: '/css/reset.css' },
       { rel: 'stylesheet', href: '/fonts/iconfont.css' },
     ],
   },
   css: [
+    '@/assets/css/reset.css',
+    '@/assets/css/var.css',
     '@/assets/css/media.less',
     '@/assets/css/main.less',
   ],

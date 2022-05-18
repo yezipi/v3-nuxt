@@ -26,9 +26,9 @@ const homeRoute = {
 
 const personalizeSettings = await usePersonalizeSettings()
 const baseSettings = await useBaseSettings()
-const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 
-const custome: any = personalizeSettings ? personalizeSettings.value : {}
+const { web_name, web_title, web_description, web_keywords } = baseSettings ? baseSettings.value : ref({})
+const custome: any = personalizeSettings ? personalizeSettings.value : ref({})
 
 const metaConfig = {
   title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
@@ -48,7 +48,7 @@ const metaConfig = {
     style: custome.gray ? 'filter: grayscale(1)' : ''
   },
   bodyAttrs: {
-    class: custome.style,
+    class: `yzp-theme-${custome.style}`,
     style: custome.style === 'fresh' && custome.background ? `background-image: url(${custome.background})` : ''
   },
   link: [] as any
@@ -63,19 +63,20 @@ if (custome.style !== 'simple') {
   })
 }
 
-useMeta(metaConfig)
+useHead(metaConfig)
 
 // 获取栏目数据
 const navData = await useColumns()
-columns.value = [ homeRoute, ...navData.value ]
+const navVal = navData ? navData.value: []
+columns.value = [ homeRoute, ...navVal ]
 
 // 数组打平
 const flatColumns = columns.value.map((e: ColumnItem) => [ e, ...e.subcolumns ]).flat()
 
-provide('baseSettings', baseSettings || {})
-provide('personalizeSettings', personalizeSettings || {})
-provide('columns', columns || [])
-provide('flatColumns', flatColumns || [])
+provide('baseSettings', baseSettings)
+provide('personalizeSettings', personalizeSettings)
+provide('columns', columns || ref([]))
+provide('flatColumns', flatColumns || ref([]))
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []
