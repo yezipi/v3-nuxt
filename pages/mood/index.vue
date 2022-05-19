@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
 const route = useRoute()
+const { moodApi } = useApi()
 
 const moods = ref<any>({})
 
 const getMoods = async () => {
-  const result = await useMoods(route.query)
+  const result = await moodApi.getList(route.query)
   moods.value = result.value
 }
 

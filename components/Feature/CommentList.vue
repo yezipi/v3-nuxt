@@ -24,6 +24,8 @@ const parentType = {
 
 const emit = defineEmits(['load'])
 
+const { commentApi, feedbackApi } = useApi()
+
 const page = ref(1)
 
 const typeText = props.type !== 'feedback' ? '评论' : '留言'
@@ -35,10 +37,10 @@ condition[parentType[props.type]] = props.parentId
 
 const initList = async () => {
   if (props.type !== 'feedback') {
-    const result = await useComments(condition)
+    const result = await commentApi.getList(condition)
     list.value = result.value
   } else {
-    const result = await useFeedbacks(condition)
+    const result = await feedbackApi.getList(condition)
     list.value = result.value
   }
   emit('load', list)

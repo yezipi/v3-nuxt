@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const route  = useRoute()
 const { $columns } = useNuxtApp()
+const { blogrollApi, columnApi } = useApi()
 
 const currColumn = $columns.value ? $columns.value.find((e: any) => e.url === route.name) : {}
-const info = await useColumnDetail(Number(currColumn.id))
+const info = await columnApi.getDetail(Number(currColumn.id))
 
-const blogrolls = await useBlogroll()
+const blogrolls = await blogrollApi.getList()
 </script>
 
 <template>

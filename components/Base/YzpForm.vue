@@ -63,6 +63,8 @@ const drawVerifyCode = () => {
   }
 }
 
+const { feedbackApi, blogrollApi, commentApi } = useApi()
+
 // 提交评论
 const submit = async () => {
   const patternName = /^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/
@@ -114,11 +116,11 @@ const submit = async () => {
     }
     let res: any = {}
     if (props.type === 'feedback') {
-      res = await saveFeedback(params)
+      res = await feedbackApi.save(params)
     } else if (props.type === 'blogroll') {
-      res = await saveBlogroll(params)
+      res = await blogrollApi.save(params)
     } else {
-      res = await saveComment(params)
+      res = await commentApi.save(params)
     }
     $message.success(res.value.msg)
     form.content = ''

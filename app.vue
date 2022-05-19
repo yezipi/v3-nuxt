@@ -9,6 +9,8 @@ interface ColumnItem {
   subcolumns: any[]
 }
 
+const { settingsApi, columnApi } = useApi()
+
 const route = useRoute()
 const { provide, $db } = useNuxtApp()
 
@@ -24,8 +26,8 @@ const homeRoute = {
   subcolumns: []
 }
 
-const personalizeSettings = await usePersonalizeSettings()
-const baseSettings = await useBaseSettings()
+const personalizeSettings = await settingsApi.getPersonalizeSettings()
+const baseSettings = await settingsApi.getBaseSettings()
 
 const { web_name, web_title, web_description, web_keywords } = baseSettings ? baseSettings.value : ref({})
 const custome: any = personalizeSettings ? personalizeSettings.value : ref({})
@@ -66,7 +68,7 @@ if (custome.style !== 'simple') {
 useHead(metaConfig)
 
 // 获取栏目数据
-const navData = await useColumns()
+const navData = await columnApi.getList()
 const navVal = navData ? navData.value: []
 columns.value = [ homeRoute, ...navVal ]
 

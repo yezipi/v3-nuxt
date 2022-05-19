@@ -29,10 +29,11 @@ const logTypes = {
 
 const route  = useRoute()
 const { $columns } = useNuxtApp()
+const { columnApi, settingsApi } = useApi()
 
 const currColumn = $columns.value ? $columns.value.find((e: any) => e.url === route.name) : {}
-const info = await useColumnDetail(Number(currColumn.id))
-const logs = await useLogs()
+const info = await columnApi.getDetail(Number(currColumn.id))
+const logs = await settingsApi.getChangeLogs()
 </script>
 
 <template>

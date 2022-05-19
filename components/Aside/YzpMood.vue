@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-
-const moods = await useMoods({ page: 1, size: 5 })
-console.log(moods)
+const { commentApi } = useApi()
+const moods = await commentApi.getList({ page: 1, size: 5 })
 </script>
 
 <template>

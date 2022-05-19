@@ -35,12 +35,14 @@ const props = defineProps({
 
 const route = useRoute()
 
+const { articleApi } = useApi()
+
 const filter = ref<any>(props.condition)
 
 const articles = ref<any>({ count: 0, rows: [] as any })
 
 const getArticles = async () => {
-  const data = await useArticles({ ...filter.value, ...route.query })
+  const data = await articleApi.getList({ ...filter.value, ...route.query })
   articles.value = data.value
 }
 

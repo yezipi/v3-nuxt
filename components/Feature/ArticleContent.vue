@@ -59,13 +59,14 @@ const props = defineProps({
 })
 
 const { $baseSettings } = useNuxtApp()
+const { articleApi } = useApi()
 
 const dashangTabIndex = ref(0)
 const tags = ref<any>([])
 const timer = ref()
 const count = ref(0)
 
-const info: ArticleFields = await useArticleDetil(Number(props.id))
+const info: ArticleFields = await articleApi.getDetail(Number(props.id))
 
 const onDashangTypeChange = (index: number) => {
   dashangTabIndex.value = index

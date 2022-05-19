@@ -2,6 +2,8 @@
 
 import { timeAgao, setAticleLink } from '@/utils/index'
 
+const { articleApi } = useApi()
+
 const tabs = reactive([
   { name: '最多点赞', icon: 'iconicon-test' },
   { name: '最多评论', icon: 'iconxiaoxi' }
@@ -20,7 +22,7 @@ const setTabRefs = (el: any) => {
   tabRefs.push(el)
 }
 
-const result = await useMostLikeAndMostComment()
+const result = await articleApi.getMostLikeAndMostComment()
 const { mostComment, mostLike } = result.value
 articles.value = [
   { rows: mostLike },

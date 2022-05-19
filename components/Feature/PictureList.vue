@@ -23,6 +23,8 @@ const props = defineProps({
 
 const emit = defineEmits(['load'])
 
+const { albumApi } = useApi()
+
 const { $lightbox } = useNuxtApp()
 
 const route = useRoute()
@@ -33,17 +35,17 @@ const albums = ref<any>({ count: 0, rows: [] as any })
 const info = ref<any>({})
 
 if (props.condition.album_id) {
-  const res = await useAlbumeDetil(props.condition.album_id)
+  const res = await albumApi.getDetail(props.condition.album_id)
   info.value = res.value
 }
 
 const getList = async () => {
   const params = { ...filter.value, ...route.query }
   if (props.condition.album_id) {
-    const data = await usePictures(params)
+    const data = await albumApi.getPictures(params)
     albums.value = data.value
   } else {
-    const data = await useAlbums(params)
+    const data = await albumApi.getList(params)
     albums.value = data.value
   }
   emit('load', albums)

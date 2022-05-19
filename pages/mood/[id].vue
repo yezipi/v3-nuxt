@@ -1,8 +1,9 @@
 <script setup lang="ts">
 
 const route = useRoute()
+const { moodApi } = useApi()
 
-const mood = await useMoodDetail(Number(route.params.id))
+const mood = await moodApi.getDetail(Number(route.params.id))
 const id = computed(() => mood.value && mood.value.id)
 </script>
 

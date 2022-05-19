@@ -2,7 +2,9 @@
 <script lang="ts" setup>
 import { setAticleLink } from '@/utils'
 
-const banners = await useBanners()
+const { articleApi } = useApi()
+
+const banners = await articleApi.getBanners()
 const swipers = banners.value.map((e: any) => {
   return {
     ...e,
@@ -11,7 +13,7 @@ const swipers = banners.value.map((e: any) => {
   }
 })
 
-const hots = await useHotArticle()
+const hots = await articleApi.getHot()
 
 </script>
 

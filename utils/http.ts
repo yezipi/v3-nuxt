@@ -36,21 +36,21 @@ const fetch = (url: string, options?: any): Promise<any> => {
   })
 }
 
-export default new class Http {
+export default class Http {
 
-  get(url: string, params?: any): Promise<any> {
+  get = (url: string, params?: any): Promise<any> => {
     return fetch(url, { method: 'get', params })
   }
 
-  post(url: string, body?: any): Promise<any> {
+  post = (url: string, body?: any): Promise<any> => {
     return fetch(url, { method: 'post', body })
   }
 
-  put(url: string, body?: any): Promise<any> {
+  put = (url: string, body?: any): Promise<any> => {
     return fetch(url, { method: 'put', body })
   }
 
-  delete(url: string, body?: any): Promise<any> {
+  delete = (url: string, body?: any): Promise<any> => {
     return fetch(url, { method: 'delete', body })
   }
 }
