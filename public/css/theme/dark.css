@@ -1,8 +1,7 @@
-.yzp-theme-simple {
+.yzp-theme-dark {
   background: #222222;
 }
 :root {
-  --rgb-primary: 154, 54, 54;
-  --rgb-white: 55, 55, 55;
-  --rgb-dark: 222, 222, 222;
+  --rgb-white: 55, 55, 55!important;
+  --rgb-dark: 222, 222, 222!important;
 }
