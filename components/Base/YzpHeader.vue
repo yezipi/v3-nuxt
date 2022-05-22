@@ -20,6 +20,8 @@ const scrolling = ref(false)
 const currIndex = ref(-1) // 当前页面的菜单索引
 const activeIndex = ref(-1) // 滑动菜单的索引
 const currSubcolumn = ref<any>({}) // 当前二级分类
+const navVisible = ref(false)
+const navRef = ref()
 
 const setItemNavRefs = (el: any) => {
   navItemRefs.push(el)
@@ -67,8 +69,21 @@ const showSubNav = (flag: boolean, index: number) => {
     activeIndex.value = idx
   }, currIndex.value === -1 ? 0 : 100)
 }
+
+// 移动端的导航显示
+const showNav = () => {
+  const str = 'mobile-hide'
+  const classAttr = navRef.value.getAttribute('class')
+  if (classAttr.indexOf(str) > -1) {
+    navRef.value.setAttribute('class', classAttr.replace(str, ''))
+  } else {
+    navRef.value.setAttribute('class', classAttr + str)
+  }
+}
+
 watch(() => route.path, () => {
   initActiveIndex()
+  showNav()
   if (process.client) {
     window.scrollTo(0, 0)
   }
@@ -108,8 +123,13 @@ onMounted(() => {
         </div>
         <!--end 滚动消息-->
       </div>
+
+      <!--移动端按钮显示-->
+      <i class="iconfont iconliebiao mobile-show mobile-nav" @click="showNav"></i>
+      <!--end 移动端按钮显示-->
+
       <!--导航菜单-->
-      <nav class="yzp-header-nav">
+      <nav ref="navRef" id="yzp-header-nav" class="yzp-header-nav mobile-hide">
         <ul class="yzp-nav-list">
           <li
             v-for="(item, index) in $columns"
@@ -147,7 +167,7 @@ onMounted(() => {
               transform: `translate(${navActiveDiv.left}px, ${navActiveDiv.top}px) scale(${navActiveDiv.width ? 1 : 0})`,
               width: navActiveDiv.width + 'px'
             }"
-            class="yzp-nav-slider-active"
+            class="yzp-nav-slider-active mobile-hide"
           >
           </div>
         </template>
@@ -217,118 +237,128 @@ onMounted(() => {
       }
     }
   }
-  .yzp-header-nav {
-    margin-left: 10px;
-    height: 100%;
-    position: relative;
-  }
 }
-.yzp-nav-list {
-  display: flex;
-  align-items: center;
+.yzp-header-nav {
+  margin-left: 10px;
   height: 100%;
-  .yzp-nav-item {
+  position: relative;
+  .yzp-nav-list {
     display: flex;
-    text-align: center;
-    justify-content: center;
-    width: 100px;
+    align-items: center;
     height: 100%;
-    z-index: 1;
-    position: relative;
-    &:hover {
-      .yzp-drop-nav {
-        display: block;
-        animation: toTop 0.3s ease;
-      }
-    }
-    .yzp-nav-link {
+    .yzp-nav-item {
       display: flex;
-      width: 100%;
-      height: 100%;
-      align-items: center;
+      text-align: center;
       justify-content: center;
-      font-size: var(--font-m);
-      .iconfont {
-        display: inline-block;
-        margin-left: 5px;
+      width: 100px;
+      height: 100%;
+      z-index: 1;
+      position: relative;
+      &:hover {
+        .yzp-drop-nav {
+          display: block;
+          animation: toTop 0.3s ease;
+        }
       }
-    }
-    &.yzp-nav-link-active {
       .yzp-nav-link {
-        color: #ffffff;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-m);
+        .iconfont {
+          display: inline-block;
+          margin-left: 5px;
+        }
+      }
+      &.yzp-nav-link-active {
+        .yzp-nav-link {
+          color: #ffffff;
+        }
       }
     }
   }
-}
-.yzp-drop-nav {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding-top: 11px;
-  top: 70px;
-  z-index: -1;
-  transition: all 0.3s;
-  box-shadow: 0 8px 8px rgba(var(--rgb-dark), .15);
-  &:after,
-  &:before {
-    content: "";
+  .yzp-drop-nav {
+    display: none;
     position: absolute;
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
     left: 0;
     right: 0;
-    margin: auto;
-  }
-  &:after {
-    top: 2px;
-    border-width: 0 10px 10px;
-    border-color: transparent transparent var(--color-white);
-    z-index: 1;
-  }
-  &:before {
-    top: 1px;
-    z-index: 0;
-    border-width: 0 11px 11px;
-    border-color: transparent transparent var(--border-2);
-  }
-  .yzp-sub-list {
-    border: 1px solid var(--border-1);
-    border-radius: var(--border-radius);
-    background: var(--color-white);
-    overflow: hidden;
-    .yzp-sub-item-active {
-      .yzp-sub-item-link {
-         color: #ffffff;
+    padding-top: 11px;
+    top: 70px;
+    z-index: -1;
+    transition: all 0.3s;
+    box-shadow: 0 8px 8px rgba(var(--rgb-dark), .15);
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    &:after {
+      top: 2px;
+      border-width: 0 10px 10px;
+      border-color: transparent transparent var(--color-white);
+      z-index: 1;
+    }
+    &:before {
+      top: 1px;
+      z-index: 0;
+      border-width: 0 11px 11px;
+      border-color: transparent transparent var(--border-2);
+    }
+    .yzp-sub-list {
+      border: 1px solid var(--border-1);
+      border-radius: var(--border-radius);
+      background: var(--color-white);
+      overflow: hidden;
+      .yzp-sub-item-active {
+        .yzp-sub-item-link {
+          color: #ffffff;
+          background: rgba(var(--rgb-primary), 0.5);
+        }
+      }
+    }
+    .yzp-sub-item-link {
+      display: block;
+      padding: var(--space-10) 0;
+      text-align: center;
+      width: 100%;
+      font-size: var(--font-m);
+      &:hover {
+        color: #ffffff;
         background: rgba(var(--rgb-primary), 0.5);
       }
     }
   }
-  .yzp-sub-item-link {
-    display: block;
-    padding: var(--space-10) 0;
-    text-align: center;
-    width: 100%;
-    font-size: var(--font-m);
-    &:hover {
-      color: #ffffff;
-      background: rgba(var(--rgb-primary), 0.5);
-    }
+  .yzp-nav-slider-active {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 40px;
+    background: var(--color-primary);
+    z-index: 0;
+    width: 0;
+    left: 0;
+    margin: auto;
+    border-radius: 50px;
+    transition: all 0.3s;
   }
 }
-.yzp-nav-slider-active {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  height: 40px;
-  background: var(--color-primary);
-  z-index: 0;
-  width: 0;
-  left: 0;
-  margin: auto;
-  border-radius: 50px;
-  transition: all 0.3s;
+.mobile-nav {
+  font-size: var(--font-xxxxxl);
+  display: inline-block;
+  margin-right: var(--space-15);
+  color: #999999;
+  cursor: pointer;
+  &:hover, :active {
+    color: #333333;
+  }
 }
 </style>
