@@ -4,6 +4,7 @@
   --rgb-primary: 54, 164, 108;
   --rgb-white: 255, 255, 255;
   --rgb-dark: 51, 51, 51;
+  --rgb-sub: 51, 163, 255;
 
   --space-5: 5px;
   --space-10: 10px;
@@ -16,8 +17,9 @@
   --color-white: rgb(var(--rgb-white));
   --color-primary: rgb(var(--rgb-primary));
   --color-gray: rgba(var(--rgb-dark), 0.6);
-  --color-primary-sub: rgba(var(--rgb-primary), 0.8);
-  --color-link: #33a3ff;
+  --color-primary-05: rgba(var(--rgb-primary), 0.5);
+  --color-primary-01: rgba(var(--rgb-primary), 0.1);
+  --color-link: rgb(var(--rgb-sub));
 
   --bg-white: rgba(var(--rgb-white),1);
   --bg-primary: rgba(var(--rgb-dark), 0.05);
@@ -39,14 +41,6 @@
   --border-radius: 5px;
 
   --content-width: 1200px;
-}
-
-/* Light mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --rgb-white: 255, 255, 255;
-    --rgb-dark: 51, 51, 51;
-  }
 }
 
 /* Dark mode */

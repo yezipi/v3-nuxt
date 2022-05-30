@@ -96,7 +96,7 @@ const getCommentLink = (item: any) => {
       background: var(--border-1);
     }
     &:hover {
-      background: var(--bg-primary);
+      background: var(--color-primary-01);
       
       .yzp-aside-comment-item-article-content {
         text-decoration: underline;

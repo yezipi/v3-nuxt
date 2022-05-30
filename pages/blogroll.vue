@@ -65,9 +65,9 @@ const blogrolls = await blogrollApi.getList()
     margin-bottom: var(--space-15);
     &:hover {
       transform: translateY(-5px);
-      background: rgba(var(--rgb-primary), 0.05);
-      border-color: var(--color-primary);
-      box-shadow: 0 0 5px rgba(var(--rgb-primary), 0.5);
+      background: var(--color-primary-01);
+      border-color: var(--color-primary-05);
+      box-shadow: 0 0 8px var(--color-primary-01);
     }
     .yzp-blogroll-item-main {
       display: flex;

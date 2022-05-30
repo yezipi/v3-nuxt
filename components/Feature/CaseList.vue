@@ -74,7 +74,7 @@ await getArticles()
 
     <ul v-if="articles && articles.rows" class="yzp-case-ul">
       <li v-for="(item) in articles.rows" :key="item.id" class="yzp-case-item">
-        <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-case-item-block">
+        <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-case-item-block yzp-box">
           <div class="yzp-case-item-cover">
             <base-yzp-image class="yzp-case-item-img" :src="item.cover"></base-yzp-image>
           </div>
@@ -175,6 +175,9 @@ await getArticles()
         box-shadow: none;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+        &::after {
+          display: none;
+        }
         .yzp-case-item-title {
           font-size: var(--font-l);
           display: block;

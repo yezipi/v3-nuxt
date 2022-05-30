@@ -416,7 +416,7 @@ onMounted(() => {
     right: 0;
     bottom: 0;
     z-index: 2;
-    background: rgba(var(--rgb-dark), 0.7);
+    background: rgba(0,0,0, 0.5);
     backdrop-filter: saturate(100%) blur(5px);
     color: var(--color-white);
     font-size: 12px;

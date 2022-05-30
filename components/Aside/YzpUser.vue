@@ -18,7 +18,7 @@ const onLike = () => {
 
 <template>
   <!--博主信息-->
-  <base-yzp-panel noPadding>
+  <base-yzp-panel noPadding style="position: relative;z-index: 1">
     <div class="yzp-aside-info">
       <div class="yzp-aside-info-avatar">
         <img class="yzp-aside-info-avatar-img" :src="web_avatar" onerror="this.src='/img/default-avatar.png'" />
@@ -113,30 +113,30 @@ const onLike = () => {
       position: relative;
       z-index: 1;
       line-height: 28px;
-      &:hover {
-        filter: saturate(120%);
-        border-radius: var(--border-radius);
-      }
       .iconfont {
         display: inline-block;
         margin-right: var(--space-5);
       }
     }
     .yzp-aside-info-like-btn {
-      background: var(--color-primary);
+      background: var(--color-primary-01);
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary-05);
       &:hover {
-        background: var(--color-white);
-        color: var(--color-primary);
-        border-color: var(--color-primary);
+        background: var(--color-primary);
+        color: var(--color-white);
+        border-color: var(--color-white);
       }
     }
     .yzp-aside-info-focus-btn {
-      background: var(--color-link);
+      background: rgba(var(--rgb-sub),0.1);
+      color: rgb(var(--rgb-sub));
+      border: 1px solid rgb(var(--rgb-sub));
       margin-left: var(--space-15);
       &:hover {
-        background: var(--color-white);
-        color: var(--color-link);
-        border-color: var(--color-link);
+        background: rgb(var(--rgb-sub));
+        color: var(--color-white);
+        border-color: var(--color-white);
         .yzp-aside-info-focus-img {
           display: block;
         }

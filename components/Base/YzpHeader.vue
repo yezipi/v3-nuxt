@@ -274,7 +274,7 @@ onMounted(() => {
       }
       &.yzp-nav-link-active {
         .yzp-nav-link {
-          color: #ffffff;
+          color: var(--color-primary);
         }
       }
     }
@@ -288,7 +288,7 @@ onMounted(() => {
     top: 70px;
     z-index: -1;
     transition: all 0.3s;
-    box-shadow: 0 8px 8px rgba(var(--rgb-dark), .15);
+    box-shadow: 0 8px 8px var(--color-primary-01);
     &:after,
     &:before {
       content: "";
@@ -320,8 +320,8 @@ onMounted(() => {
       overflow: hidden;
       .yzp-sub-item-active {
         .yzp-sub-item-link {
-          color: #ffffff;
-          background: rgba(var(--rgb-primary), 0.5);
+          color: var(--color-primary);
+          background: var(--color-primary-2);
         }
       }
     }
@@ -332,8 +332,8 @@ onMounted(() => {
       width: 100%;
       font-size: var(--font-m);
       &:hover {
-        color: #ffffff;
-        background: rgba(var(--rgb-primary), 0.5);
+        color: var(--color-primary);
+        background: var(--color-primary-01);
       }
     }
   }
@@ -342,7 +342,7 @@ onMounted(() => {
     top: 0;
     bottom: 0;
     height: 40px;
-    background: var(--color-primary);
+    background: var(--color-primary-01);
     z-index: 0;
     width: 0;
     left: 0;

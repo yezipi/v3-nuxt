@@ -53,7 +53,8 @@ const metaConfig = {
     class: `yzp-theme-${custome.style}`,
     style: custome.style === 'fresh' && custome.background ? `background-image: url(${custome.background})` : ''
   },
-  link: [] as any
+  link: [] as any,
+  script: [] as any
 }
 
 if (custome.style !== 'simple') {
@@ -61,8 +62,14 @@ if (custome.style !== 'simple') {
     hid: 'theme',
     id: 'theme',
     rel: 'stylesheet',
-    href: `/css/theme/${custome.style}.css`
+    href: `/theme/${custome.style}/index.css`
   })
+  if (custome.style === 'spring' || custome.style === 'autumn' || custome.style === 'winter') {
+    metaConfig.script.push({
+      type: 'text/javascript',
+      src: '/js/fallenLeaves.js'
+    })
+  }
 }
 
 useHead(metaConfig)

@@ -90,7 +90,7 @@ onMounted(() => onTabChange(0))
 .yzp-aside-article-wrap {
   .yzp-aside-article-tab {
     
-    height: 40px;
+    height: 50px;
     border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
     overflow: hidden;
@@ -130,7 +130,7 @@ onMounted(() => onTabChange(0))
       color: var(--color-gray);
       transition: all 0.3s;
       &:hover {
-        background: var(--bg-primary);
+        background: var(--color-primary-01);
       }
       &.yzp-aside-article-tab-item-active {
         color: var(--color-primary);
@@ -151,7 +151,7 @@ onMounted(() => onTabChange(0))
       padding:  var(--space-10) var(--space-15);
       position: relative;
       &:hover {
-        background: var(--bg-primary);
+        background: var(--color-primary-01);
         .yzp-aside-article-item-link {
           .yzp-aside-article-item-pic {
             .yzp-aside-article-item-img {
