@@ -153,7 +153,7 @@ const previewImage = (src: string) => {
         &.three {
           width: 31%;
           height: 200px;
-          flex: auto;
+          flex-grow: auto;
           &:last-child {
             margin-right: 0;
           }
@@ -161,7 +161,7 @@ const previewImage = (src: string) => {
         &.four {
           width: 25%;
           height: 200px;
-          flex: auto;
+          flex-grow: auto;
           margin-bottom: var(--space-15);
           &:nth-child(3n) {
             margin-right: 0;
