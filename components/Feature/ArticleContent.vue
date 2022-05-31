@@ -107,7 +107,7 @@ const checkHljsIsLoad = () => {
   }
 }
 
-useMeta({
+useHead({
   title: info.value.title + '-' + $baseSettings.value.web_name,
   meta: [
     {
@@ -246,8 +246,8 @@ onMounted(() => {
     <!--相似文章-->
     <div class="yzp-article-similar">
       <ul v-if="info.similar && info.similar.length">
-        <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item yzp-box">
-          <a :href="`/article/detail/${ele.id}`">
+        <li v-for="(ele, idx) in info.similar" :key="idx" class="yzp-article-similar-item">
+          <a :href="`/article/detail/${ele.id}`" class="yzp-box">
             <div class="yzp-article-similar-cover">
               <base-yzp-image class="yzp-article-similar-img" :src="ele.cover"></base-yzp-image>
             </div>
@@ -551,6 +551,8 @@ onMounted(() => {
         box-sizing: border-box;
         border-top-left-radius: var(--border-radius);
         border-top-right-radius: var(--border-radius);
+        position: relative;
+        z-index: -1;
         .yzp-article-similar-img {
           width: 100%;
           height: 100%;

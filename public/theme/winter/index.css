@@ -40,7 +40,8 @@
 .yzp-theme-winter .yzp-case-list .yzp-case-ul .yzp-case-item .yzp-case-item-block:after,
 .yzp-theme-winter .yzp-album-list .yzp-album-ul .yzp-album-item .yzp-album-item-block:after,
 .yzp-theme-winter .yzp-form-submit:after,
-.yzp-theme-winter .yzp-aside-info .yzp-aside-info-btngroup .yzp-aside-info-btn-item:after
+.yzp-theme-winter .yzp-aside-info .yzp-aside-info-btngroup .yzp-aside-info-btn-item:after,
+.yzp-theme-winter .yzp-header:after
 {
   content: '';
   display: block;
@@ -61,21 +62,21 @@
   z-index: 0;
 }
 .yzp-theme-winter .yzp-article-ul .yzp-article-item:after,
-.yzp-theme-winter .yzp-article-main:after,
-.yzp-theme-winter .yzp-mood-item:after
-{
-  background: url('./img/index_list_ice.png') repeat-x;
-  height: 30%;
-}
+.yzp-theme-winter .yzp-header:after,
+.yzp-theme-winter .yzp-comment-wrap .yzp-comment-list .yzp-comment-item:after,
 .yzp-theme-winter .yzp-case-list .yzp-case-list-head:after,
 .yzp-theme-winter .yzp-comment-wrap .yzp-comment-head:after,
 .yzp-theme-winter .yzp-album-list .yzp-album-list-head:after,
 .yzp-theme-winter .yzp-blogroll-wrap .yzp-panel-wrap .yzp-panel-title:after,
-.yzp-theme-winter .yzp-about-wrap .yzp-panel-wrap .yzp-panel-title:after,
-.yzp-theme-winter .yzp-comment-wrap .yzp-comment-list .yzp-comment-item:after
+.yzp-theme-winter .yzp-about-wrap .yzp-panel-wrap .yzp-panel-title:after
 {
   background: url('./img/index_list_ice.png') repeat-x;
-  height: 80%;
+  background-size: 50% 100%;
+}
+.yzp-theme-winter .yzp-article-main:after,
+.yzp-theme-winter .yzp-mood-item:after
+{
+  height: 100px;
 }
 .yzp-theme-winter .yzp-form-item::after,
 .yzp-theme-winter .yzp-form-submit:after,
@@ -87,7 +88,7 @@
   background: url('./img/header.jpg');
 }
 .yzp-theme-winter .yzp-header-nav .yzp-nav-list .yzp-nav-item {
-  color: #666666;
+  color: #ffffff;
 }
 .yzp-theme-winter .yzp-header-nav .yzp-nav-slider-active {
   background: url('./img/nav.png') center;
