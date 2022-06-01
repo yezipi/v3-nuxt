@@ -46,7 +46,17 @@
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body {
-    background: #222222;
+    background: #222222!important;
+  }
+  body:after {
+    display: none!important;
+  }
+  .blur {
+    background: rgba(var(--rgb-white),.9)!important;
+  }
+  .yzp-box {
+    background: var(--bg-white)!important;
+    border: 1px solid var(--border-1)!important;
   }
   :root {
     --rgb-white: 55, 55, 55;

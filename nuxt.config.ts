@@ -49,6 +49,9 @@ export default defineNuxtConfig({
     baseURL: BASE_URL,
   },
   vite: {
+    build: {
+      target: 'es2015', // 兼容低版本浏览器
+    },
     server: SERVER_CONFIG,
     preview: SERVER_CONFIG,
   }
