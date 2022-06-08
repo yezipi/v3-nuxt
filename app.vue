@@ -9,6 +9,8 @@ interface ColumnItem {
   subcolumns: any[]
 }
 
+const currTheme =  useCookie<{ theme: string }>('theme')
+
 const { settingsApi, columnApi } = useApi()
 
 const route = useRoute()
@@ -57,19 +59,24 @@ const metaConfig = {
   script: [] as any
 }
 
-if (custome.style !== 'simple') {
-  metaConfig.link.push({
-    hid: 'theme',
-    id: 'theme',
-    rel: 'stylesheet',
-    href: `/theme/${custome.style}/index.css`
-  })
-  if (custome.style === 'spring' || custome.style === 'autumn' || custome.style === 'winter') {
+// 如果cookie中已经设置了主题
+if (currTheme.value) {
+  custome.style = currTheme.value
+}
+
+metaConfig.link.push({
+  hid: 'theme',
+  id: 'theme',
+  rel: 'stylesheet',
+  href: `/theme/${custome.style}/index.css`
+})
+
+if (custome.style === 'spring' || custome.style === 'autumn' || custome.style === 'winter') {
     metaConfig.script.push({
+      id: 'fallenLeaves',
       type: 'text/javascript',
       src: '/js/fallenLeaves.js'
-    })
-  }
+  })
 }
 
 useHead(metaConfig)
