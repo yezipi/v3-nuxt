@@ -45,16 +45,22 @@ const changeTheme = (theme: { name: string, id: any, Leaves: boolean }) => {
   } else {
     themeLinkEle.href = themeUrl
   }
+  console.log(leavesScriptEle)
   if (theme.Leaves) {
     if (!leavesScriptEle) {
       const newScriptEle: HTMLScriptElement =  document.createElement('script')
-      newScriptEle.id = 'theme'
+      newScriptEle.id = 'fallenLeaves'
       newScriptEle.type = 'text/javascript'
       newScriptEle.src = scriptUrl
       headEle.append(newScriptEle)
+      newScriptEle.onload = () => {
+        (window as any).leavesStart()
+      }
     }
   } else {
-    leavesScriptEle.src = scriptUrl
+    if (leavesScriptEle) {
+      headEle.removeChild(leavesScriptEle)
+    }
   }
   document.body.setAttribute('class', `yzp-theme-${theme.id}`)
   currTheme.value = theme.id
