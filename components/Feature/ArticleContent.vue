@@ -72,8 +72,8 @@ const onDashangTypeChange = (index: number) => {
   dashangTabIndex.value = index
 }
 
-if (info.value.tags) {
-  tags.value = info.value.tags.map((e: string) => {
+if (info.tags) {
+  tags.value = info.tags.map((e: string) => {
     return {
       name: e,
       color: setRandomTag()
@@ -108,17 +108,17 @@ const checkHljsIsLoad = () => {
 }
 
 useHead({
-  title: info.value.title + '-' + $baseSettings.value.web_name,
+  title: info.title + '-' + $baseSettings.web_name,
   meta: [
     {
       hid: 'description',
       name: 'description',
-      content: info.value.description || '',
+      content: info.description || '',
     },
     {
       hid: 'keywords',
       name: 'keywords',
-      content: info.value.keywords || '',
+      content: info.keywords || '',
     }
   ],
   link: [
@@ -541,6 +541,8 @@ onMounted(() => {
       a {
         width: 100%;
         display: block;
+        position: relative;
+        z-index: 1;
       }
       .yzp-article-similar-cover {
         width: 100%;

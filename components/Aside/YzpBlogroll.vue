@@ -2,7 +2,7 @@
 const { blogrollApi } = useApi()
 
 const result = await blogrollApi.getList({ page: 1, size: 50, recommend: 1 })
-const blogroll = ref(result.value && result.value.rows ? result.value.rows : [] )
+const blogroll = result && result.rows ? result.rows : []
 </script>
 
 <template>

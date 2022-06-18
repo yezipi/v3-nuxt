@@ -42,7 +42,6 @@ const changeTheme = (theme: { name: string, id: any, Leaves: boolean }) => {
   } else {
     themeLinkEle.href = themeUrl
   }
-  console.log(leavesScriptEle)
   if (theme.Leaves) {
     if (!leavesScriptEle) {
       const newScriptEle: HTMLScriptElement = document.createElement('script')
@@ -61,6 +60,9 @@ const changeTheme = (theme: { name: string, id: any, Leaves: boolean }) => {
   }
   document.body.setAttribute('class', `yzp-theme-${theme.id}`)
   currTheme.value = theme.id
+  setTimeout(() => {
+    window.location.reload()
+  })
 }
 
 onMounted(() => {
@@ -98,24 +100,25 @@ onMounted(() => {
     <base-yzp-footer></base-yzp-footer>
     <!--end 页脚-->
 
-
-    <div class="yzp-skin-main">
-      <span class="yzp-skin-btn">换肤</span>
-      <div class="yzp-skin-wrap">
-        <div class="yzp-skin-list">
-          <span
-            v-for="(theme) in themeList"
-            :key="theme.id"
-            :class="{ active: currTheme === theme.id }"
-            class="yzp-skin-item"
-            @click="changeTheme(theme)"
-          >
-          {{ theme.name }}
-        </span>
+    <!--悬浮按钮-->
+    <div class="yzp-floatbtn">
+      <div class="yzp-float-item">
+        <a :class="{ halfRadius: backTopButtonShow }" title="切换主题"><i class="iconfont">&#xe6cb;</i></a>
+        <div class="yzp-float-menu yzp-skin-wrap">
+          <div class="yzp-skin-list">
+            <span v-for="(theme) in themeList" :key="theme.id" :class="{ active: currTheme === theme.id }"
+              class="yzp-skin-item" @click="changeTheme(theme)">
+              {{ theme.name }}
+            </span>
+          </div>
         </div>
       </div>
+      <div v-if="backTopButtonShow" class="yzp-float-backtop yzp-float-item" @click="backToTop">
+        <a title="返回顶部">
+          <i class="iconfont">&#xe693;</i>
+        </a>
+      </div>
     </div>
-    <div v-if="backTopButtonShow" class="yzp-backtop-btn" @click="backToTop"></div>
 
   </div>
 </template>
@@ -146,100 +149,106 @@ onMounted(() => {
   min-height: calc(100vh - 170px);
 }
 
-.yzp-backtop-btn {
+.yzp-floatbtn {
   width: 46px;
-  height: 46px;
-  background: url('@/img/back-top-btn.png') no-repeat;
-  background-size: 100%;
   text-align: center;
   position: fixed;
-  border-radius: 50%;
-  bottom: 20px;
-  right: 20px;
-  cursor: pointer;
+  bottom: 130px;
+  right: var(--space-20);
   z-index: 9;
-}
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 
-.yzp-skin-main {
-  width: 46px;
-  height: 46px;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  right: 20px;
-  top: 0;
-  margin: auto;
-  cursor: pointer;
-  z-index: 9;
-  border-radius: 50%;
-  background: var(--bg-white);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  line-height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    .yzp-skin-wrap {
+  .yzp-float-item {
+    position: relative;
+    a {
       display: block;
+      height: 46px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: saturate(100%) blur(10px);
+      background: rgba(var(--rgb-white), .5);
+      border-radius: 5px;
     }
-  }
 
-  .yzp-skin-btn {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    .iconfont {
+      color: var(--color-gray);
+      font-size: var(--font-xl);
+    }
 
     &:hover {
-      color: var(--color-primary);
       background: var(--color-primary-01);
+
+      .iconfont {
+        color: var(--color-primary);
+      }
+
+      .yzp-float-menu {
+        display: block;
+      }
     }
   }
+  .yzp-float-backtop a {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  a.halfRadius {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
 
-  .yzp-skin-wrap {
+.yzp-skin-wrap {
+  position: absolute;
+  left: -112px;
+  bottom: 0;
+  padding-right: 10px;
+  display: none;
+
+  &:after,
+  &:before {
+    content: "";
     position: absolute;
-    left: -110px;
-    padding-right: 10px;
-    display: none;
-    &:after,
-    &:before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-    }
-    &:after {
-      right: -10px;
-      border-width: 11px;
-      border-color: transparent transparent transparent var(--bg-white);
-      z-index: 1;
-    }
-    &:before {
-      right: -11px;
-      z-index: 0;
-      border-width: 11px;
-      border-color: transparent transparent transparent var(--border-1);
-    }
-    .yzp-skin-list {
-      width: 100px;
-      border: 1px solid var(--border-1);
-      border-radius: 5px;
-      backdrop-filter: saturate(100%) blur(10px);
-      background: rgba(var(--rgb-white),.5);
-    }
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    bottom: var(--space-15);
+    margin: auto;
+  }
 
-    .yzp-skin-item {
-      display: block;
-      &:hover,&.active {
-        color: var(--color-primary);
-        background: var(--color-primary-01);
-      }
+  &:after {
+    right: -10px;
+    border-width: 11px;
+    border-color: transparent transparent transparent rgba(var(--rgb-white), .8);
+    z-index: 1;
+  }
+
+  &:before {
+    right: -11px;
+    z-index: 0;
+    border-width: 11px;
+    border-color: transparent transparent transparent var(--border-1);
+  }
+
+  .yzp-skin-list {
+    width: 100px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-1);
+    border-radius: 5px;
+    backdrop-filter: saturate(100%) blur(10px);
+    background: rgba(var(--rgb-white), .5);
+  }
+
+  .yzp-skin-item {
+    display: block;
+    padding: var(--space-15);
+    cursor: pointer;
+    &:hover,
+    &.active {
+      color: var(--color-primary);
+      background: var(--color-primary-01);
     }
   }
 }

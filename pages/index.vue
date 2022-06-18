@@ -5,7 +5,7 @@ import { setAticleLink } from '@/utils'
 const { articleApi } = useApi()
 
 const banners = await articleApi.getBanners()
-const swipers = banners.value.map((e: any) => {
+const swipers = banners.map((e: any) => {
   return {
     ...e,
     title: e.name,

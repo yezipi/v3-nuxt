@@ -2,7 +2,7 @@
 import { timeAgao } from '@/utils/index'
 
 const { $baseSettings } = useNuxtApp()
-const { web_avatar, web_name } = $baseSettings.value
+const { web_avatar, web_name } = $baseSettings
 
 const props = defineProps({
   type: {
@@ -37,11 +37,9 @@ condition[parentType[props.type]] = props.parentId
 
 const initList = async () => {
   if (props.type !== 'feedback') {
-    const result = await commentApi.getList(condition)
-    list.value = result.value
+    list.value = await commentApi.getList(condition)
   } else {
-    const result = await feedbackApi.getList(condition)
-    list.value = result.value
+    list.value = await feedbackApi.getList(condition)
   }
   emit('load', list)
 }

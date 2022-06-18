@@ -4,7 +4,7 @@ import { scrollAnimation } from '~~/utils/index'
 
 const route = useRoute()
 const { $baseSettings, $columns, $flatColumns } = useNuxtApp()
-const { web_notice, web_logo } = $baseSettings ? $baseSettings.value : ref({})
+const { web_notice, web_logo } = $baseSettings || {}
 
 const scroller = new scrollAnimation()
 

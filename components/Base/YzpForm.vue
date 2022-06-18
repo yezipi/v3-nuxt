@@ -122,7 +122,8 @@ const submit = async () => {
     } else {
       res = await commentApi.save(params)
     }
-    $message.success(res.value.msg)
+    console.log(res)
+    $message.success(res.msg)
     form.content = ''
     emit('success', params)
   } catch (e) {

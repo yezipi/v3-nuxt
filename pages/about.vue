@@ -32,16 +32,24 @@ const { $columns } = useNuxtApp()
 const { columnApi, settingsApi } = useApi()
 
 const currColumn = $columns.value ? $columns.value.find((e: any) => e.url === route.name) : {}
-const info = await columnApi.getDetail(Number(currColumn.id))
-const logs = await settingsApi.getChangeLogs()
+
+const info = ref(undefined)
+
+try {
+  info.value = await columnApi.getDetail(Number(currColumn.id))
+} catch(e) {
+  console.log(e)
+}
+
+const changeLogs = await settingsApi.getChangeLogs()
 </script>
 
 <template>
   <div class="yzp-about-wrap">
-    <div class="yzp-about-info" v-html="info.content"></div>
+    <div v-if="info" class="yzp-about-info" v-html="info.content"></div>
     <base-yzp-panel title="更新日志" icon="iconxinxi" noBg noPadding>
       <ul class="yzp-changelogs-list">
-        <li v-for="(item, index) in logs.rows" :key="index" class="yzp-changelogs-item">
+        <li v-for="(item, index) in changeLogs.rows" :key="index" class="yzp-changelogs-item">
           <div class="yzp-changelogs-item-top">
             <span class="color888">v{{ item.version }} {{ timeAgao(item.created_at, true) }}</span>
           </div>

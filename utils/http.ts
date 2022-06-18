@@ -13,7 +13,7 @@ export interface ValueConfig {
 }
 
 const fetch = (url: string, options?: any): Promise<any> => {
-  const { $config, $router } = useNuxtApp()
+  const { $config } = useNuxtApp()
   const reqUrl = $config.baseURL + url
   return new Promise((resolve, reject) => {
     useFetch(reqUrl, { ...options }).then(({ data, error }: _AsyncData<any, any>) => {
@@ -24,10 +24,9 @@ const fetch = (url: string, options?: any): Promise<any> => {
       const value = data.value
       const result = value && value.data
       if (!result || value.code !== 1) {
-        resolve(ref<any>(result))
-        $router.replace('/reject/' + value.status)
+        reject(value)
       } else {
-        resolve(ref<any>(options.method === 'get' ? result : value))
+        resolve(options.method === 'post' ? value : result)
       }
     }).catch((err: any) => {
       console.log(err)

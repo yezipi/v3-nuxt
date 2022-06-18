@@ -86,6 +86,14 @@
 }
 .yzp-theme-winter .yzp-header {
   background: url('./img/header.jpg');
+  backdrop-filter: none;
+}
+.yzp-theme-winter .yzp-header-nav .yzp-drop-nav .yzp-sub-list {
+  backdrop-filter: saturate(100%) blur(10px);
+  background: rgba(var(--rgb-white), .5);
+}
+.yzp-theme-winter .yzp-header-nav .yzp-nav-list .yzp-nav-item:hover .yzp-drop-nav {
+  animation: none;
 }
 .yzp-theme-winter .yzp-header-nav .yzp-nav-list .yzp-nav-item {
   color: #ffffff;

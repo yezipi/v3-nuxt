@@ -23,7 +23,7 @@ const setTabRefs = (el: any) => {
 }
 
 const result = await articleApi.getMostLikeAndMostComment()
-const { mostComment, mostLike } = result.value
+const { mostComment, mostLike } = result
 articles.value = [
   { rows: mostLike },
   { rows: mostComment }

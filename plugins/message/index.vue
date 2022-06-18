@@ -83,10 +83,11 @@ onMounted(() => show())
 .yzp-message-wrap .yzp-meesage-box {
   box-shadow: 0 0 10px var(--border-1);
   border: 1px solid var(--border-1);
-  padding: var(--space-15);
+  padding: var(--space-15) var(--space-30);
   display: flex;
   align-items: center;
   border-radius: var(--border-radius);
+  max-width: 50%;
 }
 .yzp-message-wrap .yzp-message-img {
   width: 45px;
@@ -95,6 +96,7 @@ onMounted(() => show())
 }
 .yzp-message-wrap .yzp-message-tip {
   font-size: 14px;
+  word-break: break-all;
 }
 .zoomIn {
   animation: zoomIn 0.3s linear;

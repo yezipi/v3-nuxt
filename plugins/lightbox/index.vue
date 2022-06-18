@@ -83,6 +83,7 @@ watch(() => props.visible, (res: boolean) => {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: saturate(100%) blur(10px);
   z-index: 19;
   display: flex;
   align-items: center;

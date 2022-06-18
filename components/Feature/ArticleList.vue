@@ -44,8 +44,7 @@ const filter = ref<any>(props.condition)
 const articles = ref<any>({ count: 0, rows: [] as any })
 
 const getArticles = async () => {
-  const data = await articleApi.getList({ ...filter.value, ...route.query })
-  articles.value = data.value
+  articles.value = await articleApi.getList({ ...filter.value, ...route.query })
   emit('load', articles)
 }
 

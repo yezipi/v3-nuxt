@@ -6,8 +6,7 @@ const { moodApi } = useApi()
 const moods = ref<any>({})
 
 const getMoods = async () => {
-  const result = await moodApi.getList(route.query)
-  moods.value = result.value
+  moods.value = await moodApi.getList(route.query)
 }
 
 await getMoods()

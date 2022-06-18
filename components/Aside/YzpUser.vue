@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { $baseSettings, $message, $db  } = useNuxtApp()
-const { web_avatar, web_like, web_slogan } = $baseSettings ? $baseSettings.value : {} as any
+const { web_avatar, web_like, web_slogan } = $baseSettings || {}
 
 const likeNum = ref(web_like || 0)
 

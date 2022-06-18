@@ -320,7 +320,7 @@ onMounted(() => {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.5);
+      background: rgba(var(--rgb-white),0.5);
       position: absolute;
       top: 0;
       bottom: 0;
@@ -441,7 +441,7 @@ onMounted(() => {
         height: 5px;
         width: 10px;
         border-radius: 10px;
-        background: rgba(var(--rbg-white),0.5);
+        background: rgba(var(--rgb-white),0.5);
         transition: all 0.3s;
         margin: 0 5px;
         &.active {

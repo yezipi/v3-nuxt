@@ -35,18 +35,15 @@ const albums = ref<any>({ count: 0, rows: [] as any })
 const info = ref<any>({})
 
 if (props.condition.album_id) {
-  const res = await albumApi.getDetail(props.condition.album_id)
-  info.value = res.value
+  info.value = await albumApi.getDetail(props.condition.album_id)
 }
 
 const getList = async () => {
   const params = { ...filter.value, ...route.query }
   if (props.condition.album_id) {
-    const data = await albumApi.getPictures(params)
-    albums.value = data.value
+    albums.value = await albumApi.getPictures(params)
   } else {
-    const data = await albumApi.getList(params)
-    albums.value = data.value
+    albums.value = await albumApi.getList(params)
   }
   emit('load', albums)
 }

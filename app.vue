@@ -9,7 +9,7 @@ interface ColumnItem {
   subcolumns: any[]
 }
 
-const currTheme =  useCookie<{ theme: string }>('theme')
+const currTheme =  useCookie<string>('theme')
 
 const { settingsApi, columnApi } = useApi()
 
@@ -31,8 +31,8 @@ const homeRoute = {
 const personalizeSettings = await settingsApi.getPersonalizeSettings()
 const baseSettings = await settingsApi.getBaseSettings()
 
-const { web_name, web_title, web_description, web_keywords } = baseSettings ? baseSettings.value : ref({})
-const custome: any = personalizeSettings ? personalizeSettings.value : ref({})
+const { web_name, web_title, web_description, web_keywords } = baseSettings || {}
+const customeSettings: any = personalizeSettings || {}
 
 const metaConfig = {
   title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
@@ -49,11 +49,11 @@ const metaConfig = {
     }
   ],
   htmlAttrs: {
-    style: custome.gray ? 'filter: grayscale(1)' : ''
+    style: customeSettings.gray ? 'filter: grayscale(1)' : ''
   },
   bodyAttrs: {
-    class: `yzp-theme-${custome.style}`,
-    style: custome.style === 'fresh' && custome.background ? `background-image: url(${custome.background})` : ''
+    class: `yzp-theme-${customeSettings.style}`,
+    style: customeSettings.style === 'fresh' && customeSettings.background ? `background-image: url(${customeSettings.background})` : ''
   },
   link: [] as any,
   script: [] as any
@@ -61,29 +61,31 @@ const metaConfig = {
 
 // 如果cookie中已经设置了主题
 if (currTheme.value) {
-  custome.style = currTheme.value
+  customeSettings.style = currTheme.value
 }
 
 metaConfig.link.push({
   hid: 'theme',
   id: 'theme',
   rel: 'stylesheet',
-  href: `/theme/${custome.style}/index.css`
+  href: `/theme/${customeSettings.style}/index.css`
 })
 
-if (custome.style === 'spring' || custome.style === 'autumn' || custome.style === 'winter') {
-    metaConfig.script.push({
-      id: 'fallenLeaves',
-      type: 'text/javascript',
-      src: '/js/fallenLeaves.js'
+if (customeSettings.style === 'spring' || customeSettings.style === 'summer' || customeSettings.style === 'autumb' || customeSettings.style === 'winter') {
+  metaConfig.script.push({
+    id: 'fallenLeaves',
+    type: 'text/javascript',
+    src: '/js/fallenLeaves.js'
   })
 }
+
+currTheme.value = customeSettings.style
 
 useHead(metaConfig)
 
 // 获取栏目数据
 const navData = await columnApi.getList()
-const navVal = navData ? navData.value: []
+const navVal = navData || []
 columns.value = [ homeRoute, ...navVal ]
 
 // 数组打平

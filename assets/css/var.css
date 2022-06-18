@@ -16,9 +16,9 @@
   --color-dark: rgb(var(--rgb-dark));
   --color-white: rgb(var(--rgb-white));
   --color-primary: rgb(var(--rgb-primary));
-  --color-gray: rgba(var(--rgb-dark), 0.6);
   --color-primary-05: rgba(var(--rgb-primary), 0.5);
   --color-primary-01: rgba(var(--rgb-primary), 0.1);
+  --color-gray: rgba(var(--rgb-dark), 0.6);
   --color-link: rgb(var(--rgb-sub));
 
   --bg-white: rgba(var(--rgb-white),1);
@@ -60,6 +60,6 @@
   }
   :root {
     --rgb-white: 55, 55, 55;
-    --rgb-dark: 222, 222, 222;
+    --rgb-dark: 180, 180, 180;
   }
 }

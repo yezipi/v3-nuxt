@@ -1,5 +1,5 @@
 .yzp-theme-spring {
-  background-image: url('./img/bg1.jpg');
+  background-image: url('./img/bg.jpg');
 }
 .yzp-theme-spring::after{
   content: '';
@@ -22,7 +22,15 @@
   background: none;
 }
 .yzp-theme-spring .yzp-header {
-  background: url('./img/header1.jpg');
+  background: url('./img/header.jpg');
+  backdrop-filter: none;
+}
+.yzp-theme-spring .yzp-header-nav .yzp-drop-nav .yzp-sub-list {
+  backdrop-filter: saturate(100%) blur(10px);
+  background: rgba(var(--rgb-white), .5);
+}
+.yzp-theme-spring .yzp-header-nav .yzp-nav-list .yzp-nav-item:hover .yzp-drop-nav {
+  animation: none;
 }
 .yzp-theme-spring .yzp-header-nav .yzp-nav-list .yzp-nav-item {
   color: #666666;

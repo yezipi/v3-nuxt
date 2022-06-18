@@ -4,7 +4,7 @@ import { timeAgao } from '@/utils/index'
 const { commentApi } = useApi()
 
 const result = await commentApi.getList({ page: 1, size: 5 })
-const comments = result.value ? result.value.rows : []
+const comments = result && result.rows ? result.rows : []
 
 const commentType = {
   article: {
