@@ -278,7 +278,7 @@ onMounted(() => {
     margin-bottom: var(--space-30);
   }
   .yzp-article-title {
-    font-size: var(--font-xxxxxxxl);
+    font-size: var(--font-30);
     margin-bottom: var(--space-30);
   }
   .yzp-article-count {
@@ -308,8 +308,8 @@ onMounted(() => {
     }
   }
   .yzp-article-content {
-    font-size: var(--font-l);
-    line-height: var(--font-xxxxxxxxl);
+    font-size: var(--font-16);
+    line-height: var(--font-32);
     img, video {
       height: auto;
       max-width: 100%;
@@ -319,7 +319,7 @@ onMounted(() => {
   }
   .yzp-article-edittime {
     color: var(--color-gray);
-    font-size: var(--font-s);
+    font-size: var(--font-12);
     margin-top: var(--space-15);
   }
   .yzp-article-btn {
@@ -568,7 +568,7 @@ onMounted(() => {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        font-size: var(--font-m);
+        font-size: var(--font-14);
         padding: var(--space-5) var(--space-15);
       }
     }

@@ -12,7 +12,7 @@ const { $baseSettings } = useNuxtApp()
         <nuxt-link to="/blogroll">友情链接</nuxt-link>
         <nuxt-link to="/about">关于本站</nuxt-link>
       </div>
-      <div class="yzp-footer-copyroght">
+      <div v-if="$baseSettings.web_date" class="yzp-footer-copyroght">
         <span>CopyRight ©{{ new Date($baseSettings.web_date).getFullYear() + '-' + new Date().getFullYear() + $baseSettings.web_name }} - </span>
         <a href="https://beian.miit.gov.cn/" target="_blank">{{ $baseSettings.web_beian }}</a>
       </div>

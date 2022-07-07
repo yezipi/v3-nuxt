@@ -169,7 +169,7 @@ await getArticles()
     }
 
     .yzp-article-item-title {
-      font-size: var(--font-xl);
+      font-size: var(--font-18);
       font-weight: bold;
 
       &:hover {
@@ -204,7 +204,7 @@ await getArticles()
 
     .yzp-article-item-desc {
       margin: var(--space-10) 0;
-      font-size: var(--font-s);
+      font-size: var(--font-12);
       color: var(--color-gray);
       line-height: 20px;
       text-overflow: ellipsis;

@@ -266,7 +266,7 @@ onMounted(() => {
         height: 100%;
         align-items: center;
         justify-content: center;
-        font-size: var(--font-m);
+        font-size: var(--font-14);
         .iconfont {
           display: inline-block;
           margin-left: 5px;
@@ -330,7 +330,7 @@ onMounted(() => {
       padding: var(--space-10) 0;
       text-align: center;
       width: 100%;
-      font-size: var(--font-m);
+      font-size: var(--font-14);
       &:hover {
         color: var(--color-primary);
         background: var(--color-primary-01);
@@ -352,7 +352,7 @@ onMounted(() => {
   }
 }
 .mobile-nav {
-  font-size: var(--font-xxxxxl);
+  font-size: var(--font-26);
   display: inline-block;
   margin-right: var(--space-15);
   color: #999999;

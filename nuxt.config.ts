@@ -1,6 +1,6 @@
 import { defineNuxtConfig } from 'nuxt'
 
-const BASE_URL = 'http://localhost:7001'
+const BASE_URL = 'http://localhost:8001'
 const SERVER_CONFIG = {
   host: '0.0.0.0',
   port: 4000,

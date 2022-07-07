@@ -39,7 +39,7 @@ ul li {list-style: none;}
 a {text-decoration: none;color: inherit;}
 body {
   font-family: Microsoft YaHei,Menlo,Monaco,Consolas,Courier New,monospace;
-  font-size: var(--font-m);
+  font-size: var(--font-14);
   line-height: 24px;
   margin: 0;
   padding: 0;

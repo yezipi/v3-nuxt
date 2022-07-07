@@ -178,14 +178,14 @@ await getArticles()
           display: none;
         }
         .yzp-case-item-title {
-          font-size: var(--font-l);
+          font-size: var(--font-16);
           display: block;
           margin-bottom: var(--space-5);
         }
         .yzp-case-item-bottom {
           display: flex;
           justify-content: space-between;
-          font-size: var(--font-s);
+          font-size: var(--font-12);
           color: var(--color-gray);
           .iconfont {
             display: inline-block;

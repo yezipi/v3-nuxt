@@ -117,7 +117,7 @@ const previewImage = (src: string) => {
       display: flex;
       align-items: center;
       color: var(--color-gray);
-      font-size: var(--font-s);
+      font-size: var(--font-12);
       .yzp-mood-item-data-item {
         margin-right: var(--space-15);
       }

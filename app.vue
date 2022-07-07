@@ -30,7 +30,6 @@ const homeRoute = {
 
 const personalizeSettings = await settingsApi.getPersonalizeSettings()
 const baseSettings = await settingsApi.getBaseSettings()
-
 const { web_name, web_title, web_description, web_keywords } = baseSettings || {}
 const customeSettings: any = personalizeSettings || {}
 
@@ -81,7 +80,7 @@ if (customeSettings.style === 'spring' || customeSettings.style === 'summer' || 
 
 currTheme.value = customeSettings.style
 
-useHead(metaConfig)
+useHead(metaConfig as any)
 
 // 获取栏目数据
 const navData = await columnApi.getList()
@@ -91,10 +90,12 @@ columns.value = [ homeRoute, ...navVal ]
 // 数组打平
 const flatColumns = columns.value.map((e: ColumnItem) => [ e, ...e.subcolumns ]).flat()
 
-provide('baseSettings', baseSettings)
-provide('personalizeSettings', personalizeSettings)
-provide('columns', columns || ref([]))
-provide('flatColumns', flatColumns || ref([]))
+// useState('baseSettings', () => baseSettings)
+
+provide('baseSettings', baseSettings || {})
+provide('personalizeSettings', personalizeSettings || {})
+provide('columns', columns || [])
+provide('flatColumns', flatColumns || [])
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []

@@ -55,7 +55,7 @@ const moods = await commentApi.getList({ page: 1, size: 5 })
       }
     }
     .yzp-aside-mood-date {
-      font-size: var(--font-s);
+      font-size: var(--font-12);
       color: var(--color-gray);
       flex-shrink: 0;
     }

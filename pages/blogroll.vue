@@ -86,7 +86,7 @@ const blogrolls = await blogrollApi.getList()
     .yzp-blogroll-item-info {
       line-height: 16px;
       overflow: hidden;
-      font-size: var(--font-s);
+      font-size: var(--font-12);
       div {
         white-space: nowrap;
         overflow: hidden;

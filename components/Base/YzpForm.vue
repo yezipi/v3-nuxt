@@ -224,7 +224,7 @@ onMounted(() => {
     position: absolute;
     left: var(--space-15);
     margin: auto;
-    font-size: var(--font-l);
+    font-size: var(--font-16);
     color: var(--color-gray);
   }
 }
@@ -239,7 +239,7 @@ onMounted(() => {
     height: 40px;
     color: #ffffff;
     transition: all 0.3s;
-    font-size: var(--font-m);
+    font-size: var(--font-14);
     display: flex;
     align-items: center;
     justify-content: center;

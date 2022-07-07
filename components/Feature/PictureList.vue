@@ -190,13 +190,13 @@ await getList()
           display: none;
         }
         .yzp-album-item-title {
-          font-size: var(--font-l);
+          font-size: var(--font-16);
           display: block;
         }
         .yzp-album-item-bottom {
           display: flex;
           justify-content: space-between;
-          font-size: var(--font-s);
+          font-size: var(--font-12);
           color: var(--color-gray);
           margin-top: var(--space-5);
           .iconfont {

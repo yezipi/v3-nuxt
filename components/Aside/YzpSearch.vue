@@ -38,7 +38,7 @@ const toSearch = () => {
     padding: 0 var(--space-15);
   }
   .iconfont {
-    font-size: var(--font-xl);
+    font-size: var(--font-18);
     color: var(--color-gray);
     display: inline-block;
     position: absolute;

@@ -184,13 +184,13 @@ await initList()
         flex: 1;
         .yzp-comment-item-top .yzp-comment-item-id {
           color: var(--color-gray);
-          font-size: var(--font-s);
+          font-size: var(--font-12);
         }
         .yzp-comment-item-data {
           display: flex;
           align-items: center;
           color: var(--color-gray);
-          font-size: var(--font-s);
+          font-size: var(--font-12);
           .yzp-comment-item-data-item {
             margin-right: var(--space-15);
           }
@@ -216,7 +216,7 @@ await initList()
           .yzp-comment-item-reply-top {
             display: flex;
             align-items: center;
-            font-size: var(--font-s);
+            font-size: var(--font-12);
           }
           .yzp-comment-item-reply-date {
             display: inline-block;

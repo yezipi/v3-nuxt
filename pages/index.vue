@@ -101,7 +101,7 @@ const hots = await articleApi.getHot()
         height: 18px;
         text-align: center;
         line-height: 18px;
-        font-size: var(--font-s);
+        font-size: var(--font-12);
       }
       .yzp-hot-title {
         line-height: 18px;

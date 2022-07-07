@@ -216,12 +216,12 @@ const onLike = () => {
       }
       .yzp-aside-info-count-num {
         color: var(--color-dark);
-        font-size: var(--font-xl);
+        font-size: var(--font-18);
         font-weight: bold;
       }
       .yzp-aside-info-count-label {
         color: var(--color-gray);
-        font-size: var(--font-s);
+        font-size: var(--font-12);
       }
     }
   }
