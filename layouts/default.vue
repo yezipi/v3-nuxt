@@ -149,7 +149,7 @@ onMounted(() => {
 .yzp-backtop-btn {
   width: 46px;
   height: 46px;
-  background: url('@/img/back-top-btn.png') no-repeat;
+  background: url('_nuxt/img/back-top-btn.png') no-repeat;
   background-size: 100%;
   text-align: center;
   position: fixed;
