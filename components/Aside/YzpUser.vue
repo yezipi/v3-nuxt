@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-const { $baseSettings, $message, $db  } = useNuxtApp()
-const { web_avatar, web_like, web_slogan } = $baseSettings || {}
+const baseSettings = useBaseSettings()
+const { $message, $db  } = useNuxtApp()
+const { web_avatar, web_like, web_slogan } = baseSettings.value || {}
 
 const likeNum = ref(web_like || 0)
 

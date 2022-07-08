@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { timeAgao } from '@/utils/index'
-const { $baseSettings, $lightbox  } = useNuxtApp()
-const { web_avatar, web_name } = $baseSettings
+const baseSettings: any = useBaseSettings()
+const { $lightbox  } = useNuxtApp()
+const { web_avatar, web_name } = baseSettings.value
 
 const props = defineProps({
   item: {

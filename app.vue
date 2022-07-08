@@ -1,23 +1,19 @@
 <script lang="ts" setup>
 
-interface ColumnItem {
-  name: string,
-  id: string,
-  alias: string,
-  type: string,
-  url: string,
-  subcolumns: any[]
-}
-
-const currTheme =  useCookie<string>('theme')
-
+const currTheme = useCookie<string>('theme')
 const { settingsApi, columnApi } = useApi()
 
 const route = useRoute()
-const { provide, $db } = useNuxtApp()
+const { $db } = useNuxtApp()
 
-const columns = ref<Array<ColumnItem>>([])
+
+const metaConfig = ref<any>({})
 const pageTitle = ref('')
+
+const baseSettings = useBaseSettings()
+const personalizeSettings = usePersonalSettings()
+const columns = useColumns()
+const flatColumns = useFlatColumns()
 
 const homeRoute = {
   name: '首页',
@@ -28,78 +24,80 @@ const homeRoute = {
   subcolumns: []
 }
 
-const personalizeSettings = await settingsApi.getPersonalizeSettings()
-const baseSettings = await settingsApi.getBaseSettings()
-const { web_name, web_title, web_description, web_keywords } = baseSettings || {}
-const customeSettings: any = personalizeSettings || {}
-
-const metaConfig = {
-  title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
-  meta: [
-    {
-      hid: 'description',
-      name: 'description',
-      content: web_description || '',
-    },
-    {
-      hid: 'keywords',
-      name: 'keywords',
-      content: web_keywords || '',
+// 获取设置
+const initSettings = async () => {
+  try {
+    personalizeSettings.value = await settingsApi.getPersonalizeSettings()
+    baseSettings.value = await settingsApi.getBaseSettings()
+    const { web_name, web_title, web_description, web_keywords } = baseSettings.value
+    const { style, gray, background } = personalizeSettings.value
+    const hasLeafStyle = ['spring', 'summer', 'autumn', 'winter']
+    metaConfig.value = {
+      title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: web_description || '',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: web_keywords || '',
+        }
+      ],
+      htmlAttrs: {
+        style: gray ? 'filter: grayscale(1)' : ''
+      },
+      bodyAttrs: {
+        class: `yzp-theme-${style || 'fresh'}`,
+        style: style === 'fresh' && background ? `background-image: url(${background})` : ''
+      },
+      link: [] as any,
+      script: [] as any
     }
-  ],
-  htmlAttrs: {
-    style: customeSettings.gray ? 'filter: grayscale(1)' : ''
-  },
-  bodyAttrs: {
-    class: `yzp-theme-${customeSettings.style}`,
-    style: customeSettings.style === 'fresh' && customeSettings.background ? `background-image: url(${customeSettings.background})` : ''
-  },
-  link: [] as any,
-  script: [] as any
+
+    // 如果cookie中已经设置了主题
+    if (currTheme.value) {
+      personalizeSettings.value.style = currTheme.value
+    }
+
+    metaConfig.link.push({
+      hid: 'theme',
+      id: 'theme',
+      rel: 'stylesheet',
+      href: `/theme/${style || 'fresh'}/index.css`
+    })
+
+    if (hasLeafStyle.includes(style)) {
+      metaConfig.script.push({
+        id: 'fallenLeaves',
+        type: 'text/javascript',
+        src: '/js/fallenLeaves.js'
+      })
+    }
+
+    currTheme.value = style
+  } catch (e) {
+    console.log(e)
+  }
 }
 
-// 如果cookie中已经设置了主题
-if (currTheme.value) {
-  customeSettings.style = currTheme.value
+// 初始化栏目
+const initColumns = async () => {
+  try {
+    const navData = await columnApi.getList()
+    const navVal = navData || []
+    columns.value = [homeRoute, ...navVal]
+    flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
+  } catch (e) {
+    console.log(e)
+  }
 }
-
-metaConfig.link.push({
-  hid: 'theme',
-  id: 'theme',
-  rel: 'stylesheet',
-  href: `/theme/${customeSettings.style}/index.css`
-})
-
-if (customeSettings.style === 'spring' || customeSettings.style === 'summer' || customeSettings.style === 'autumb' || customeSettings.style === 'winter') {
-  metaConfig.script.push({
-    id: 'fallenLeaves',
-    type: 'text/javascript',
-    src: '/js/fallenLeaves.js'
-  })
-}
-
-currTheme.value = customeSettings.style
-
-useHead(metaConfig as any)
-
-// 获取栏目数据
-const navData = await columnApi.getList()
-const navVal = navData || []
-columns.value = [ homeRoute, ...navVal ]
-
-// 数组打平
-const flatColumns = columns.value.map((e: ColumnItem) => [ e, ...e.subcolumns ]).flat()
-
-// useState('baseSettings', () => baseSettings)
-
-provide('baseSettings', baseSettings || {})
-provide('personalizeSettings', personalizeSettings || {})
-provide('columns', columns || [])
-provide('flatColumns', flatColumns || [])
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []
-  const currCoulmn = flatColumns.find((e: ColumnItem) => paths.includes(e.url))
+  const currCoulmn = flatColumns.value.find((e) => paths.includes(e.url))
   pageTitle.value = currCoulmn ? currCoulmn.name : ''
 }
 
@@ -108,6 +106,11 @@ watch(() => route.path, (val: string) => {
 })
 
 setPageTitle(route.path)
+
+await initSettings()
+await initColumns()
+
+useHead(metaConfig.value)
 
 onMounted(() => {
   if (!$db.get('avatar')) {

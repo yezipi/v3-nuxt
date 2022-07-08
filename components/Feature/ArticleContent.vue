@@ -58,7 +58,7 @@ const props = defineProps({
   }
 })
 
-const { $baseSettings } = useNuxtApp()
+const baseSettings = useBaseSettings()
 const { articleApi } = useApi()
 
 const dashangTabIndex = ref(0)
@@ -108,7 +108,7 @@ const checkHljsIsLoad = () => {
 }
 
 useHead({
-  title: info.title + '-' + $baseSettings.web_name,
+  title: info.title + '-' + baseSettings.value.web_name,
   meta: [
     {
       hid: 'description',

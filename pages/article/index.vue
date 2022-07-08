@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  const { $flatColumns } = useNuxtApp()
+  const flatColumns = useFlatColumns()
   const route = useRoute()
   
-  const column = $flatColumns.find((e: any) => route.name === e.url)
+  const column = flatColumns.value.find((e: any) => route.name === e.url)
   const condition = { column_id: column.id, type: 'article' }
 </script>
 

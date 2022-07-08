@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 
-  const { $flatColumns } = useNuxtApp()
+  const flatColumns = useFlatColumns()
   const route = useRoute()
   
-  const subcolumn = $flatColumns.find((e: any) => route.params.id === e.url)
+  const subcolumn = flatColumns.value.find((e) => route.params.id === e.url)
   const condition = { subcolumn_id: subcolumn.id, type: 'case' }
 </script>
 

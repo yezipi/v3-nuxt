@@ -28,10 +28,10 @@ const logTypes = {
 } 
 
 const route  = useRoute()
-const { $columns } = useNuxtApp()
+const columns = useColumns()
 const { columnApi, settingsApi } = useApi()
 
-const currColumn = $columns.value ? $columns.value.find((e: any) => e.url === route.name) : {}
+const currColumn = columns.value ? columns.value.find((e: any) => e.url === route.name) : ({} as any)
 
 const info = ref(undefined)
 

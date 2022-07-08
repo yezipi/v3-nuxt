@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { timeAgao } from '@/utils/index'
 
-const { $baseSettings } = useNuxtApp()
-const { web_avatar, web_name } = $baseSettings
+const { web_avatar, web_name } = useBaseSettings().value
 
 const props = defineProps({
   type: {

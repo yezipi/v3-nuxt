@@ -3,8 +3,10 @@
 import { scrollAnimation } from '~~/utils/index'
 
 const route = useRoute()
-const { $baseSettings, $columns, $flatColumns } = useNuxtApp()
-const { web_notice, web_logo } = $baseSettings || {}
+const baseSettings = useBaseSettings()
+const columns: any = useColumns()
+const flatColumns: any = useFlatColumns()
+const { web_notice, web_logo } = baseSettings.value
 
 const scroller = new scrollAnimation()
 
@@ -45,11 +47,11 @@ const setActiveNav = (index: number) => {
 }
 
 const getCurrNavIndex = () => {
-  if (!$columns) {
+  if (!columns.value) {
     return
   }
-  const columnIndex = $columns.value.findIndex((e: any) => e.url && String(route.path).indexOf(e.url) > -1)
-  currSubcolumn.value = $flatColumns.find((e: any) => e.url == route.params.id)
+  const columnIndex = columns.value.findIndex((e: any) => e.url && String(route.path).indexOf(e.url) > -1)
+  currSubcolumn.value = flatColumns.value.find((e: any) => e.url == route.params.id)
   currIndex.value = route.name === 'index' ? 0 : columnIndex
   activeIndex.value = currIndex.value
 }
@@ -132,7 +134,7 @@ onMounted(() => {
       <nav ref="navRef" id="yzp-header-nav" class="yzp-header-nav mobile-hide">
         <ul class="yzp-nav-list">
           <li
-            v-for="(item, index) in $columns"
+            v-for="(item, index) in columns"
             :key="index"
             :ref="setItemNavRefs"
             :class="{ 'yzp-nav-link-active': index === activeIndex }"
@@ -160,7 +162,7 @@ onMounted(() => {
             <!--end 菜单-->
           </li>
         </ul>
-        <template v-if="$columns">
+        <template v-if="columns">
           <div
             v-show="navItemRefs.length"
             :style="{
