@@ -62,7 +62,7 @@ const initSettings = async () => {
       personalizeSettings.value.style = currTheme.value
     }
 
-    metaConfig.link.push({
+    metaConfig.value.link.push({
       hid: 'theme',
       id: 'theme',
       rel: 'stylesheet',
@@ -70,7 +70,7 @@ const initSettings = async () => {
     })
 
     if (hasLeafStyle.includes(style)) {
-      metaConfig.script.push({
+      metaConfig.value.script.push({
         id: 'fallenLeaves',
         type: 'text/javascript',
         src: '/js/fallenLeaves.js'
@@ -105,10 +105,10 @@ watch(() => route.path, (val: string) => {
   setPageTitle(val)
 })
 
-setPageTitle(route.path)
-
 await initSettings()
 await initColumns()
+
+setPageTitle(route.path)
 
 useHead(metaConfig.value)
 

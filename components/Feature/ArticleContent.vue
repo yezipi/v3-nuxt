@@ -168,7 +168,7 @@ onMounted(() => {
             <i class="iconfont icon03"></i>
             <span class="yzp-article-data">{{ info.like }}</span>
           </div>
-          <div class="yzp-article-icon">
+          <div v-if="info.subcolumn" class="yzp-article-icon">
             <i class="iconfont iconfenlei"></i>
             <span class="yzp-article-data">{{ info.subcolumn && info.subcolumn.name }}</span>
           </div>

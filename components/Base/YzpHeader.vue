@@ -114,7 +114,7 @@ onMounted(() => {
     <div class="yzp-header-main max-w1200">
       <div class="yzp-header-left">
         <div class="yzp-header-logo">
-          <img :src="web_logo" />
+          <img v-if="web_logo" :src="web_logo" />
         </div>
         <!--滚动消息-->
         <div v-if="web_notice && web_notice.length" class="yzp-header-notice">
@@ -213,6 +213,7 @@ onMounted(() => {
       justify-content: center;
       img {
         max-width: 100%;
+        max-height: 100%;
         height: auto;
       }
     }

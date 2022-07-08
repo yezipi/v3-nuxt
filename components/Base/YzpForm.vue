@@ -13,7 +13,7 @@ const props = defineProps({
 
 const emit = defineEmits(['success'])
 
-const { $message } = useNuxtApp()
+const { $message, $db } = useNuxtApp()
 
 const form = reactive({
   nickname: undefined,
@@ -112,7 +112,7 @@ const submit = async () => {
       ...toRaw(form),
       parent_id: props.parentId, 
       type: props.type,
-      avatar: `/public/avatar/${localStorage.getItem('avatar') || 2}.jpg`
+      avatar: `/public/avatar/${$db.get('avatar') || 1}.jpg`
     }
     let res: any = {}
     if (props.type === 'feedback') {

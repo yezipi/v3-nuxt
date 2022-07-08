@@ -118,7 +118,7 @@ watch(() => route.query, (query: { page: any }) => {
           color: #ffffff;
         }
         &.yzp-pagination-item-disabled {
-          background: var(--bg-gray);
+          background: rgba(var(--rgb-dark), 0.2);
           color: var(--color-gray);
           cursor: not-allowed;
         }

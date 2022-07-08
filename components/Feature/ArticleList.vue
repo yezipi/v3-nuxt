@@ -104,7 +104,7 @@ await getArticles()
                 <i class="iconfont icon03"></i>
                 <span class="yzp-article-data">{{ item.like }}</span>
               </div>
-              <div class="yzp-article-item-icon">
+              <div v-if="item.subcolumn" class="yzp-article-item-icon">
                 <i class="iconfont iconfenlei"></i>
                 <span class="yzp-article-data">{{ item.subcolumn.name }}</span>
               </div>

@@ -19,7 +19,7 @@ const hots = await articleApi.getHot()
 
 <template>
   <div class="yzp-index">
-    <div class="yzp-index-top">
+    <div :class="{ noSwiper: !swipers || !swipers.length }"  class="yzp-index-top">
 
       <!--轮播图部分-->
       <base-yzp-swiper :list="swipers" class="yzp-top-swiper">
@@ -41,7 +41,7 @@ const hots = await articleApi.getHot()
       <!--end 轮播图部分-->
 
       <!--热门排行-->
-      <base-yzp-panel v-if="hots && hots.length" icon="iconhuoyan" title="热门排行" :class="{ noSwiper: !swipers || !swipers.length }" class="yzp-top-hot">
+      <base-yzp-panel v-if="hots && hots.length" icon="iconhuoyan" title="热门排行" class="yzp-top-hot">
         <div class="yzp-hot-wrap">
           <ul class="yzp-hot-list">
             <li v-for="(el, i) in hots" :key="i" class="yzp-hot-item">
@@ -68,17 +68,23 @@ const hots = await articleApi.getHot()
     justify-content: space-between;
     height: 250px;
     margin-bottom: var(--space-15);
+    &.noSwiper {
+      height: auto;
+      .yzp-top-hot {
+        flex: 1;
+      }
+      .yzp-hot-item .yzp-hot-title {
+        max-width: none;
+      }
+    }
     .yzp-top-swiper {
       height: 100%;
       flex: 1;
       border-radius: 5px;
+      margin-right: 15px;
     }
     .yzp-top-hot {
-      margin-left: 15px;
       flex: 0.6;
-      &.noSwiper {
-        flex: 1
-      }
       .yzp-hot-wrap {
         position: relative;
         height: 100%;
