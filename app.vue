@@ -24,76 +24,66 @@ const homeRoute = {
   subcolumns: []
 }
 
-// 获取设置
-const initSettings = async () => {
-  try {
-    personalizeSettings.value = await settingsApi.getPersonalizeSettings()
-    baseSettings.value = await settingsApi.getBaseSettings()
-    const { web_name, web_title, web_description, web_keywords } = baseSettings.value
-    const { style, gray, background } = personalizeSettings.value
-    const hasLeafStyle = ['spring', 'summer', 'autumn', 'winter']
-    metaConfig.value = {
-      title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: web_description || '',
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: web_keywords || '',
-        }
-      ],
-      htmlAttrs: {
-        style: gray ? 'filter: grayscale(1)' : ''
-      },
-      bodyAttrs: {
-        class: `yzp-theme-${style || 'fresh'}`,
-        style: style === 'fresh' && background ? `background-image: url(${background})` : ''
-      },
-      link: [] as any,
-      script: [] as any
+// 获取设置信息
+personalizeSettings.value = await settingsApi.getPersonalizeSettings()
+baseSettings.value = await settingsApi.getBaseSettings()
+
+const { web_name, web_title, web_description, web_keywords } = baseSettings.value
+const { style, gray, background } = personalizeSettings.value
+const hasLeafStyle = ['spring', 'summer', 'autumn', 'winter']
+metaConfig.value = {
+  title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: web_description || '',
+    },
+    {
+      hid: 'keywords',
+      name: 'keywords',
+      content: web_keywords || '',
     }
-
-    // 如果cookie中已经设置了主题
-    if (currTheme.value) {
-      personalizeSettings.value.style = currTheme.value
-    }
-
-    metaConfig.link.push({
-      hid: 'theme',
-      id: 'theme',
-      rel: 'stylesheet',
-      href: `/theme/${style || 'fresh'}/index.css`
-    })
-
-    if (hasLeafStyle.includes(style)) {
-      metaConfig.script.push({
-        id: 'fallenLeaves',
-        type: 'text/javascript',
-        src: '/js/fallenLeaves.js'
-      })
-    }
-
-    currTheme.value = style
-  } catch (e) {
-    console.log(e)
-  }
+  ],
+  htmlAttrs: {
+    style: gray ? 'filter: grayscale(1)' : ''
+  },
+  bodyAttrs: {
+    class: `yzp-theme-${style || 'fresh'}`,
+    style: style === 'fresh' && background ? `background-image: url(${background})` : ''
+  },
+  link: [] as any,
+  script: [] as any
 }
 
-// 初始化栏目
-const initColumns = async () => {
-  try {
-    const navData = await columnApi.getList()
-    const navVal = navData || []
-    columns.value = [homeRoute, ...navVal]
-    flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
-  } catch (e) {
-    console.log(e)
-  }
+// 如果cookie中已经设置了主题
+if (currTheme.value) {
+  personalizeSettings.value.style = currTheme.value
 }
+
+metaConfig.value.link.push({
+  hid: 'theme',
+  id: 'theme',
+  rel: 'stylesheet',
+  href: `/theme/${style || 'fresh'}/index.css`
+})
+
+if (hasLeafStyle.includes(style)) {
+  metaConfig.value.script.push({
+    id: 'fallenLeaves',
+    type: 'text/javascript',
+    src: '/js/fallenLeaves.js'
+  })
+}
+
+currTheme.value = style
+useHead(metaConfig.value)
+
+// 获取栏目数据
+const navData = await columnApi.getList()
+columns.value = [homeRoute, ...navData || []]
+flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
+
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []
@@ -106,11 +96,6 @@ watch(() => route.path, (val: string) => {
 })
 
 setPageTitle(route.path)
-
-await initSettings()
-await initColumns()
-
-useHead(metaConfig.value)
 
 onMounted(() => {
   if (!$db.get('avatar')) {

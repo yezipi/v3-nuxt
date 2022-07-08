@@ -213,6 +213,7 @@ onMounted(() => {
       justify-content: center;
       img {
         max-width: 100%;
+        max-height: 100%;
         height: auto;
       }
     }
