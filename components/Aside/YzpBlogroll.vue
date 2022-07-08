@@ -30,11 +30,13 @@ const blogroll = result && result.rows ? result.rows : []
 .yzp-aside-blogroll-wrap {
   margin-right: -10px;
   .yzp-aside-blogroll-item {
-    margin-bottom: var(--space-10);
-    margin-right: var(--space-10);
+    padding: var(--space-5) var(--space-10);
     cursor: pointer;
+    transition: all 0.3s;
+    border-radius: var(--border-radius);
     &:hover {
-      text-decoration: underline;
+      background: var(--color-primary);
+      color: var(--color-white);
     }
   }
 }
