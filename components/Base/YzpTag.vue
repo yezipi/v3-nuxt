@@ -35,6 +35,12 @@ const props = defineProps({
   border: 1px solid #d9d9d9;
   line-height: 24px;
   font-size: 12px;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: -3px 3px 3px rgba(0,0,0,0.2);
+    opacity: 0.8;
+  }
   &.yzp-tag-small {
     padding: 0 var(--space-5);
     line-height: 18px;
