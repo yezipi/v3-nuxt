@@ -67,7 +67,7 @@ const getCommentLink = (item: any) => {
               <span class="yzp-aside-comment-item-nickname">{{ item.nickname }}</span>
               <span class="yzp-aside-comment-item-ua color-primary">{{ item.ua }}</span>
             </div>
-            <span class="yzp-aside-comment-item-date">{{ timeAgao(item.createdAt) }}</span>
+            <span class="yzp-aside-comment-item-date">{{ timeAgao(item.created_at) }}</span>
           </div>
           <div class="yzp-aside-comment-item-article">
             <base-yzp-tag :color="commentType[item.type].color" size="small">{{ commentType[item.type].name }}</base-yzp-tag>

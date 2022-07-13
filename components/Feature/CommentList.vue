@@ -81,7 +81,7 @@ await initList()
             <div class="yzp-comment-item-data">
               <div class="yzp-comment-item-data-item">
                 <i class="iconfont iconshijian1"></i>
-                <span>{{ timeAgao(item.createdAt, true) }}</span>
+                <span>{{ timeAgao(item.created_at, true) }}</span>
               </div>
               <div class="yzp-comment-item-data-item">
                 <i class="iconfont iconweizhi"></i>
