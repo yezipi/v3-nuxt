@@ -81,9 +81,8 @@ useHead(metaConfig.value)
 
 // 获取栏目数据
 const navData = await columnApi.getList()
-columns.value = [homeRoute, ...navData || []]
+columns.value = [homeRoute, ...(navData || [])]
 flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
-
 
 const setPageTitle = (val: string) => {
   const paths = val ? val.split('/').filter((e: string) => e) : []
