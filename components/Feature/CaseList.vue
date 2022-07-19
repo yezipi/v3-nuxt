@@ -93,7 +93,7 @@ await getArticles()
                 <i class="iconfont icon03"></i>
                 <span class="yzp-case-data">{{ item.like }}</span>
               </div>
-              <div class="yzp-case-item-icon">
+              <div v-if="item.subcolumn" class="yzp-case-item-icon">
                 <i class="iconfont iconfenlei"></i>
                 <span class="yzp-case-data">{{ item.subcolumn.name }}</span>
               </div>
