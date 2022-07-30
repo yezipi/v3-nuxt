@@ -94,6 +94,7 @@ watch(() => route.path, () => {
 
 onMounted(() => {
   initActiveIndex()
+  scroller.stop()
   scroller.start({
     list: web_notice,
     intervalChange: () => {

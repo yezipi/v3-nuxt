@@ -38,6 +38,9 @@
   backdrop-filter: none;
   box-shadow: none;
 }
+.yzp-theme-autumn .yzp-header-nav .yzp-drop-nav:after {
+  border-color: transparent transparent rgba(var(--rgb-white), .7)
+}
 .yzp-theme-autumn .yzp-header-nav .yzp-drop-nav .yzp-sub-list {
   background: rgba(var(--rgb-white), .5);
   backdrop-filter: saturate(100%) blur(10px);
