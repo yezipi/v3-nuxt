@@ -60,3 +60,8 @@ export const useFlatColumns = (data?: any) => {
   return useState<ColumnItem[]>('flatColumns', () => data || [])
 }
 
+/** 打平的栏目 */
+export const useTheme = () => {
+  return useState<string>('theme', () => useCookie<string>('theme'))
+}
+

@@ -22,8 +22,13 @@
   background: none;
 }
 .yzp-theme-spring .yzp-header {
-  background: url('./img/header.jpg');
+  background: url('./img/bg.jpg');
+  background-size: cover!important;
+  background-attachment: fixed!important;
+  background-repeat: no-repeat!important;
+  background-position: center!important;
   backdrop-filter: none;
+  box-shadow: none;
 }
 .yzp-theme-spring .yzp-header-nav .yzp-drop-nav .yzp-sub-list {
   backdrop-filter: saturate(100%) blur(10px);

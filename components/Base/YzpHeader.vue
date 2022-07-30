@@ -4,6 +4,8 @@ import { scrollAnimation } from '~~/utils/index'
 
 const route = useRoute()
 const baseSettings = useBaseSettings()
+const personalSettings = usePersonalSettings()
+const currTheme = useTheme()
 const columns: any = useColumns()
 const flatColumns: any = useFlatColumns()
 const { web_notice, web_logo } = baseSettings.value
@@ -22,7 +24,6 @@ const scrolling = ref(false)
 const currIndex = ref(-1) // 当前页面的菜单索引
 const activeIndex = ref(-1) // 滑动菜单的索引
 const currSubcolumn = ref<any>({}) // 当前二级分类
-const navVisible = ref(false)
 const navRef = ref()
 
 const setItemNavRefs = (el: any) => {
@@ -110,7 +111,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="yzp-header blur">
+  <header
+    :style="currTheme === 'fresh' && personalSettings.background ? { background: `url(${personalSettings.background})` } : ''"
+    class="yzp-header blur"
+  >
     <div class="yzp-header-main max-w1200">
       <div class="yzp-header-left">
         <div class="yzp-header-logo">
@@ -189,9 +193,6 @@ onMounted(() => {
   width: 100%;
   height: 70px;
   z-index: 9;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-position: top center !important;
 }
 .yzp-header-main {
   display: flex;

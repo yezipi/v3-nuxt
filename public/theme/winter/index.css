@@ -86,6 +86,8 @@
 }
 .yzp-theme-winter .yzp-header {
   background: url('./img/header.jpg');
+  background-size: 100% 100%;
+  background-position: center;
   backdrop-filter: none;
 }
 .yzp-theme-winter .yzp-header-nav .yzp-drop-nav .yzp-sub-list {

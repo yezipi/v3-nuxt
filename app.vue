@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 
-const currTheme = useCookie<string>('theme')
-const settingsTheme = ref('')
 const { settingsApi, columnApi } = useApi()
 
 const route = useRoute()
@@ -11,6 +9,8 @@ const { $db } = useNuxtApp()
 const metaConfig = ref<any>({})
 const pageTitle = ref('')
 
+const settingsTheme = ref<string>('')
+const currTheme = useCookie<string>('theme')
 const baseSettings = useBaseSettings()
 const personalizeSettings = usePersonalSettings()
 const columns = useColumns()
@@ -31,10 +31,13 @@ baseSettings.value = await settingsApi.getBaseSettings()
 
 const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 const { style, gray, background } = personalizeSettings.value
-const hasLeafStyle = ['spring', 'summer', 'autumn', 'winter']
+const hasLeafStyle = ['spring', 'autumn', 'winter']
 // 如果cookie中已经设置了主题
 if (currTheme.value) {
   settingsTheme.value = currTheme.value
+} else {
+  currTheme.value = settingsTheme.value = style
+  useTheme().value = style
 }
 metaConfig.value = {
   title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),

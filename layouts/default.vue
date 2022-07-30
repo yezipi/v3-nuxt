@@ -2,13 +2,16 @@
 const backTopButtonShow = ref(false)
 
 const currTheme = useCookie<string>('theme')
+const personalSettings = usePersonalSettings()
 
 const themeList = ref([
+  { name: '春季', id: 'spring', Leaves: true },
+  { name: '夏季', id: 'summer', Leaves: false },
+  { name: '秋季', id: 'autumn', Leaves: true },
+  { name: '冬季', id: 'winter', Leaves: true },
   { name: '暗黑', id: 'dark', Leaves: false },
   { name: '简约', id: 'simple', Leaves: false },
-  { name: '春季', id: 'spring', Leaves: true },
-  { name: '秋季', id: 'autumn', Leaves: true },
-  { name: '冬季', id: 'winter', Leaves: true }
+  { name: '小清新', id: 'fresh', Leaves: false },
 ])
 
 const backToTop = () => {
@@ -58,8 +61,15 @@ const changeTheme = (theme: { name: string, id: any, Leaves: boolean }) => {
       headEle.removeChild(leavesScriptEle)
     }
   }
+  if (theme.id !== 'fresh') {
+    document.body.removeAttribute('style')
+  } else {
+    document.body.setAttribute('style', `background-image: url(${personalSettings.value.background})`)
+  }
   document.body.setAttribute('class', `yzp-theme-${theme.id}`)
   currTheme.value = theme.id
+  personalSettings.value.style = theme.id
+  useTheme().value = theme.id
   setTimeout(() => {
     window.location.reload()
   })
