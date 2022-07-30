@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
 const currTheme = useCookie<string>('theme')
+const settingsTheme = ref('')
 const { settingsApi, columnApi } = useApi()
 
 const route = useRoute()
@@ -31,6 +32,10 @@ baseSettings.value = await settingsApi.getBaseSettings()
 const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 const { style, gray, background } = personalizeSettings.value
 const hasLeafStyle = ['spring', 'summer', 'autumn', 'winter']
+// 如果cookie中已经设置了主题
+if (currTheme.value) {
+  settingsTheme.value = currTheme.value
+}
 metaConfig.value = {
   title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
   meta: [
@@ -49,26 +54,21 @@ metaConfig.value = {
     style: gray ? 'filter: grayscale(1)' : ''
   },
   bodyAttrs: {
-    class: `yzp-theme-${style || 'fresh'}`,
-    style: style === 'fresh' && background ? `background-image: url(${background})` : ''
+    class: `yzp-theme-${settingsTheme.value || 'fresh'}`,
+    style: settingsTheme.value === 'fresh' && background ? `background-image: url(${background})` : ''
   },
   link: [] as any,
   script: [] as any
-}
-
-// 如果cookie中已经设置了主题
-if (currTheme.value) {
-  personalizeSettings.value.style = currTheme.value
 }
 
 metaConfig.value.link.push({
   hid: 'theme',
   id: 'theme',
   rel: 'stylesheet',
-  href: `/theme/${style || 'fresh'}/index.css`
+  href: `/theme/${settingsTheme.value || 'fresh'}/index.css`
 })
 
-if (hasLeafStyle.includes(style)) {
+if (hasLeafStyle.includes(settingsTheme.value)) {
   metaConfig.value.script.push({
     id: 'fallenLeaves',
     type: 'text/javascript',
@@ -76,7 +76,6 @@ if (hasLeafStyle.includes(style)) {
   })
 }
 
-currTheme.value = style
 useHead(metaConfig.value)
 
 // 获取栏目数据

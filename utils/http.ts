@@ -15,8 +15,10 @@ export interface ValueConfig {
 const fetch = (url: string, options?: any): Promise<any> => {
   const { $config } = useNuxtApp()
   const reqUrl = $config.baseURL + url
+  const key = JSON.stringify(options) + '_' + url
   return new Promise((resolve, reject) => {
-    useFetch(reqUrl, { ...options, key: url }).then(({ data, error }: _AsyncData<any, any>) => {
+    console.log(options)
+    useFetch(reqUrl, { ...options, key }).then(({ data, error }: _AsyncData<any, any>) => {
       if (error.value) {
         reject(error.value)
         return
