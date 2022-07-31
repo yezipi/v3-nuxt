@@ -147,7 +147,7 @@ await getArticles()
     padding: var(--space-15);
     margin-bottom: var(--space-15);
     transition: all 0.3s;
-    min-height: 100px;
+    min-height: 95px;
     display: flex;
     .yzp-article-item-link {
       display: flex;
@@ -182,7 +182,6 @@ await getArticles()
       flex-shrink: 0;
       border-radius: 5px;
       overflow: hidden;
-      height: 100px;
       margin-right: var(--space-15);
       background: var(--bg-primary);
 
@@ -203,7 +202,7 @@ await getArticles()
     }
 
     .yzp-article-item-desc {
-      margin: var(--space-10) 0;
+      margin: var(--space-5) 0;
       font-size: var(--font-12);
       color: var(--color-gray);
       line-height: 20px;
