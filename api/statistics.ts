@@ -13,4 +13,11 @@ export default new class statistics extends Http {
   total() {
     return this.get('/app/v1/statistics/total')
   }
+
+  /**
+   * 网站点赞
+   */
+  like() {
+    return this.post('/app/v1/statistics/like')
+  }
 }

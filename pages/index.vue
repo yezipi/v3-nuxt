@@ -84,7 +84,7 @@ const hots = await articleApi.getHot()
       margin-right: 15px;
     }
     .yzp-top-hot {
-      flex: 0.6;
+      width: 40%;
       .yzp-hot-wrap {
         position: relative;
         height: 100%;
@@ -111,8 +111,6 @@ const hots = await articleApi.getHot()
       }
       .yzp-hot-title {
         line-height: 18px;
-        max-width: 220px;
-        display: block;
         margin-left: 15px;
         white-space: nowrap;
         text-overflow: ellipsis;

@@ -73,4 +73,13 @@ export default new class article extends Http {
   unlock(params?: { id: any, password: any }) {
     return this.post('/app/v1/article/unlock', params)
   }
+
+  /**
+   * 文章点赞
+   * @param { Object } params params
+   * @param { Number } params.id 文章id
+   */
+  like(params?: { id: any }) {
+    return this.post('/app/v1/article/like', params)
+  }
 }

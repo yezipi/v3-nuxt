@@ -16,13 +16,20 @@ const total = ref<Total>({
   comment: 0,
 })
 
-const onLike = () => {
-  if (!$db.get('isLikedWeb')) {
-    $db.set('isLikedWeb', true)
-    $message.success('点赞成功')
-    likeNum.value += 1
-  } else {
+// 点赞
+const like = async () => {
+  if (+$db.get('isLike') === 1) {
     $message.warning('您已经点过赞了')
+    return
+  }
+  try {
+    await statisticsApi.like()
+    likeNum.value += 1
+    $db.set('isLike', 1)
+    $message.success('点赞成功')
+  } catch (error: any) {
+    console.log(error);
+    $message.error(error.msg)
   }
 }
 
@@ -43,7 +50,7 @@ try {
       </div>
       <p class="yzp-aside-info-slogan">{{ web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
-        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn" @click="onLike">
+        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn" @click="like">
           <i class="iconfont iconicon-test"></i>
           <span>{{ likeNum }}</span>
         </div>

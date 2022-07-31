@@ -1,5 +1,6 @@
 // 封装请求，2022-1-15 yzp
 import { _AsyncData } from 'nuxt/dist/app/composables/asyncData'
+import { hash } from 'ohash'
 
 export interface ResponseConfig {
   code: number,
@@ -15,9 +16,9 @@ export interface ValueConfig {
 const fetch = (url: string, options?: any): Promise<any> => {
   const { $config } = useNuxtApp()
   const reqUrl = $config.baseURL + url
-  const key = JSON.stringify(options) + '_' + url
+  const key = hash(JSON.stringify(options) + '_' + url)
   return new Promise((resolve, reject) => {
-    console.log(options)
+    console.log(key)
     useFetch(reqUrl, { ...options, key }).then(({ data, error }: _AsyncData<any, any>) => {
       if (error.value) {
         reject(error.value)

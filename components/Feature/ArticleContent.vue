@@ -59,7 +59,7 @@ const props = defineProps({
   }
 })
 
-const { $message } = useNuxtApp()
+const { $message, $db } = useNuxtApp()
 const baseSettings = useBaseSettings()
 const { articleApi } = useApi()
 
@@ -70,6 +70,7 @@ const count = ref(0)
 const password = ref('')
 const loading = ref(false)
 const info = ref<ArticleFields>({} as any)
+const likeCount = ref(0)
 
 info.value = await articleApi.getDetail(Number(props.id))
 
@@ -120,7 +121,7 @@ const unclock = async () => {
   }
   try {
     loading.value = true
-    const { data } = await articleApi.unlock({ id: info.value.id, password: password.value })
+    const { data } = await articleApi.unlock({ id: props.id, password: password.value })
     info.value.content = data
     info.value.lock = false
     console.log(info)
@@ -128,6 +129,22 @@ const unclock = async () => {
     $message.error(error.msg)
   } finally {
     loading.value = false
+  }
+}
+
+// 文章点赞
+const like = async () => {
+  if (+$db.get(`articleLikeId_${props.id}`) === props.id) {
+    $message.warning('您已经点过赞了')
+    return
+  }
+  try {
+    await articleApi.like({ id: props.id })
+    info.value.like += 1
+    $db.set(`articleLikeId_${props.id}`, props.id)
+    $message.success('点赞成功')
+  } catch (error: any) {
+    $message.error(error.msg)
   }
 }
 
@@ -151,12 +168,6 @@ useHead({
   script: [
     { type: 'text/javascript', src: 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.5.0/highlight.min.js' },
   ]
-  // link: [
-  //   { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-tomorrow.min.css' }
-  // ],
-  // script: [
-  //   { type: 'text/javascript', src: 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js' },
-  // ]
 })
 
 onMounted(() => {
@@ -218,7 +229,7 @@ onMounted(() => {
       </div>
 
       <!--编辑时间-->
-      <div class="yzp-article-edittime">编辑时间： {{ timeAgao(info.updated_at, true) }}</div>
+      <!-- <div class="yzp-article-edittime">编辑时间： {{ timeAgao(info.updated_at, true) }}</div> -->
       <!--end 编辑时间-->
 
       <!--文章底部按钮-->
@@ -239,7 +250,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div class="yzp-article-zan">
+        <div class="yzp-article-zan" @click="like">
           <i class="iconfont iconicon-test"></i>
           <span>{{ info.like || 0 }}</span>
         </div>
@@ -301,6 +312,8 @@ onMounted(() => {
 <style lang="less">
 .yzp-article-main {
   padding: var(--space-30);
+  position: relative;
+  z-index: 1;
   .yzp-article-header {
     text-align: center;
     border-bottom: 1px solid var(--border-1);
