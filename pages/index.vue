@@ -9,7 +9,7 @@ const swipers = banners.map((e: any) => {
   return {
     ...e,
     title: e.name,
-    url: e.cover || '/img/nopic.jpg',
+    cover: e.cover || '/img/nopic.jpg',
   }
 })
 
@@ -31,10 +31,10 @@ const hots = await articleApi.getHot()
             class="yzp-swiper-a"
             target="_blank"
           >
-            <base-yzp-image class="yzp-swiper-img" :src="item.url"></base-yzp-image>
+            <base-yzp-image class="yzp-swiper-img" :src="item.cover"></base-yzp-image>
           </nuxt-link>
           <a v-if="item.type === 3" :href="item.url" class="yzp-swiper-a" target="_blank">
-            <base-yzp-image class="yzp-swiper-img" :src="item.url"></base-yzp-image>
+            <base-yzp-image class="yzp-swiper-img" :src="item.cover"></base-yzp-image>
           </a>
         </template>
       </base-yzp-swiper>

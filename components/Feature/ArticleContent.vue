@@ -2,42 +2,43 @@
 import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
 
 interface ArticleFields {
-  id?: number,
-  value: any,
-  title?: string,
-  content?: string,
-  type?: string,
-  sub_column_id?: number | string,
-  comments_count?: number,
-  column_id?: number,
-  keywords?: string,
-  description?: string,
-  view?: number,
-  like?: number,
-  status?: boolean,
+  id?: number
+  value: any
+  title?: string
+  content?: string
+  type?: string
+  sub_column_id?: number | string
+  comments_count?: number
+  column_id?: number
+  keywords?: string
+  description?: string
+  view?: number
+  like?: number
+  status?: boolean
   top?: boolean
   recommend?: boolean
   comment_open?: boolean
-  tags?: Array<any>,
-  created_at?: Date,
-  updated_at?: Date,
+  tags?: Array<any>
+  created_at?: Date
+  updated_at?: Date
+  lock: boolean
   user?: {
-    nickname: string,
-    id: number,
+    nickname: string
+    id: number
   },
   subcolumn?: {
-    name: string,
-    id: number,
+    name: string
+    id: number
   },
   prev?: {
-    title?: string,
-    id?:number,
-    type?: string,
+    title?: string
+    id?:number
+    type?: string
   },
   next?: {
-    title?: string,
-    id?: number,
-    type?: string,
+    title?: string
+    id?: number
+    type?: string
   },
   similar?: Array<any>
 }
@@ -58,6 +59,7 @@ const props = defineProps({
   }
 })
 
+const { $message } = useNuxtApp()
 const baseSettings = useBaseSettings()
 const { articleApi } = useApi()
 
@@ -65,15 +67,18 @@ const dashangTabIndex = ref(0)
 const tags = ref<any>([])
 const timer = ref()
 const count = ref(0)
+const password = ref('')
+const loading = ref(false)
+const info = ref<ArticleFields>({} as any)
 
-const info: ArticleFields = await articleApi.getDetail(Number(props.id))
+info.value = await articleApi.getDetail(Number(props.id))
 
 const onDashangTypeChange = (index: number) => {
   dashangTabIndex.value = index
 }
 
-if (info.tags) {
-  tags.value = info.tags.map((e: string) => {
+if (info.value.tags) {
+  tags.value = info.value.tags.map((e: string) => {
     return {
       name: e,
       color: setRandomTag()
@@ -107,18 +112,37 @@ const checkHljsIsLoad = () => {
   }
 }
 
+// 查看加密文章
+const unclock = async () => {
+  if (!password.value) {
+    $message.error('请输入密码')
+    return
+  }
+  try {
+    loading.value = true
+    const { data } = await articleApi.unlock({ id: info.value.id, password: password.value })
+    info.value.content = data
+    info.value.lock = false
+    console.log(info)
+  } catch (error: any) {
+    $message.error(error.msg)
+  } finally {
+    loading.value = false
+  }
+}
+
 useHead({
-  title: info.title + '-' + baseSettings.value.web_name,
+  title: info.value.title + '-' + baseSettings.value.web_name,
   meta: [
     {
       hid: 'description',
       name: 'description',
-      content: info.description || '',
+      content: info.value.description || '',
     },
     {
       hid: 'keywords',
       name: 'keywords',
-      content: info.keywords || '',
+      content: info.value.keywords || '',
     }
   ],
   link: [
@@ -185,8 +209,13 @@ onMounted(() => {
       <!--end 描述-->
 
       <!--文章正文-->
-      <div class="yzp-article-content" v-html="info.content"></div>
+      <div v-if="!info.lock && info.content" class="yzp-article-content" v-html="info.content"></div>
       <!--end 正文-->
+
+      <div v-else class="yzp-article-lock">
+        <input v-model="password" type="text" placeholder="请输入密码查看" />
+        <button :disabled="loading" :class="{ disbaled: loading }" @click="unclock">{{ loading? 'loading...': '确定' }}</button>
+      </div>
 
       <!--编辑时间-->
       <div class="yzp-article-edittime">编辑时间： {{ timeAgao(info.updated_at, true) }}</div>
@@ -315,6 +344,30 @@ onMounted(() => {
       max-width: 100%;
       vertical-align: middle;
       border: 0;
+    }
+  }
+  .yzp-article-lock {
+    display: flex;
+    min-height: 285px;
+    align-items: center;
+    justify-content: center;
+    input {
+      height: 40px;
+      padding: 0 var(--space-10);
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+    button {
+      height: 40px;
+      padding: 0 var(--space-20);
+      background: var(--color-primary);
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      color: var(--color-white);
+      &.disabled {
+        background: var(--border-1);
+        cursor: not-allowed;
+      }
     }
   }
   .yzp-article-edittime {

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { setAticleLink } from '~~/utils/index'
 
 const props = defineProps({
 
@@ -19,6 +18,13 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+
+  info: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  },
 })
 
 const emit = defineEmits(['load'])
@@ -32,11 +38,6 @@ const route = useRoute()
 const filter = ref<any>(props.condition)
 
 const albums = ref<any>({ count: 0, rows: [] as any })
-const info = ref<any>({})
-
-if (props.condition.album_id) {
-  info.value = await albumApi.getDetail(props.condition.album_id)
-}
 
 const getList = async () => {
   const params = { ...filter.value, ...route.query }

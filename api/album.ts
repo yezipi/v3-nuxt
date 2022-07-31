@@ -38,4 +38,14 @@ export default new class album extends Http {
   getPictures(params?: PictureListCondition) {
     return this.get('/app/v1/picture', params)
   }
+
+  /**
+   * 查看加密相册
+   * @param { Object } params params
+   * @param { Number } params.id 相册id
+   * @param { Number } params.password 相册密码
+   */
+  unlock(params?: { id: any, password: any }) {
+    return this.post('/app/v1/album/unlock', params)
+  }
 }

@@ -6,6 +6,7 @@ import commentApi from '@/api/comment'
 import feedbackApi from '@/api/feedback'
 import moodApi from '@/api/mood'
 import settingsApi from '@/api/settings'
+import statisticsApi from '@/api/statistics'
 
 export default {
   albumApi,
@@ -16,4 +17,5 @@ export default {
   feedbackApi,
   moodApi,
   settingsApi,
+  statisticsApi,
 }

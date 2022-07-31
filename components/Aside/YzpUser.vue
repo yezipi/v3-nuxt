@@ -1,9 +1,20 @@
 <script lang="ts" setup>
+type Total = {
+  article: number
+  mood: number
+  comment: number
+}
+
+const { statisticsApi } = useApi()
 const baseSettings = useBaseSettings()
 const { $message, $db  } = useNuxtApp()
 const { web_avatar, web_like, web_slogan } = baseSettings.value || {}
-
 const likeNum = ref(web_like || 0)
+const total = ref<Total>({
+  article: 0,
+  mood: 0,
+  comment: 0,
+})
 
 const onLike = () => {
   if (!$db.get('isLikedWeb')) {
@@ -13,6 +24,12 @@ const onLike = () => {
   } else {
     $message.warning('您已经点过赞了')
   }
+}
+
+try {
+  total.value = await statisticsApi.total()
+} catch(e) {
+  console.log(e)
 }
 
 </script>
@@ -42,16 +59,16 @@ const onLike = () => {
       </div>
       <div class="yzp-aside-info-count">
         <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">523</span>
-          <span class="yzp-aside-info-count-label">今日pv</span>
-        </div>
-        <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">85</span>
+          <span class="yzp-aside-info-count-num">{{ total.article }}</span>
           <span class="yzp-aside-info-count-label">文章</span>
         </div>
         <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">36</span>
-          <span class="yzp-aside-info-count-label">留言</span>
+          <span class="yzp-aside-info-count-num">{{ total.mood }}</span>
+          <span class="yzp-aside-info-count-label">微语</span>
+        </div>
+        <div class="yzp-aside-info-count-item">
+          <span class="yzp-aside-info-count-num">{{ total.comment }}</span>
+          <span class="yzp-aside-info-count-label">评论</span>
         </div>
       </div>
     </div>
