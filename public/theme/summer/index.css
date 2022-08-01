@@ -1,0 +1,56 @@
+:root {
+  --rgb-primary: 130, 200, 255!important;
+}
+.yzp-theme-summer {
+  background-image: url('./img/bg.jpg');
+}
+.yzp-theme-summer::after, .yzp-theme-summer .yzp-header:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(255,255,255,0.1);
+  z-index: -2;
+}
+.yzp-theme-summer .yzp-header:after {
+  position: absolute;
+}
+.yzp-theme-summer .yzp-box, .yzp-theme-summer .yzp-panel-wrap .yzp-panel-title  {
+  backdrop-filter: saturate(100%) blur(10px);
+  background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
+  border: 0;
+}
+.yzp-theme-summer .yzp-box .yzp-panel-title {
+  backdrop-filter: unset;
+  background: none;
+}
+.yzp-theme-summer .yzp-header {
+  background: url('./img/bg.jpg');
+  background-size: cover!important;
+  background-attachment: fixed!important;
+  background-repeat: no-repeat!important;
+  background-position: center!important;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+.yzp-theme-summer .yzp-header-nav .yzp-drop-nav:after {
+  border-color: transparent transparent rgba(var(--rgb-white), .7)
+}
+.yzp-theme-summer .yzp-header-nav .yzp-drop-nav .yzp-sub-list {
+  backdrop-filter: saturate(100%) blur(10px);
+  background: rgba(var(--rgb-white), .5);
+  color: var(--color-gray);
+}
+.yzp-theme-summer .yzp-header-nav .yzp-nav-list .yzp-nav-item:hover .yzp-drop-nav {
+  animation: none;
+}
+.yzp-theme-summer .yzp-header-nav .yzp-nav-list .yzp-nav-item {
+  color: var(--color-white);
+}
+.yzp-theme-summer .yzp-header-nav .yzp-nav-slider-active {
+  background: url('./img/nav.png') center;
+  background-size: 100% 100%;
+}

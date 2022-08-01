@@ -1,18 +1,42 @@
 <script lang="ts" setup>
+type Total = {
+  article: number
+  mood: number
+  comment: number
+}
+
+const { statisticsApi } = useApi()
 const baseSettings = useBaseSettings()
 const { $message, $db  } = useNuxtApp()
 const { web_avatar, web_like, web_slogan } = baseSettings.value || {}
-
 const likeNum = ref(web_like || 0)
+const total = ref<Total>({
+  article: 0,
+  mood: 0,
+  comment: 0,
+})
 
-const onLike = () => {
-  if (!$db.get('isLikedWeb')) {
-    $db.set('isLikedWeb', true)
-    $message.success('点赞成功')
-    likeNum.value += 1
-  } else {
+// 点赞
+const like = async () => {
+  if (+$db.get('isLike') === 1) {
     $message.warning('您已经点过赞了')
+    return
   }
+  try {
+    await statisticsApi.like()
+    likeNum.value += 1
+    $db.set('isLike', 1)
+    $message.success('点赞成功')
+  } catch (error: any) {
+    console.log(error);
+    $message.error(error.msg)
+  }
+}
+
+try {
+  total.value = await statisticsApi.total()
+} catch(e) {
+  console.log(e)
 }
 
 </script>
@@ -26,7 +50,7 @@ const onLike = () => {
       </div>
       <p class="yzp-aside-info-slogan">{{ web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
-        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn" @click="onLike">
+        <div class="yzp-aside-info-btn-item yzp-aside-info-like-btn" @click="like">
           <i class="iconfont iconicon-test"></i>
           <span>{{ likeNum }}</span>
         </div>
@@ -42,16 +66,16 @@ const onLike = () => {
       </div>
       <div class="yzp-aside-info-count">
         <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">523</span>
-          <span class="yzp-aside-info-count-label">今日pv</span>
-        </div>
-        <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">85</span>
+          <span class="yzp-aside-info-count-num">{{ total.article }}</span>
           <span class="yzp-aside-info-count-label">文章</span>
         </div>
         <div class="yzp-aside-info-count-item">
-          <span class="yzp-aside-info-count-num">36</span>
-          <span class="yzp-aside-info-count-label">留言</span>
+          <span class="yzp-aside-info-count-num">{{ total.mood }}</span>
+          <span class="yzp-aside-info-count-label">微语</span>
+        </div>
+        <div class="yzp-aside-info-count-item">
+          <span class="yzp-aside-info-count-num">{{ total.comment }}</span>
+          <span class="yzp-aside-info-count-label">评论</span>
         </div>
       </div>
     </div>

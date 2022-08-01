@@ -73,36 +73,36 @@ const submit = async () => {
   const patternSite = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/
 
   if (!props.parentId && props.type === 'comment') {
-    return $message.warning('缺少id')
+    return $message.error('缺少id')
   }
 
   if (!form.nickname || form.nickname.length < 2) {
-    return $message.warning('昵称不能为空或者太短哦~')
+    return $message.error('昵称不能为空或者太短哦~')
   }
   if (!patternName.test(form.nickname)) {
-    return $message.warning('亲，非法昵称~')
+    return $message.error('亲，非法昵称~')
   }
   if (!patternEmail.test(form.email)) {
-    return $message.warning('亲，非法邮箱~')
+    return $message.error('亲，非法邮箱~')
   }
   if (form.site && !patternSite.test(form.site)) {
-    return $message.warning('亲，非法网址~')
+    return $message.error('亲，非法网址~')
   }
   if (!form.content || form.content.length < 4) {
-    return $message.warning('内容不能为空或者太短哦~')
+    return $message.error('内容不能为空或者太短哦~')
   }
   if (props.type === 'blogroll' && !form.site) {
-    return $message.warning('亲，请填写网址~')
+    return $message.error('亲，请填写网址~')
   }
   if (patternContent.test(form.content)) {
-    return $message.warning('内容包含非法字符哦~')
+    return $message.error('内容包含非法字符哦~')
   }
   if (!verifyCode.value) {
-    return $message.warning('请填写验证码哦~')
+    return $message.error('请填写验证码哦~')
   }
   if (verifyCode.value.toUpperCase() !== checkCode.value) {
     drawVerifyCode()
-    return $message.warning('验证码错误~')
+    return $message.error('验证码错误~')
   }
 
   loading.value = true

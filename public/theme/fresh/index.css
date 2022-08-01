@@ -1,4 +1,4 @@
-.yzp-theme-fresh::after{
+.yzp-theme-fresh::after, .yzp-theme-fresh .yzp-header::after{
   content: '';
   display: block;
   width: 100%;
@@ -9,10 +9,24 @@
   background: rgba(255,255,255,0.3);
   z-index: -2;
 }
+.yzp-theme-fresh .yzp-header::after{
+  position: absolute;
+}
 .yzp-theme-fresh .yzp-box {
   backdrop-filter: saturate(100%) blur(10px);
   background: rgba(var(--rgb-white),.5);
 }
 .yzp-theme-fresh .yzp-panel-wrap .yzp-panel-title {
   background: rgba(var(--rgb-white),.5);
+}
+.yzp-theme-fresh .yzp-header-nav .yzp-drop-nav:after {
+  border-color: transparent transparent rgba(var(--rgb-white), .7)
+}
+.yzp-theme-fresh .yzp-header {
+  background-size: cover!important;
+  background-attachment: fixed!important;
+  background-repeat: no-repeat!important;
+  background-position: center!important;
+  backdrop-filter: none;
+  box-shadow: none;
 }

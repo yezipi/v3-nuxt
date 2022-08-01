@@ -86,8 +86,8 @@ await initList()
               <div class="yzp-comment-item-data-item">
                 <i class="iconfont iconweizhi"></i>
                 <span v-if="item.province">{{ item.province + item.city }}</span>
-                <span v-if="item.address">{{ item.address }}</span>
-                <span v-if="!item.province && !item.city && !item.address">未知</span>
+                <span v-if="item.district">{{ item.district }}</span>
+                <span v-if="!item.province && !item.city && !item.district">未知</span>
               </div>
               <div class="yzp-comment-item-data-item">
                 <i class="iconfont iconiPhone"></i>

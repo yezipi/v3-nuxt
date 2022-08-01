@@ -29,7 +29,7 @@ const toSearch = () => {
   align-items: center;
   justify-content: space-between;
   position: relative;
-  padding: 2px 0;
+  padding: 6px 0;
   .yzp-aside-search-input {
     flex: 1;
     line-height: 45px;
