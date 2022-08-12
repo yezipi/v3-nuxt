@@ -11,10 +11,10 @@
     "cross-env": "^7.0.3",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
-    "nuxt": "^3.0.0-rc.6"
+    "nuxt": "^3.0.0-rc.7"
   },
   "dependencies": {
-    "dayjs": "^1.10.7",
-    "ohash": "^0.1.4"
+    "dayjs": "^1.11.4",
+    "ohash": "^0.1.5"
   }
 }

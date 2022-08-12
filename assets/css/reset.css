@@ -1,7 +1,7 @@
 
 @font-face {
-  font-family: 'Menlo';  /* Project id 2499550 */
-  src: url('../fonts/Menlo.ttf') format('truetype');
+  font-family: 'Menlo';
+  src: url('@/assets/fonts/Menlo.ttf') format('truetype');
 }
 * { margin: 0;padding: 0;outline: none; }
 body::selection { background: var(--color-primary); color: var(--color-white); }
@@ -38,7 +38,7 @@ textarea:focus, .textarea:focus {
 ul li {list-style: none;}
 a {text-decoration: none;color: inherit;}
 body {
-  font-family: Microsoft YaHei,Menlo,Monaco,Consolas,Courier New,monospace;
+  font-family: Microsoft YaHei,Monaco,Consolas,Courier New,monospace;
   font-size: var(--font-14);
   line-height: 24px;
   margin: 0;

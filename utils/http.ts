@@ -18,7 +18,6 @@ const fetch = (url: string, options?: any): Promise<any> => {
   const reqUrl = $config.baseURL + url
   const key = hash(JSON.stringify(options) + '_' + url)
   return new Promise((resolve, reject) => {
-    console.log(key)
     useFetch(reqUrl, { ...options, key }).then(({ data, error }: _AsyncData<any, any>) => {
       if (error.value) {
         reject(error.value)

@@ -6,11 +6,11 @@ const SERVER_CONFIG = {
   port: 4000,
   strictPort: true,
   proxy: {
-    '^/api/.*': {
-      target: BASE_URL,
-      changeOrigin: true,
-      rewrite: (path: string) => path.replace(/^\/api/, '')
-    },
+    // '^/api/.*': {
+    //   target: BASE_URL,
+    //   changeOrigin: true,
+    //   rewrite: (path: string) => path.replace(/^\/api/, '')
+    // },
     '^/public/.*': {
       target: `${BASE_URL}/public`,
       changeOrigin: true,
@@ -49,10 +49,6 @@ export default defineNuxtConfig({
     baseURL: BASE_URL,
   },
   vite: {
-    build: {
-      target: 'es2015', // 兼容低版本浏览器
-    },
     server: SERVER_CONFIG,
-    preview: SERVER_CONFIG,
   }
 })
