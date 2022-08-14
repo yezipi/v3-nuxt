@@ -14,6 +14,7 @@ const props = defineProps({
 const emit = defineEmits(['success'])
 
 const { $message, $db } = useNuxtApp()
+const { commonApi } = useApi()
 
 const form = reactive({
   nickname: undefined,
@@ -27,7 +28,13 @@ const checkCode = ref(undefined)
 const loading = ref(false)
 const codeRef = ref()
 
-const drawNumber = (ctx: any, number: number | string, index: number) => {
+const drawVerifyCode = () => {
+  if (!checkCode.value) {
+    return
+  }
+  const arrStr = checkCode.value.split('')
+  const canvas = codeRef.value
+  const ctx = canvas.getContext('2d')
   ctx.font = '20px normal bold'
 
   // 创建渐变
@@ -35,31 +42,23 @@ const drawNumber = (ctx: any, number: number | string, index: number) => {
   gradient.addColorStop('0', 'green')
   gradient.addColorStop('0.5', 'blue')
   gradient.addColorStop('1.0', 'red')
-
-  // 用渐变填色
-  ctx.fillStyle = gradient;
-  ctx.fillText(number, (index + 1) * 18 , 28)
-}
-
-const drawVerifyCode = () => {
-  verifyCode.value = ''
-  checkCode.value = ''
-  const codeLength = 4
-
-  // 绘制canvas
-  const canvas = codeRef.value
-  const ctx = canvas.getContext('2d')
-
+  
   ctx.fillStyle = '#eeeeee'
   ctx.fillRect(0, 0, canvas.width, canvas.height)
-  
-  const random = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-  for(let i = 0; i < codeLength; i++) {
-    const index = Math.floor(Math.random() * 36)
-    const number = random[index]
-    drawNumber(ctx, number, i)
-    checkCode.value += number
+  // 用渐变填色
+  for (let i = 0; i < arrStr.length; i++) {
+    const num = arrStr[i];
+    ctx.fillStyle = gradient;
+    ctx.fillText(num, (i + 1) * 18 , 28)
+  }
+}
+
+const getVerifyCode = async (refresh?: boolean) => {
+  verifyCode.value = ''
+  checkCode.value = await commonApi.getVerifyCode(new Date().getTime() + checkCode.value)
+  if (refresh) {
+    drawVerifyCode()
   }
 }
 
@@ -101,7 +100,7 @@ const submit = async () => {
     return $message.error('请填写验证码哦~')
   }
   if (verifyCode.value.toUpperCase() !== checkCode.value) {
-    drawVerifyCode()
+    getVerifyCode(true)
     return $message.error('验证码错误~')
   }
 
@@ -130,10 +129,12 @@ const submit = async () => {
     console.log(e)
     $message.error(e.msg || '提交失败，请稍后再试')
   } finally {
-    drawVerifyCode()
+    getVerifyCode(true)
     loading.value = false
   }
 }
+
+await getVerifyCode()
 
 onMounted(() => {
   drawVerifyCode()
@@ -187,7 +188,7 @@ onMounted(() => {
       <div class="yzp-form-item yzp-box">
         <i class="iconxinxi iconfont"></i>
         <input v-model="verifyCode" class="yzp-form-item-input" type="text" placeholder="验证码">
-        <canvas id="yzp-form-code" ref="codeRef" height="39" width="100" @click="drawVerifyCode">不支持canvas</canvas>
+        <canvas id="yzp-form-code" ref="codeRef" height="40" width="100" @click="getVerifyCode(true)">不支持canvas</canvas>
       </div>
       <div class="yzp-form-button">
         <button class="yzp-form-submit yzp-box" :class="{ disabled: loading }" :disabled="loading" @click="submit">

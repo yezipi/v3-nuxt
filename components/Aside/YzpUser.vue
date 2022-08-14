@@ -104,10 +104,9 @@ try {
       transform: rotate(360deg);
     }
     img {
-      width: 80%;
-      height: 80%;
+      width: 90%;
+      height: 90%;
       border-radius: 50%;
-      padding: 10px;
     }
   }
   .yzp-aside-info-slogan {
