@@ -5,12 +5,12 @@ const { settingsApi, columnApi } = useApi()
 const route = useRoute()
 const { $db } = useNuxtApp()
 
-
 const metaConfig = ref<any>({})
 const pageTitle = ref('')
 
 const settingsTheme = ref<string>('')
 const currTheme = useCookie<string>('theme')
+const maintenanceSettings = useMaintenanceSettings()
 const baseSettings = useBaseSettings()
 const personalizeSettings = usePersonalSettings()
 const columns = useColumns()
@@ -23,6 +23,13 @@ const homeRoute = {
   type: 'home',
   url: '',
   subcolumns: []
+}
+
+// 获取网站维护设置
+try {
+  maintenanceSettings.value = await settingsApi.getMaintenanceSettings()
+} catch (error) {
+  console.log(error)
 }
 
 // 获取设置信息
@@ -107,7 +114,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout :name="maintenanceSettings.open ? 'maintenance' : 'default'">
     <NuxtPage />
   </NuxtLayout>
 </template>

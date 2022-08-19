@@ -48,6 +48,11 @@ export const useBaseSettings = (data?: any) => {
   return useState<BaseSettingsConfig>('baseSettings', () => data || {})
 }
 
+/** 维护设置 */
+export const useMaintenanceSettings = (data?: any) => {
+  return useState<{ open: boolean, content: string }>('maintenanceSettings', () => data || {})
+}
+
 /** 个性化设置 */
 export const usePersonalSettings = (data?: any) => {
   return useState<PersonalSettingsConfig>('personalSettings', () => data || {})
