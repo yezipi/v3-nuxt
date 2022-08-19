@@ -8,7 +8,7 @@ type Total = {
 const { statisticsApi } = useApi()
 const baseSettings = useBaseSettings()
 const { $message, $db  } = useNuxtApp()
-const { web_avatar, web_like, web_slogan } = baseSettings.value || {}
+const { web_avatar, web_like, web_slogan, gzh_code } = baseSettings.value || {}
 const likeNum = ref(web_like || 0)
 const total = ref<Total>({
   article: 0,
@@ -59,7 +59,7 @@ try {
           <span>关注我</span>
           <div class="yzp-aside-info-focus-img">
             <div class="yzp-aside-info-focus-img-box">
-              <img src="https://yezipi.net/_nuxt/img/e9a495f.jpg" />
+              <img :src="gzh_code" />
             </div>
           </div>
         </div>
@@ -93,8 +93,8 @@ try {
     background: var(--color-white);
     border: 1px solid var(--border-2);
     margin: auto;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,20 +104,17 @@ try {
       transform: rotate(360deg);
     }
     img {
-      width: 80%;
-      height: 80%;
+      width: 90%;
+      height: 90%;
       border-radius: 50%;
-      padding: 10px;
     }
   }
   .yzp-aside-info-slogan {
     text-align: center;
     color: var(--color-gray);
     margin: var(--space-10) 0;
+    font-size: var(--font-12);
     line-height: 20px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
   }
   .yzp-aside-info-btngroup {
     display: flex;
@@ -207,6 +204,7 @@ try {
       }
       img {
         width: 100%;
+        display: block;
       }
     }
   }

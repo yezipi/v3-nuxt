@@ -19,15 +19,18 @@ export interface BaseSettingsConfig {
   web_avatar: string;
   web_logo: string;
   web_like: number;
+  alipay_code: string;
+  wxpay_code: string;
+  gzh_code: string;
 }
 
 export interface ColumnItem {
-  name: string,
-  id: string,
-  alias: string,
-  type: string,
-  url: string,
-  subcolumns: any[]
+  name: string;
+  id: string;
+  alias: string;
+  type: string;
+  url: string;
+  subcolumns: any[];
 }
 
 export interface PersonalSettingsConfig {
