@@ -91,7 +91,6 @@ try {
     border-radius: 50%;
     overflow: hidden;
     background: var(--color-white);
-    border: 1px solid var(--border-2);
     margin: auto;
     width: 60px;
     height: 60px;
@@ -104,8 +103,8 @@ try {
       transform: rotate(360deg);
     }
     img {
-      width: 90%;
-      height: 90%;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
     }
   }
