@@ -19,15 +19,18 @@ export interface BaseSettingsConfig {
   web_avatar: string;
   web_logo: string;
   web_like: number;
+  alipay_code: string;
+  wxpay_code: string;
+  gzh_code: string;
 }
 
 export interface ColumnItem {
-  name: string,
-  id: string,
-  alias: string,
-  type: string,
-  url: string,
-  subcolumns: any[]
+  name: string;
+  id: string;
+  alias: string;
+  type: string;
+  url: string;
+  subcolumns: any[];
 }
 
 export interface PersonalSettingsConfig {
@@ -43,6 +46,11 @@ export const useApi = () => api
 /** 基本设置数据 */
 export const useBaseSettings = (data?: any) => {
   return useState<BaseSettingsConfig>('baseSettings', () => data || {})
+}
+
+/** 维护设置 */
+export const useMaintenanceSettings = (data?: any) => {
+  return useState<{ open: boolean, content: string }>('maintenanceSettings', () => data || {})
 }
 
 /** 个性化设置 */

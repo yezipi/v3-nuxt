@@ -60,7 +60,7 @@ const props = defineProps({
 })
 
 const { $message, $db } = useNuxtApp()
-const baseSettings = useBaseSettings()
+const { value: { web_name, alipay_code, wxpay_code } } = useBaseSettings()
 const { articleApi } = useApi()
 
 const dashangTabIndex = ref(0)
@@ -149,7 +149,7 @@ const like = async () => {
 }
 
 useHead({
-  title: info.value.title + '-' + baseSettings.value.web_name,
+  title: info.value.title + '-' + web_name,
   meta: [
     {
       hid: 'description',
@@ -239,8 +239,8 @@ onMounted(() => {
           <div class="yzp-dashang-wrap">
             <div class="yzp-dashang-main">
               <div class="yzp-dashang-code">
-                <img v-show="dashangTabIndex === 0" src="https://yezipi.net/_nuxt/img/f718a2a.png" />
-                <img v-show="dashangTabIndex === 1" src="https://yezipi.net/_nuxt/img/9e42ad9.jpg" style="display: none" />
+                <img v-show="dashangTabIndex === 0" :src="alipay_code" />
+                <img v-show="dashangTabIndex === 1" :src="wxpay_code" style="display: none" />
               </div>
               <div class="yzp-dashang-tab">
                 <span :class="{ active: dashangTabIndex === 0 }" @click="onDashangTypeChange(0)">支付宝</span>
@@ -475,6 +475,7 @@ onMounted(() => {
         height: 120px;
       }
       img{
+        display: block;
         width: 120px;
         margin: auto;
         height: 120px;

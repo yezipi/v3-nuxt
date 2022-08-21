@@ -16,6 +16,13 @@ export default new class settings extends Http {
   }
 
   /**
+   * 获取维护设置
+   */
+   getMaintenanceSettings() {
+    return this.get('/app/v1/settings/maintenance')
+  }
+
+  /**
    * 获取个性化设置
    */
   getPersonalizeSettings() {
