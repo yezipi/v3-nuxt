@@ -114,7 +114,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NuxtLayout :name="maintenanceSettings.open ? 'maintenance' : 'default'">
+  <NuxtLayout :name="maintenanceSettings && maintenanceSettings.open ? 'maintenance' : 'default'">
     <NuxtPage />
   </NuxtLayout>
 </template>
