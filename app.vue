@@ -115,6 +115,7 @@ onMounted(() => {
 
 <template>
   <NuxtLayout :name="maintenanceSettings && maintenanceSettings.open ? 'maintenance' : 'default'">
+    <NuxtLoadingIndicator />
     <NuxtPage />
   </NuxtLayout>
 </template>
