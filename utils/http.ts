@@ -25,8 +25,12 @@ const fetch = (url: string, options?: any): Promise<any> => {
       }
       const value = data.value
       const result = value && value.data
-      if (!result || value.code !== 1) {
-        reject(value)
+      if (value.code !== 1) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: reqUrl,
+          message: value.msg,
+        })
       } else {
         resolve(options.method === 'post' ? value : result)
       }

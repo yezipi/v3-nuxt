@@ -5,7 +5,7 @@ interface ListConfig {
   page?: number,
 }
 
-export default new class statistics extends Http {
+export default new class Statistics extends Http {
 
   /**
    * 数据统计
