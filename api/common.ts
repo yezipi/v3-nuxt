@@ -9,4 +9,11 @@ export default new class Common extends Http {
    getVerifyCode(timestamp?: number) {
     return this.get('/app/v1/common/getVerifyCode', { timestamp })
   }
+
+  /**
+   * 获取表情
+   */
+   getFace() {
+    return this.get('/app/v1/common/getFace')
+  }
 }

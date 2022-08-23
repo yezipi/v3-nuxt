@@ -231,7 +231,7 @@ onMounted(() => {
   &:after {
     right: -10px;
     border-width: 11px;
-    border-color: transparent transparent transparent rgba(var(--rgb-white), .8);
+    border-color: transparent transparent transparent rgba(var(--rgb-white), .6);
     z-index: 1;
   }
 

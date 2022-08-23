@@ -159,6 +159,20 @@ const setRandomTag = () => {
 
   del: (key: string) => localStorage.removeItem(key)
 }
+
+/** 替换表情符号 */
+const replaceFace = (str: string) => {
+  let content = str
+  const dirs = ['tieba', 'sina', 'qq']
+  for (var i = 0; i < dirs.length - 1; i ++) {
+    if (str.indexOf(dirs[i]) > -1) {
+      const reg = new RegExp(`\\[${dirs[i]}_([1-9]?\\d)]`, 'g')
+      const suffix = `${dirs[i] === 'qq' ? 'gif' : 'png'}`
+      content = content.replace(reg, `<img class="yzp-face-replace" src="/public/face/${dirs[i]}/$1.${suffix}"/>`)
+    }
+  }
+  return content
+}
  
 export {
   scrollAnimation,
@@ -166,4 +180,5 @@ export {
   setAticleLink,
   setRandomTag,
   timeAgao,
+  replaceFace,
 }

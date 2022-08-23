@@ -14,19 +14,21 @@ const props = defineProps({
 const emit = defineEmits(['success'])
 
 const { $message, $db } = useNuxtApp()
-const { commonApi } = useApi()
+const { feedbackApi, blogrollApi, commentApi, commonApi } = useApi()
 
 const form = reactive({
-  nickname: undefined,
-  email: undefined,
-  site: undefined,
-  content: undefined,
+  nickname: '',
+  email: '',
+  site: '',
+  content: '',
 })
 
 const verifyCode = ref(undefined)
 const checkCode = ref(undefined)
 const loading = ref(false)
 const codeRef = ref()
+const faceVisible = ref(false)
+const textareaRef = ref()
 
 const drawVerifyCode = () => {
   if (!checkCode.value) {
@@ -62,7 +64,10 @@ const getVerifyCode = async (refresh?: boolean) => {
   }
 }
 
-const { feedbackApi, blogrollApi, commentApi } = useApi()
+const onFaceChange = (res: any) => {
+  textareaRef.value.focus()
+  form.content += res.alias
+}
 
 // 提交评论
 const submit = async () => {
@@ -111,7 +116,8 @@ const submit = async () => {
       ...toRaw(form),
       parent_id: props.parentId, 
       type: props.type,
-      avatar: `/public/avatar/${$db.get('avatar') || 1}.jpg`
+      avatar: `/public/avatar/${$db.get('avatar') || 1}.jpg`,
+      verifyCode: verifyCode.value
     }
     let res: any = {}
     if (props.type === 'feedback') {
@@ -173,10 +179,17 @@ onMounted(() => {
 
       <!--内容-->
       <!-- <div class="edit-div textarea" :contenteditable="true" placeholder="说点什么吧"></div> -->
+      
+      <div class="yzp-face-show">
+        <img class="yzp-face-btn" src="/public/face/sina/0.png" @click.stop="faceVisible = true" />
+        <base-yzp-face v-if="faceVisible" v-model:value="faceVisible" @change="onFaceChange" />
+      </div>
+
       <div class="yzp-form-item yzp-box" style="max-width: none;">
         <textarea
           v-model="form.content"
           :placeholder="type === 'blogroll' ? '请填写申请原因' : '说点什么吧...'"
+          ref="textareaRef"
           class="yzp-form-item-textarea"
           name="content"
           rows="5"
@@ -202,6 +215,14 @@ onMounted(() => {
 </template>
 
 <style lang="less">
+.yzp-face-show {
+  position: relative;
+  .yzp-face-btn {
+    width: 30px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+}
 .yzp-form-item {
   display: flex;
   align-items: center;
