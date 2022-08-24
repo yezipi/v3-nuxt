@@ -18,15 +18,15 @@ const blogrolls = await blogrollApi.getList()
           v-for="(item, index) in blogrolls.rows"
           :key="index"
           :href="item.site"
-          :title="item.content"
+          :title="item.site"
           target="_blank"
           class="yzp-blogroll-item yzp-box"
         >
           <div class="yzp-blogroll-item-main">
-            <img :src="item.avatar" class="yzp-blogroll-item-avatar" onerror="this.src='/img/default-avatar.png'" />
+            <img :src="`${item.site}/favicon.ico`" class="yzp-blogroll-item-avatar" onerror="this.src='/img/default-avatar.png'" />
             <div class="yzp-blogroll-item-info">
               <div class="yzp-blogroll-item-name color-primary">{{ item.nickname }}</div>
-              <div class="yzp-blogroll-item-site">{{ item.site || '暂无' }}</div>
+              <div class="yzp-blogroll-item-site">{{ item.content || '暂无' }}</div>
             </div>
           </div>
         </a>
