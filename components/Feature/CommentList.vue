@@ -74,7 +74,7 @@ await initList()
       </div>
 
       <ul class="yzp-comment-list">
-        <li v-for="(item, index) in list.rows" :key="index" class="yzp-comment-item yzp-box">
+        <li v-for="(item, index) in list.rows" :key="index" :id="'comment-' + item.id" class="yzp-comment-item yzp-box">
           <a href="" class="yzp-comment-item-avatar">
             <img :src="item.avatar" onerror="this.src='/img/default-avatar.png'" />
           </a>
@@ -82,7 +82,7 @@ await initList()
 
             <div class="yzp-comment-item-top flex-between">
               <span class="yzp-comment-item-nickname color-primary">{{ item.nickname }}</span>
-              <span v-if="item.id" class="yzp-comment-item-id" :id="'#' + item.id">#{{ item.id }}</span>
+              <span v-if="item.id" class="yzp-comment-item-id">#{{ item.id }}</span>
             </div>
 
             <div class="yzp-comment-item-data">

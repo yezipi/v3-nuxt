@@ -79,7 +79,7 @@ await getList()
 
     <ul v-if="albums && albums.rows" class="yzp-album-ul">
       <li v-for="(item) in albums.rows" :key="item.id" class="yzp-album-item">
-        <nuxt-link :to="isPicture ? 'javascript:void(0)' : `/album/${item.id}`" class="yzp-album-item-block yzp-box">
+        <nuxt-link :to="isPicture ? 'javascript:void(0)' : `/album/detail/${item.id}`" class="yzp-album-item-block yzp-box">
           <div class="yzp-album-item-cover">
             <base-yzp-image class="yzp-album-item-img" :src="item.cover || item.thumb_path" @click.native="previewImage(item)"></base-yzp-image>
           </div>
