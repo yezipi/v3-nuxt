@@ -11,6 +11,10 @@ const props = defineProps({
   parentId: {
     type: Number,
     default: 0
+  },
+  temp: {
+    type: Object,
+    default: () => {},
   }
 })
 
@@ -24,8 +28,6 @@ const parentType = {
 const emit = defineEmits(['load'])
 
 const { commentApi, feedbackApi } = useApi()
-
-const page = ref(1)
 
 const typeText = props.type !== 'feedback' ? '评论' : '留言'
 
@@ -47,6 +49,11 @@ const onPageChange = (page: number) => {
   condition.page = page
   initList()
 }
+
+watch(() => props.temp, (data: any) => {
+  list.value.rows.unshift(data)
+  list.value.count += 1
+})
 
 await initList()
 
@@ -75,7 +82,7 @@ await initList()
 
             <div class="yzp-comment-item-top flex-between">
               <span class="yzp-comment-item-nickname color-primary">{{ item.nickname }}</span>
-              <span class="yzp-comment-item-id" :id="'#' + item.id">#{{ item.id }}</span>
+              <span v-if="item.id" class="yzp-comment-item-id" :id="'#' + item.id">#{{ item.id }}</span>
             </div>
 
             <div class="yzp-comment-item-data">

@@ -71,6 +71,7 @@ const password = ref('')
 const loading = ref(false)
 const info = ref<ArticleFields>({} as any)
 const likeCount = ref(0)
+const tempComments = ref<any>()
 
 info.value = await articleApi.getDetail(Number(props.id))
 
@@ -146,6 +147,11 @@ const like = async () => {
   } catch (error: any) {
     $message.error(error.msg)
   }
+}
+
+// 未开启审核的时候，评论直接插入
+const refreshComments = (data: any) => {
+  tempComments.value = data
 }
 
 useHead({
@@ -299,11 +305,11 @@ onMounted(() => {
     <!--end-->
 
     <!--评论列表-->
-    <feature-comment-list v-if="info && info.id" :type="type" :parent-id="id"></feature-comment-list>
+    <feature-comment-list v-if="info && info.id" :temp="tempComments" :type="type" :parent-id="id"></feature-comment-list>
     <!--end评论列表-->
 
     <!--评论表单-->
-    <base-yzp-form v-if="info && info.id" :type="type" :parent-id="id" />
+    <base-yzp-form v-if="info && info.id" :type="type" :parent-id="id" @refresh="refreshComments" />
     <!--end 评论表单-->
 
   </div>

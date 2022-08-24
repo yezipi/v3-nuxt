@@ -11,7 +11,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success', 'refresh'])
 
 const { $message, $db } = useNuxtApp()
 const { feedbackApi, blogrollApi, commentApi, commonApi } = useApi()
@@ -129,6 +129,10 @@ const submit = async () => {
     }
     console.log(res)
     $message.success(res.msg)
+    if (res.data && !res.data.audit) {
+      console.log('refresh')
+      emit('refresh', res.data.result)
+    }
     form.content = ''
     emit('success', params)
   } catch (e) {
