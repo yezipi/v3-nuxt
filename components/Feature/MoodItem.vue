@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { timeAgao } from '@/utils/index'
+import { timeAgao, replaceFace } from '@/utils/index'
 const baseSettings: any = useBaseSettings()
 const { $lightbox  } = useNuxtApp()
 const { web_avatar, web_name } = baseSettings.value
@@ -52,7 +52,7 @@ const previewImage = (src: string) => {
         </div>
       </div>
       <div v-if="item.content" class="yzp-mood-item-text">
-        <p class="yzp-mood-item-content">{{ item.content }}</p>
+        <p v-html="replaceFace(item.content)" class="yzp-mood-item-content"></p>
       </div>
       <div v-if="item.images && item.images.length" class="yzp-mood-item-imgs">
         <div

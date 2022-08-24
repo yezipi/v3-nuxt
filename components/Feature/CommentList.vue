@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { timeAgao } from '@/utils/index'
+import { timeAgao, replaceFace } from '@/utils/index'
 
 const { web_avatar, web_name } = useBaseSettings().value
 
@@ -107,7 +107,7 @@ await initList()
             </div>
             
             <div class="yzp-comment-item-text">
-              <p class="yzp-comment-item-content">{{ item.content }}</p>
+              <p v-html="replaceFace(item.content)" class="yzp-comment-item-content"></p>
               <div v-if="item.reply_content" class="yzp-comment-item-reply">
                 <div class="yzp-comment-item-reply-avavtar">
                   <img :src="web_avatar" />
@@ -118,7 +118,7 @@ await initList()
                     <span class="yzp-comment-item-reply-date">2022-03-27 回复</span>
                     <span class="color-primary">@{{ item.nickname }}</span>
                   </div>
-                  <div class="yzp-comment-item-reply-content">{{ item.reply_content }}</div>
+                  <div v-html="replaceFace(item.reply_content)" class="yzp-comment-item-reply-content"></div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { timeAgao } from '@/utils/index'
+import { timeAgao, replaceFace } from '@/utils/index'
 
 const { commentApi } = useApi()
 
@@ -71,7 +71,7 @@ const getCommentLink = (item: any) => {
           </div>
           <div class="yzp-aside-comment-item-article">
             <base-yzp-tag :color="commentType[item.type].color" size="small">{{ commentType[item.type].name }}</base-yzp-tag>
-            <span class="yzp-aside-comment-item-article-content">{{ item.content }}</span>
+            <span v-html="replaceFace(item.content)" class="yzp-aside-comment-item-article-content"></span>
           </div>
         </nuxt-link>
       </li>
