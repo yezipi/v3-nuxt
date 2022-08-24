@@ -94,8 +94,9 @@ columns.value = [homeRoute, ...(navData || [])]
 flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
 
 const setPageTitle = (val: string) => {
-  const paths = val ? val.split('/').filter((e: string) => e) : []
-  const currCoulmn = flatColumns.value.find((e) => paths.includes(e.url))
+  const path = val ? val.split('/').filter((e: string) => e) : []
+  const currCoulmn = flatColumns.value.find((e) => path && path[ path.length - 1] === e.url )
+  console.log(currCoulmn)
   pageTitle.value = currCoulmn ? currCoulmn.name : ''
 }
 

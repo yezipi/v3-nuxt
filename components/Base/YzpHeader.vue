@@ -326,7 +326,7 @@ onMounted(() => {
       .yzp-sub-item-active {
         .yzp-sub-item-link {
           color: var(--color-primary);
-          background: var(--color-primary-2);
+          background: var(--color-primary-01);
         }
       }
     }
