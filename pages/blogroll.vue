@@ -26,7 +26,7 @@ const blogrolls = await blogrollApi.getList()
             <img :src="`${item.site}/favicon.ico`" class="yzp-blogroll-item-avatar" onerror="this.src='/img/default-avatar.png'" />
             <div class="yzp-blogroll-item-info">
               <div class="yzp-blogroll-item-name color-primary">{{ item.nickname }}</div>
-              <div class="yzp-blogroll-item-site">{{ item.content || '暂无' }}</div>
+              <div class="yzp-blogroll-item-site">{{ item.content || '暂无描述' }}</div>
             </div>
           </div>
         </a>

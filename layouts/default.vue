@@ -155,8 +155,9 @@ onMounted(() => {
 }
 
 .yzp-section {
-  flex: 1;
   min-height: calc(100vh - 170px);
+  width: 70%;
+  flex-shrink: 0;
 }
 
 .yzp-floatbtn {

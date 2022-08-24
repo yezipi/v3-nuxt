@@ -19,7 +19,8 @@ const blogroll = result && result.rows ? result.rows : []
         target="_blank"
         class="yzp-aside-blogroll-item color-primary"
       >
-        {{ item.nickname }}
+        <img :src="`${item.site}/favicon.ico`" class="yzp-blogroll-item-avatar" onerror="this.src='/img/default-avatar.png'" />
+        <span>{{ item.nickname }}</span>
       </a>
     </div>
   </base-yzp-panel>
@@ -29,6 +30,8 @@ const blogroll = result && result.rows ? result.rows : []
 <style lang="less">
 .yzp-aside-blogroll-wrap {
   margin-right: -10px;
+  display: flex;
+  flex-wrap: wrap;
   .yzp-aside-blogroll-item {
     padding: var(--space-5) var(--space-10);
     cursor: pointer;
@@ -36,9 +39,19 @@ const blogroll = result && result.rows ? result.rows : []
     border-radius: var(--border-radius);
     background: var(--color-primary-01);
     margin: var(--space-5);
+    display: flex;
+    align-items: center;
     &:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: -3px 3px 3px rgba(0,0,0,0.2);
       background: var(--color-primary);
       color: var(--color-white);
+    }
+    .yzp-blogroll-item-avatar {
+      width: var(--space-20);
+      height: var(--space-20);
+      display: inline-block;
+      margin-right: 5px;
     }
   }
 }

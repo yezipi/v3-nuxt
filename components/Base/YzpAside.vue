@@ -30,11 +30,9 @@ onMounted(() => {
 
 <style lang="less">
 .yzp-aside {
-  flex: 0.43;
   margin-left: var(--space-15);
   height: 100%;
-  flex-shrink: 0;
-  max-width: 365px;
+  width: 30%;
   .yzp-aside-panel {
     margin-top: var(--space-15);
     &:first-child {

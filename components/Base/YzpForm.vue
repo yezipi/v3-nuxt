@@ -21,6 +21,7 @@ const form = reactive({
   email: '',
   site: '',
   content: '',
+  reason: '',
 })
 
 const verifyCode = ref(undefined)
@@ -81,7 +82,7 @@ const submit = async () => {
   }
 
   if (!form.nickname || form.nickname.length < 2) {
-    return $message.error('昵称不能为空或者太短哦~')
+    return $message.error('亲，昵称不能为空或者太短哦~')
   }
   if (!patternName.test(form.nickname)) {
     return $message.error('亲，非法昵称~')
@@ -92,21 +93,24 @@ const submit = async () => {
   if (form.site && !patternSite.test(form.site)) {
     return $message.error('亲，非法网址~')
   }
-  if (!form.content || form.content.length < 4) {
-    return $message.error('内容不能为空或者太短哦~')
+  if (props.type !== 'blogroll' && (!form.content || form.content.length < 4)) {
+    return $message.error('亲，内容不能为空或者太短哦~')
+  }
+  if (props.type === 'blogroll' && !form.reason) {
+    return $message.error('亲，请填写申请理由')
   }
   if (props.type === 'blogroll' && !form.site) {
     return $message.error('亲，请填写网址~')
   }
   if (patternContent.test(form.content)) {
-    return $message.error('内容包含非法字符哦~')
+    return $message.error('亲，内容包含非法字符哦~')
   }
   if (!verifyCode.value) {
-    return $message.error('请填写验证码哦~')
+    return $message.error('亲，请填写验证码哦~')
   }
   if (verifyCode.value.toUpperCase() !== checkCode.value) {
     getVerifyCode(true)
-    return $message.error('验证码错误~')
+    return $message.error('亲，验证码错误~')
   }
 
   loading.value = true
@@ -189,10 +193,22 @@ onMounted(() => {
         <base-yzp-face v-if="faceVisible" v-model:value="faceVisible" @change="onFaceChange" />
       </div>
 
-      <div class="yzp-form-item yzp-box" style="max-width: none;">
+      <div v-if="type !== 'blogroll'" class="yzp-form-item yzp-box" style="max-width: none;">
         <textarea
           v-model="form.content"
-          :placeholder="type === 'blogroll' ? '请填写申请原因' : '说点什么吧...'"
+          placeholder="说点什么吧..."
+          ref="textareaRef"
+          class="yzp-form-item-textarea"
+          name="content"
+          rows="5"
+        >
+        </textarea>
+      </div>
+
+      <div v-else class="yzp-form-item yzp-box" style="max-width: none;">
+        <textarea
+          v-model="form.reason"
+          placeholder="请填写申请原因"
           ref="textareaRef"
           class="yzp-form-item-textarea"
           name="content"
