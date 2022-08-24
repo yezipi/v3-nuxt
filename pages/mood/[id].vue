@@ -9,7 +9,6 @@ const id = computed(() => mood.value && mood.value.id)
 
 const refresh = (data: any) => temp.value = data
 </script>
-</script>
 
 <template>
   <div class="yzp-mood-wrap">

@@ -173,6 +173,16 @@ const replaceFace = (str: string) => {
   }
   return content
 }
+/**
+ * 24小时内的显示为最新
+ */
+const isNewest = (time: any) => {
+  const oneDayMs = 24 * 60 * 60 * 1000
+  const viewTimeMs = new Date(time).getTime() + oneDayMs // 这个就是24小时过期的时间
+  const nowMs = new Date().getTime()
+  const isValid = (viewTimeMs - nowMs) / oneDayMs
+  return isValid >= 0
+}
  
 export {
   scrollAnimation,
@@ -181,4 +191,5 @@ export {
   setRandomTag,
   timeAgao,
   replaceFace,
+  isNewest,
 }
