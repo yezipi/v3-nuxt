@@ -3,8 +3,12 @@
 const route = useRoute()
 const { moodApi } = useApi()
 
+const temp = ref<any>();
 const mood = await moodApi.getDetail(Number(route.params.id))
 const id = computed(() => mood.value && mood.value.id)
+
+const refresh = (data: any) => temp.value = data
+</script>
 </script>
 
 <template>
@@ -17,7 +21,7 @@ const id = computed(() => mood.value && mood.value.id)
     <!--end评论列表-->
 
     <!--评论表单-->
-    <base-yzp-form v-if="mood && mood.id" type="mood" :parent-id="id" />
+    <base-yzp-form v-if="mood && mood.id" type="mood" :parent-id="id" @refresh="refresh" />
     <!--end 评论表单-->
 
   </div>

@@ -4,8 +4,9 @@ const route = useRoute();
 const album_id = computed(() => Number(route.params.id));
 const hasPicture = ref(false);
 const info = ref<any>({});
-const password = ref("");
+const password = ref('');
 const loading = ref(false);
+const temp = ref<any>();
 
 const { $message } = useNuxtApp();
 const baseSettings = useBaseSettings();
@@ -34,6 +35,8 @@ const unclock = async () => {
     loading.value = false;
   }
 };
+
+const refresh = (data: any) => temp.value = data
 
 useHead({
   title: info.value.title + "-相册-" + baseSettings.value.web_name,
@@ -86,7 +89,7 @@ useHead({
     <!--end评论列表-->
 
     <!--评论表单-->
-    <base-yzp-form v-if="album_id && hasPicture" type="album" :parent-id="album_id" />
+    <base-yzp-form v-if="album_id && hasPicture" type="album" :parent-id="album_id" @refresh="refresh" />
     <!--end 评论表单-->
   </div>
 </template>
