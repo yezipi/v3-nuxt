@@ -41,6 +41,7 @@ const blogroll = result && result.rows ? result.rows : []
     margin: var(--space-5);
     display: flex;
     align-items: center;
+    font-size: var(--font-12);
     &:hover {
       transform: translateY(-5px) scale(1.1);
       box-shadow: -3px 3px 3px rgba(0,0,0,0.2);

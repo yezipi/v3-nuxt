@@ -18,7 +18,7 @@ const blogrolls = await blogrollApi.getList()
           v-for="(item, index) in blogrolls.rows"
           :key="index"
           :href="item.site"
-          :title="item.site"
+          :title="item.content"
           target="_blank"
           class="yzp-blogroll-item yzp-box"
         >
@@ -78,7 +78,6 @@ const blogrolls = await blogrollApi.getList()
     .yzp-blogroll-item-avatar {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
       margin-right: var(--space-15);
