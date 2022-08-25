@@ -5,13 +5,13 @@ const currTheme = useCookie<string>('theme')
 const personalSettings = usePersonalSettings()
 
 const themeList = ref([
-  { name: '春季', id: 'spring', Leaves: true },
-  { name: '夏季', id: 'summer', Leaves: false },
-  { name: '秋季', id: 'autumn', Leaves: true },
-  { name: '冬季', id: 'winter', Leaves: true },
-  { name: '暗黑', id: 'dark', Leaves: false },
-  { name: '简约', id: 'simple', Leaves: false },
-  { name: '小清新', id: 'fresh', Leaves: false },
+  { name: '春季', id: 'spring', Leaves: true, icon: '\ue62c', color: '#3ed376' },
+  { name: '夏季', id: 'summer', Leaves: false, icon: '\ue636', color: '#23b6f2' },
+  { name: '秋季', id: 'autumn', Leaves: true, icon: '\ue620', color: '#e77518' },
+  { name: '冬季', id: 'winter', Leaves: true, icon: '\ue76c', color: '#cccccc' },
+  { name: '暗黑', id: 'dark', Leaves: false, icon: '\ue6a0', color: '#353535' },
+  { name: '简约', id: 'simple', Leaves: false, icon: '\ue614', color: '#999999' },
+  { name: '小清新', id: 'fresh', Leaves: false, icon: '\ue615', color: '#999999' },
 ])
 
 const backToTop = () => {
@@ -116,10 +116,15 @@ onMounted(() => {
         <a :class="{ halfRadius: backTopButtonShow }" title="切换主题"><i class="iconfont">&#xe6cb;</i></a>
         <div class="yzp-float-menu yzp-skin-wrap">
           <div class="yzp-skin-list">
-            <span v-for="(theme) in themeList" :key="theme.id" :class="{ active: currTheme === theme.id }"
-              class="yzp-skin-item" @click="changeTheme(theme)">
-              {{ theme.name }}
-            </span>
+            <div
+              v-for="(theme) in themeList"
+              :key="theme.id"
+              :class="{ active: currTheme === theme.id }"
+              class="yzp-skin-item" @click="changeTheme(theme)"
+            >
+              <i class="iconfont" :style="{color: theme.color}">{{ theme.icon }}</i>
+              <span>{{ theme.name }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -253,9 +258,14 @@ onMounted(() => {
   }
 
   .yzp-skin-item {
-    display: block;
+    display: flex;
     padding: var(--space-15);
     cursor: pointer;
+    align-items: center;
+    .iconfont {
+      font-size: var(--font-16);
+      margin-right: 5px;
+    }
     &:hover,
     &.active {
       color: var(--color-primary);

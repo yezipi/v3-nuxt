@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "883896",
+      "name": "灯泡",
+      "font_class": "dengpao",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "23225042",
+      "name": "透明",
+      "font_class": "touming",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "736205",
+      "name": "枫叶",
+      "font_class": "icon9",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "792344",
+      "name": "moon-b-月亮",
+      "font_class": "moonbyueliang",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
+      "icon_id": "2250262",
+      "name": "sun",
+      "font_class": "weibiaoti-",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "2535162",
+      "name": "雪糕",
+      "font_class": "xuegao",
+      "unicode": "e720",
+      "unicode_decimal": 59168
+    },
+    {
+      "icon_id": "3588586",
+      "name": "枫叶",
+      "font_class": "fengye",
+      "unicode": "e701",
+      "unicode_decimal": 59137
+    },
+    {
+      "icon_id": "5201450",
+      "name": "花 (4)",
+      "font_class": "hua",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "14196477",
+      "name": "雪花",
+      "font_class": "snowflake",
+      "unicode": "e76c",
+      "unicode_decimal": 59244
+    },
+    {
       "icon_id": "22825871",
       "name": "皮肤",
       "font_class": "pifu",
