@@ -60,8 +60,8 @@ const props = defineProps({
 })
 
 const { $message, $db } = useNuxtApp()
-const { value: { web_name, alipay_code, wxpay_code } } = useBaseSettings()
 const { articleApi } = useApi()
+const { value: { web_name, alipay_code, wxpay_code } } = useBaseSettings()
 
 const dashangTabIndex = ref(0)
 const tags = ref<any>([])
@@ -109,7 +109,7 @@ const checkHljsIsLoad = () => {
       checkHljsIsLoad()
     })
   } catch (e) {
-    console.log('hljs加载失败')
+    console.log('hljs加载失败', e)
   }
 }
 
@@ -176,7 +176,9 @@ useHead({
 })
 
 onMounted(() => {
-  checkHljsIsLoad()
+  setTimeout(() => {
+    checkHljsIsLoad()
+  }, 100)
 })
 
 </script>
