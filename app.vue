@@ -39,6 +39,7 @@ baseSettings.value = await settingsApi.getBaseSettings()
 const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 const { style, gray, background } = personalizeSettings.value
 const hasLeafStyle = ['spring', 'autumn', 'winter']
+
 // 如果cookie中已经设置了主题
 if (currTheme.value) {
   settingsTheme.value = currTheme.value
@@ -46,6 +47,7 @@ if (currTheme.value) {
   currTheme.value = settingsTheme.value = style
   useTheme().value = style
 }
+
 metaConfig.value = {
   title: computed(() => pageTitle.value ? `${pageTitle.value}-${web_name}` : `${web_name}-${web_title}`),
   meta: [
@@ -77,6 +79,21 @@ metaConfig.value.link.push({
   rel: 'stylesheet',
   href: `/theme/${settingsTheme.value || 'fresh'}/index.css`
 })
+
+// 格式化百度统计代码，只取链接
+if (baseSettings.value.web_tongji) {
+  const str = baseSettings.value.web_tongji.replace(/<\/?.+?\/?>/g, '').replace(/\"/g, '').trim().split('=')
+  if (str && str[3]) {
+    const link = str[3].split(';')
+    if (link && link[0]) {
+     metaConfig.value.script.push({
+      id: 'baiduTongji',
+      type: 'text/javascript',
+      src: link[0]
+    })
+    }
+  }
+}
 
 if (hasLeafStyle.includes(settingsTheme.value)) {
   metaConfig.value.script.push({
