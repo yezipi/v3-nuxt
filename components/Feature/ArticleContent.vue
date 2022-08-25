@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { timeAgao, setRandomTag, setAticleLink } from '@/utils/index'
+import { timeAgao, setRandomTag, setAticleLink, isNewest } from '@/utils/index'
 
 interface ArticleFields {
   id?: number
@@ -70,7 +70,6 @@ const count = ref(0)
 const password = ref('')
 const loading = ref(false)
 const info = ref<ArticleFields>({} as any)
-const likeCount = ref(0)
 const tempComments = ref<any>()
 
 info.value = await articleApi.getDetail(Number(props.id))
@@ -183,7 +182,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="yzp-article-wrap">
+  <div :class="{ hot: info.view >= 1000, recommend: info.recommend, new: isNewest(info.created_at)}" class="yzp-article-wrap">
     <article class="yzp-article-main yzp-box">
       <!--文章上半部分-->
       <div class="yzp-article-header">

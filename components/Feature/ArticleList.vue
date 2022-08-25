@@ -85,7 +85,7 @@ await getArticles()
           </div>
           <div class="yzp-article-item-info">
             <div class="yzp-article-item-title">
-              <span v-if="!keywords" class="yzp-article-item-title">{{ item.title }}</span>
+              <span v-if="!keywords" class="yzp-article-item-title-span">{{ item.title }}</span>
               <span v-else v-for="(txt, i) in item.title" :index="i" class="yzp-article-item-keywords">
                 <strong v-if="keywords.indexOf(txt.toLocaleLowerCase()) > -1" style="color: red">{{ txt }}</strong>
                 <i v-else style="font-style: normal">{{ txt }}</i>
@@ -202,7 +202,6 @@ await getArticles()
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
       flex: 1;
     }
 

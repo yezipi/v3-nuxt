@@ -425,6 +425,14 @@ onMounted(() => {
     padding: 5px 10px;
     justify-content: space-between;
   }
+  .yzp-swiper-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .yzp-swiper-index {
+    flex-shrink: 0;
+  }
   .yzp-swiper-dots {
     position: absolute;
     left: 0;

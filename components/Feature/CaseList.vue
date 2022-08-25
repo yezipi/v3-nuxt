@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { setAticleLink } from '~~/utils/index'
+import { setAticleLink, isNewest } from '~~/utils/index'
 
 const props = defineProps({
 
@@ -72,7 +72,12 @@ await getArticles()
     </div>
 
     <ul v-if="articles && articles.rows" class="yzp-case-ul">
-      <li v-for="(item) in articles.rows" :key="item.id" class="yzp-case-item">
+      <li
+        v-for="(item) in articles.rows"
+        :key="item.id"
+        :class="{ hot: item.view >= 1000, recommend: item.recommend, new: isNewest(item.created_at)}"
+        class="yzp-case-item"
+      >
         <nuxt-link :to="setAticleLink(item.id, item.type)" class="yzp-case-item-block yzp-box">
           <div class="yzp-case-item-cover">
             <base-yzp-image class="yzp-case-item-img" :src="item.cover"></base-yzp-image>

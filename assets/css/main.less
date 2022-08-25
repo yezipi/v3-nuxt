@@ -26,6 +26,34 @@
 .recommend, .hot, .new {
   position: relative;
 }
+.recommend::after, .hot::after, .new::after {
+  content: '';
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+  top: var(--space-10);
+  right: var(--space-10);
+  position: absolute;
+}
+.recommend::after {
+  width: 24px;
+  height: 24px;
+  background-image: url('/img/recommend.png');
+}
+.hot::after {
+  width: 19px;
+  height: 23px;
+  background-image: url('/img/hot.gif');
+}
+.new::after {
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 45px;
+  background-image: url('/img/new.png');
+}
 
 .flex-between {
   display: flex;

@@ -221,7 +221,7 @@ onMounted(() => {
   bottom: 0;
   padding-right: 10px;
   display: none;
-
+  animation: toTop 0.3s;
   &:after,
   &:before {
     content: "";
