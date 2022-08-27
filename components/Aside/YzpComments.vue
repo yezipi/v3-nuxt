@@ -65,12 +65,12 @@ const getCommentLink = (item: any) => {
           <div class="yzp-aside-comment-item-user">
             <div class="yzp-aside-comment-item-top">
               <span class="yzp-aside-comment-item-nickname">{{ item.nickname }}</span>
-              <span class="yzp-aside-comment-item-ua color-primary">{{ item.ua }}</span>
+              <!-- <span class="yzp-aside-comment-item-ua color-primary">{{ item.ua }}</span> -->
+              <base-yzp-tag :color="commentType[item.type].color" size="small">{{ commentType[item.type].name }}</base-yzp-tag>
             </div>
             <span class="yzp-aside-comment-item-date">{{ timeAgao(item.created_at) }}</span>
           </div>
           <div class="yzp-aside-comment-item-article">
-            <base-yzp-tag :color="commentType[item.type].color" size="small">{{ commentType[item.type].name }}</base-yzp-tag>
             <span v-html="replaceFace(item.content)" class="yzp-aside-comment-item-article-content"></span>
           </div>
         </nuxt-link>
@@ -134,7 +134,9 @@ const getCommentLink = (item: any) => {
       }
       .yzp-aside-comment-item-ua {
         display: inline-block;
-        margin-left: 10px;
+      }
+      .yzp-aside-comment-item-nickname {
+        margin-right: 10px;
       }
       .yzp-aside-comment-item-date {
         color: var(--color-gray);

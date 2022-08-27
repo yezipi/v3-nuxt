@@ -95,6 +95,13 @@ if (baseSettings.value.web_tongji) {
   }
 }
 
+// 51.la统计代码
+metaConfig.value.script.push({
+  id: 'LA_COLLECT',
+  type: 'text/javascript',
+  src: '//sdk.51.la/js-sdk-pro.min.js'
+})
+
 if (hasLeafStyle.includes(settingsTheme.value)) {
   metaConfig.value.script.push({
     id: 'fallenLeaves',
@@ -128,6 +135,13 @@ onMounted(() => {
   }
   $db.set('entryTime', new Date().getTime())
 })
+
+if (process.client) {
+  // 初始化51.la统计代码
+  //@ts-ignore
+  // LA.init({ id: 'JnRZ4qqqHEgeXEzu',ck: 'JnRZ4qqqHEgeXEzu', autoTrack:true })
+}
+
 </script>
 
 <template>

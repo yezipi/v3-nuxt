@@ -75,7 +75,7 @@ const previewImage = (src: string) => {
         </nuxt-link>
         <div class="yzp-mood-item-btn-cell">
           <i class="iconfont iconzan"></i>
-          <span>{{ item.like || 0 }}</span>
+          <span>{{ item.view || 0 }}</span>
         </div>
       </div>
     </div>

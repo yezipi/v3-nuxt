@@ -41,6 +41,7 @@ interface ArticleFields {
     type?: string
   },
   similar?: Array<any>
+  cover?: '',
 }
 
 const props = defineProps({
@@ -71,6 +72,7 @@ const password = ref('')
 const loading = ref(false)
 const info = ref<ArticleFields>({} as any)
 const tempComments = ref<any>()
+const articleUrl = ref()
 
 info.value = await articleApi.getDetail(Number(props.id))
 
@@ -179,6 +181,7 @@ onMounted(() => {
   setTimeout(() => {
     checkHljsIsLoad()
   }, 100)
+  articleUrl.value = location.href
 })
 
 </script>
@@ -263,6 +266,7 @@ onMounted(() => {
         </div>
         <div class="yzp-article-share">
           <i class="iconfont iconfenxiang"></i>
+          <base-yzp-share :title="info.title" :description="info.description" :summary="info.title" :cover="info.cover" :url="articleUrl"></base-yzp-share>
         </div>
       </div>
       <!--end 文章底部按钮-->
@@ -431,7 +435,7 @@ onMounted(() => {
     .yzp-article-share {
       margin-left: -41px;
       &:hover {
-        .bdsharebuttonbox{
+        .yzp-share-layer {
           display:block
         }
       }
