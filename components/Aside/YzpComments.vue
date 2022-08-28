@@ -59,7 +59,7 @@ const getCommentLink = (item: any) => {
           rel="nofollow"
           class="yzp-aside-comment-item-avatar-link"
         >
-          <img class="yzp-aside-comment-item-avatar-img" :src="item.avatar" onerror="this.src='/img/default-avatar.png'" />
+          <base-yzp-image :src="item.avatar"  class="yzp-aside-comment-item-avatar-img" />
         </a>
         <nuxt-link :to="getCommentLink(item)" class="yzp-aside-comment-item-link">
           <div class="yzp-aside-comment-item-user">

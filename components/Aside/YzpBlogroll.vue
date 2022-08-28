@@ -19,8 +19,8 @@ const blogroll = result && result.rows ? result.rows : []
         :rel="item.nofollow ? 'nofollow' : ''"
         target="_blank"
         class="yzp-aside-blogroll-item color-primary"
-      >
-        <img :src="`${item.site}/favicon.ico`" class="yzp-blogroll-item-avatar" onerror="this.src='/img/default-avatar.png'" />
+      > 
+        <base-yzp-image :src="`${item.site}/favicon.ico`"  class="yzp-blogroll-item-avatar" />
         <span>{{ item.nickname }}</span>
       </a>
     </div>

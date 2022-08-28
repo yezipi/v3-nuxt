@@ -67,7 +67,7 @@ watch(() => props.visible, (res: boolean) => {
 <template>
   <div v-if="state" class="yzp-lightbox-main" @click="changeState(false)">
     <i class="yzp-lightbox-btn-left iconfont" @click.stop="imgChange(false)">&#xe60a;</i>
-    <img v-show="list[index].load" class="yzp-lightbox-img zoomIn" :src="active" @load="imgLoad" />
+    <base-yzp-image v-show="list[index].load" :src="active" class="yzp-lightbox-img zoomIn" @load="imgLoad" />
     <img v-show="!list[index].load" class="yzp-lightbox-loading" src="/img/btn-loading.gif" />
     <i class="yzp-lightbox-btn-right iconfont" @click.stop="imgChange(true)">&#xe60a;</i>
     <i class="yzp-lightbox-btn-close iconfont" @click.stop="changeState(false)">&#xe65f;</i>

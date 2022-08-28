@@ -52,7 +52,7 @@ onMounted(() => {
 <template>
   <div class="yzp-mood-item yzp-box">
     <a href="1" class="yzp-mood-item-avatar">
-      <img :src="web_avatar" onerror="this.src='/img/default-avatar.png'" />
+      <base-yzp-image :src="web_avatar" isAvatar />
     </a>
     <div class="yzp-mood-item-info">
       <div class="yzp-mood-item-top flex-between">

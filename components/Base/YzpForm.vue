@@ -178,18 +178,8 @@ onMounted(() => {
       </div>
 
       <!--表情-->
-      <!-- <div class="yf-emoji">
-        <img src="../static/images/icon/emoji.png" style="width: 25px" alt="表情" @click="emojiShow">
-        <template v-if="showEmoji">
-          <emoji-select v-show="visibleEmoji" @onSelected="onSelectEmoji" @onClose="visibleEmoji = false" @onLoad="visibleEmoji = true"></emoji-select>
-        </template>
-      </div> -->
-
-      <!--内容-->
-      <!-- <div class="edit-div textarea" :contenteditable="true" placeholder="说点什么吧"></div> -->
-      
       <div class="yzp-face-show">
-        <img class="yzp-face-btn" src="/public/face/sina/0.png" @click.stop="faceVisible = true" />
+        <img class="yzp-face-btn" src="/img/face.png" @click.stop="faceVisible = true" />
         <base-yzp-face v-if="faceVisible" v-model:value="faceVisible" @change="onFaceChange" />
       </div>
 

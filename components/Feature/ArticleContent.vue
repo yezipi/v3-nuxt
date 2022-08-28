@@ -250,8 +250,8 @@ onMounted(() => {
           <div class="yzp-dashang-wrap">
             <div class="yzp-dashang-main">
               <div class="yzp-dashang-code">
-                <img v-show="dashangTabIndex === 0" :src="alipay_code" />
-                <img v-show="dashangTabIndex === 1" :src="wxpay_code" style="display: none" />
+                <base-yzp-image v-show="dashangTabIndex === 0" :src="alipay_code" />
+                <base-yzp-image v-show="dashangTabIndex === 1" :src="wxpay_code" style="display: none" />
               </div>
               <div class="yzp-dashang-tab">
                 <span :class="{ active: dashangTabIndex === 0 }" @click="onDashangTypeChange(0)">支付宝</span>

@@ -119,7 +119,7 @@ onMounted(() => {
     <div class="yzp-header-main max-w1200">
       <div class="yzp-header-left">
         <div class="yzp-header-logo">
-          <img v-if="web_logo" :src="web_logo" />
+          <base-yzp-image v-if="web_logo" :src="web_logo" />
         </div>
         <!--滚动消息-->
         <div v-if="web_notice && web_notice.length" class="yzp-header-notice">

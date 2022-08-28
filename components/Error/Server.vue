@@ -6,19 +6,6 @@ defineProps({
 
 <template>
   <div class="yzp-error-server">
-    <!-- <div class="yzp-error-server-box">
-      <img src="@/assets/img/error/laptop.svg" style="height: 350px" />
-      <div class="yzp-error-server-parts">
-        <img src="@/assets/img/error/eye.svg" class="eye1" />
-        <img src="@/assets/img/error/eye.svg" class="eye2" />
-        <img src="@/assets/img/error/smile.svg" class="smile" />
-      </div>
-    </div>
-    <h1 class="yzp-error-server-status">
-      服务器开小差了，{{ error.statusMessage + ' ' +error.statusCode }}
-    </h1>
-    <p class="yzp-error-server-message">{{ error.message }}</p> -->
-    <!-- <p v-html="error.description" class="yzp-error-server-desc"></p> -->
     <div class="yzp-error-server-content">
       <h1 class="yzp-error-server-title">{{ error.statusCode }} WARNING</h1>
       <h2 class="yzp-error-server-desc" style="margin-bottom: 10px">{{ error.statusMessage }}</h2>

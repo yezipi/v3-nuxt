@@ -45,7 +45,7 @@ try {
   <base-yzp-panel noPadding style="position: relative;z-index: 1">
     <div class="yzp-aside-info">
       <div class="yzp-aside-info-avatar">
-        <img class="yzp-aside-info-avatar-img" :src="web_avatar" onerror="this.src='/img/default-avatar.png'" />
+        <base-yzp-image :src="web_avatar" isAvatar  class="yzp-aside-info-avatar-img" />
       </div>
       <p class="yzp-aside-info-slogan">{{ web_slogan || '欢迎来到本站' }}</p>
       <div class="yzp-aside-info-btngroup">
@@ -58,7 +58,7 @@ try {
           <span>关注我</span>
           <div class="yzp-aside-info-focus-img">
             <div class="yzp-aside-info-focus-img-box">
-              <img :src="gzh_code" onerror="this.src='/img/nopic.png'" />
+              <base-yzp-image :src="gzh_code" />
             </div>
           </div>
         </div>

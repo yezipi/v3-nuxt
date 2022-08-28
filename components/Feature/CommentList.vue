@@ -75,8 +75,8 @@ await initList()
 
       <ul class="yzp-comment-list">
         <li v-for="(item, index) in list.rows" :key="index" :id="'comment-' + item.id" class="yzp-comment-item yzp-box">
-          <a href="" class="yzp-comment-item-avatar">
-            <img :src="item.avatar" onerror="this.src='/img/default-avatar.png'" />
+          <a :href="item.site" :title="item.site ? `去${item.nickname}网站看看` : `${item.nickname}没有登记网站`" class="yzp-comment-item-avatar">
+            <base-yzp-image :src="item.avatar" isAvatar />
           </a>
           <div class="yzp-comment-item-info">
 
@@ -110,7 +110,7 @@ await initList()
               <p v-html="replaceFace(item.content)" class="yzp-comment-item-content"></p>
               <div v-if="item.reply_content" class="yzp-comment-item-reply">
                 <div class="yzp-comment-item-reply-avavtar">
-                  <img :src="web_avatar" />
+                  <base-yzp-image :src="web_avatar" isAvatar />
                 </div>
                 <div class="yzp-comment-item-reply-info">
                   <div class="yzp-comment-item-reply-top">

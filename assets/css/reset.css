@@ -1,7 +1,7 @@
 
 @font-face {
   font-family: 'Menlo';
-  src: url('@/assets/fonts/Menlo.ttf') format('truetype');
+  src: url('/fonts/Menlo.ttf') format('truetype');
 }
 * { margin: 0;padding: 0;outline: none; }
 body::selection { background: var(--color-primary); color: var(--color-white); }
