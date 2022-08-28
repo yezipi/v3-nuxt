@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'yeizpiBlog',
+      name: 'blog-nuxt',
       exec_mode: 'cluster',
       instances: 'max',
       script: './.output/server/index.mjs'
