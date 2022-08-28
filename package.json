@@ -3,8 +3,8 @@
   "scripts": {
     "dev": "nuxi dev --port 4000",
     "build": "nuxi build",
-    "preview": "cross-env PORT=4002 nuxi preview",
-    "start": "cross-env PORT=4002 node .output/server/index.mjs"
+    "start": "cross-env PORT=4001 node .output/server/index.mjs",
+    "preview": "cross-env PORT=4002 nuxi preview"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
@@ -14,7 +14,7 @@
     "nuxt": "^3.0.0-rc.8"
   },
   "dependencies": {
-    "dayjs": "^1.11.4",
+    "dayjs": "^1.11.5",
     "ohash": "^0.1.5"
   }
 }
