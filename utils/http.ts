@@ -2,17 +2,6 @@
 import { _AsyncData } from 'nuxt/dist/app/composables/asyncData'
 import { hash } from 'ohash'
 
-export interface ResponseConfig {
-  code: number,
-  status: number,
-  data: any,
-  msg: string
-}
-export interface ValueConfig {
-  value: any,
-  [x: string]: any,
-}
-
 const fetch = (url: string, options?: any): Promise<any> => {
   const { $config } = useNuxtApp()
   const reqUrl = $config.baseURL + url

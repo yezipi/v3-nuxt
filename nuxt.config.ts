@@ -6,11 +6,6 @@ const SERVER_CONFIG = {
   port: 4000,
   strictPort: true,
   proxy: {
-    // '^/api/.*': {
-    //   target: BASE_URL,
-    //   changeOrigin: true,
-    //   rewrite: (path: string) => path.replace(/^\/api/, '')
-    // },
     '^/public/.*': {
       target: `${BASE_URL}/public`,
       changeOrigin: true,
@@ -26,11 +21,17 @@ export default defineNuxtConfig({
   },
   meta: {
     meta: [
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'renderer', content: 'webkit' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' }
     ],
     link: [
       { rel: 'stylesheet', href: '/fonts/iconfont.css' },
     ],
+    script: [
+      { id: 'LA_COLLECT', type: 'text/javascript', src: '//sdk.51.la/js-sdk-pro.min.js' },
+      { id: 'BAIDU_ZHANZHANG', type: 'text/javascript', src: 'https://zz.bdstatic.com/linksubmit/push.js' }
+    ]
   },
   css: [
     '@/assets/css/reset.css',
@@ -50,5 +51,8 @@ export default defineNuxtConfig({
   },
   vite: {
     server: SERVER_CONFIG,
+  },
+  webpack: {
+    extractCSS: true,
   }
 })

@@ -80,6 +80,14 @@ metaConfig.value.link.push({
   href: `/theme/${settingsTheme.value || 'fresh'}/index.css`
 })
 
+if (hasLeafStyle.includes(settingsTheme.value)) {
+  metaConfig.value.script.push({
+    id: 'fallenLeaves',
+    type: 'text/javascript',
+    src: '/js/fallenLeaves.js'
+  })
+}
+
 // 格式化百度统计代码，只取链接
 if (baseSettings.value.web_tongji) {
   const str = baseSettings.value.web_tongji.replace(/<\/?.+?\/?>/g, '').replace(/\"/g, '').trim().split('=')
@@ -87,27 +95,12 @@ if (baseSettings.value.web_tongji) {
     const link = str[3].split(';')
     if (link && link[0]) {
      metaConfig.value.script.push({
-      id: 'baiduTongji',
+      id: 'BAIDU_TONGJI',
       type: 'text/javascript',
       src: link[0]
     })
     }
   }
-}
-
-// 51.la统计代码
-metaConfig.value.script.push({
-  id: 'LA_COLLECT',
-  type: 'text/javascript',
-  src: '//sdk.51.la/js-sdk-pro.min.js'
-})
-
-if (hasLeafStyle.includes(settingsTheme.value)) {
-  metaConfig.value.script.push({
-    id: 'fallenLeaves',
-    type: 'text/javascript',
-    src: '/js/fallenLeaves.js'
-  })
 }
 
 useHead(metaConfig.value)
