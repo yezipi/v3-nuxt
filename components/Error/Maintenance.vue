@@ -1,11 +1,14 @@
 <script lang="ts" setup>
-const maintenanceSettings = useMaintenanceSettings()
+defineProps({
+  error: Object,
+})
 </script>
 
 <template>
   <div class="yzp-maintenance-wrap">
     <div class="yzp-maintenance-main max-w1200">
-      <div v-html="maintenanceSettings.content" class="yzp-maintenance-box"></div>
+      <h1 style="text-align: center;font-size: xx-large;">网站维护中...</h1>
+      <div v-html="error.message" class="yzp-maintenance-box"></div>
     </div>
   </div>
 </template>

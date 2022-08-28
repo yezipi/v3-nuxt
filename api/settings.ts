@@ -30,6 +30,13 @@ export default new class settings extends Http {
   }
 
   /**
+   * 获取黑名单
+   */
+  getSecuritySettings () {
+    return this.get('/app/v1/settings/security')
+  }
+
+  /**
    * 获取版本更新记录
    * @param { Object } params
    * @param { Number } params.size 页数
@@ -38,4 +45,5 @@ export default new class settings extends Http {
   getChangeLogs (params?: ListConfig) {
     return this.get('/app/v1/changeLogs', params)
   }
+
 }

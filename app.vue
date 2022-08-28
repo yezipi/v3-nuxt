@@ -10,11 +10,17 @@ const pageTitle = ref('')
 
 const settingsTheme = ref<string>('')
 const currTheme = useCookie<string>('theme')
+
 const maintenanceSettings = useMaintenanceSettings()
 const baseSettings = useBaseSettings()
 const personalizeSettings = usePersonalSettings()
+const securitySettings = useSecuritySettings()
 const columns = useColumns()
 const flatColumns = useFlatColumns()
+
+const isBlack = ref(false) // 是否黑名单
+const isMaintenance = ref(false) // 是否维护
+const ip = ref('')
 
 const homeRoute = {
   name: '首页',
@@ -26,15 +32,54 @@ const homeRoute = {
 }
 
 // 获取网站维护设置
+maintenanceSettings.value = await settingsApi.getMaintenanceSettings()
+
+if (maintenanceSettings.value && maintenanceSettings.value.open) {
+  throw createError({
+    statusCode: 503,
+    statusMessage: 'Website maintenance',
+    message: maintenanceSettings.value.content,
+  })
+}
+
+// 黑名单ip
 try {
-  maintenanceSettings.value = await settingsApi.getMaintenanceSettings()
+  securitySettings.value = await settingsApi.getSecuritySettings()
+  const { open, black_ip } = securitySettings.value
+  const blackIp = black_ip ? black_ip.split('\n') : []
+  const headers = useRequestHeaders(['x-forwarded-for'])
+  const headerIp = headers['x-forwarded-for']
+  if (open && Array.isArray(blackIp)) {
+    if (blackIp.includes(headerIp)) {
+      ip.value = headerIp
+      isBlack.value = true
+    }
+  }
 } catch (error) {
   console.log(error)
 }
 
+if (isBlack.value) {
+  throw createError({
+    statusCode: 403,
+    statusMessage: ip.value,
+    message: '您已被列入黑名单，禁止访问',
+  })
+}
+
 // 获取设置信息
-personalizeSettings.value = await settingsApi.getPersonalizeSettings()
 baseSettings.value = await settingsApi.getBaseSettings()
+personalizeSettings.value = await settingsApi.getPersonalizeSettings()
+
+if (!baseSettings.value || !personalizeSettings.value) {
+  (baseSettings.value as any) = {}
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'website is not yet',
+    message: '网站未进行相关配置，请前往后台进行配置',
+  })
+}
+
 
 const { web_name, web_title, web_description, web_keywords } = baseSettings.value
 const { style, gray, background } = personalizeSettings.value
@@ -94,11 +139,11 @@ if (baseSettings.value.web_tongji) {
   if (str && str[3]) {
     const link = str[3].split(';')
     if (link && link[0]) {
-     metaConfig.value.script.push({
-      id: 'BAIDU_TONGJI',
-      type: 'text/javascript',
-      src: link[0]
-    })
+      metaConfig.value.script.push({
+        id: 'BAIDU_TONGJI',
+        type: 'text/javascript',
+        src: link[0]
+      })
     }
   }
 }
@@ -107,12 +152,12 @@ useHead(metaConfig.value)
 
 // 获取栏目数据
 const navData = await columnApi.getList()
-columns.value = [homeRoute, ...(navData || [])]
-flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
 
 const setPageTitle = (val: string) => {
+  columns.value = [homeRoute, ...(navData || [])]
+  flatColumns.value = columns.value.map((e) => [e, ...e.subcolumns]).flat()
   const path = val ? val.split('/').filter((e: string) => e) : []
-  const currCoulmn = flatColumns.value.find((e) => path && path[ path.length - 1] === e.url )
+  const currCoulmn = flatColumns.value.find((e) => path && path[path.length - 1] === e.url)
   pageTitle.value = currCoulmn ? currCoulmn.name : ''
 }
 
@@ -138,7 +183,7 @@ if (process.client) {
 </script>
 
 <template>
-  <NuxtLayout :name="maintenanceSettings && maintenanceSettings.open ? 'maintenance' : 'default'">
+  <NuxtLayout>
     <NuxtLoadingIndicator />
     <NuxtPage />
   </NuxtLayout>

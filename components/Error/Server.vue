@@ -21,7 +21,7 @@ defineProps({
     <!-- <p v-html="error.description" class="yzp-error-server-desc"></p> -->
     <div class="yzp-error-server-content">
       <h1 class="yzp-error-server-title">{{ error.statusCode }} WARNING</h1>
-      <h2 class="yzp-error-server-desc">{{ error.statusMessage }}</h2>
+      <h2 class="yzp-error-server-desc" style="margin-bottom: 10px">{{ error.statusMessage }}</h2>
       <p class="yzp-error-server-desc">{{ error.message }}</p>
     </div>
   </div>
