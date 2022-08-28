@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { timeAgao, replaceFace } from '@/utils/index'
 const baseSettings: any = useBaseSettings()
-const { $lightbox  } = useNuxtApp()
+const { $lightbox, $db, $message } = useNuxtApp()
 const { web_avatar, web_name } = baseSettings.value
+
+const { moodApi } = useApi()
+
+const originUrl = ref()
 
 const props = defineProps({
   item: {
@@ -19,6 +23,29 @@ const previewImage = (src: string) => {
   })
   $lightbox.preview(src.replace('thumb', 'origin'), imgs, 'url')
 }
+
+// 文章点赞
+const like = async (item: any) => {
+  const localId = +$db.get(`moodLikeId_${item.id}`)
+  // if (localId === item.id) {
+  //   item.isLike = true
+  //   $message.warning('您已经点过赞了')
+  //   return
+  // }
+  try {
+    await moodApi.like({ id: item.id, like: item.like + 1 })
+    item.like += 1
+    item.isLike = true
+    $db.set(`moodLikeId_${item.id}`, item.id)
+    $message.success('点赞成功')
+  } catch (error: any) {
+    $message.error(error.toString())
+  }
+}
+
+onMounted(() => {
+  originUrl.value = location.origin
+})
 
 </script>
 
@@ -61,21 +88,32 @@ const previewImage = (src: string) => {
           :class="{ one: item.images.length === 1, two: item.images.length === 2, three: item.images.length === 3, four: item.images.length > 3 }"
           class="yzp-mood-item-img-cell"
         >
-           <base-yzp-image class="yzp-mood-item-img-main" :src="img" @click.native="previewImage(img)"></base-yzp-image>
+           <base-yzp-image
+            class="yzp-mood-item-img-main"
+            :src="img.indexOf('aliyuncs') > -1 ? `${img}?x-oss-process=image/resize,w_375` : img"
+            @click.native="previewImage(img)"
+          >
+          </base-yzp-image>
         </div>
       </div>
       <div class="yzp-mood-item-btn">
         <div class="yzp-mood-item-btn-cell">
           <i class="iconfont iconfenxiang"></i>
-          <span>0</span>
+          <base-yzp-share
+            :title="item.content ? item.content.substring(0, 50) : ''"
+            :description="item.content"
+            :cover="item.images.length ? item.images[0] : ''"
+            :summary="''"
+            :url="`${originUrl}/mood/${item.id}`"
+          ></base-yzp-share>
         </div>
         <nuxt-link :to="`/mood/${item.id}`" class="yzp-mood-item-btn-cell">
           <i class="iconfont iconxiaoxi3"></i>
           <span>{{ item.comments_count }}</span>
         </nuxt-link>
-        <div class="yzp-mood-item-btn-cell">
+        <div :class="{ isLike: item.isLike }" class="yzp-mood-item-btn-cell" @click="like(item)">
           <i class="iconfont iconzan"></i>
-          <span>{{ item.view || 0 }}</span>
+          <span>{{ item.like || 0 }}</span>
         </div>
       </div>
     </div>
@@ -181,9 +219,23 @@ const previewImage = (src: string) => {
       align-items: center;
       justify-content: center;
       border-right: 1px solid var(--border-1);
+      position: relative;
+      &.isLike {
+        color: var(--color-primary);
+      }
       &:hover {
         cursor: pointer;
         color: var(--color-primary);
+        .yzp-share-layer {
+          display: block;
+          left: initial!important;
+          top: var(--space-30);
+          .iconfont {
+            display: block;
+            margin-right: 0;
+            padding: var(--space-5) var(--space-10);
+          }
+        }
       }
       &:last-child {
         border: 0;

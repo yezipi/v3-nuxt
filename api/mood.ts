@@ -25,4 +25,14 @@ export default new class mood extends Http {
   getDetail(id: number) {
     return this.get('/app/v1/mood/' + id)
   }
+
+  /**
+   * 微语点赞
+   * @param { Object } params params
+   * @param { Number } params.id 微语id
+   * @param { Number } params.like 微语点赞数
+   */
+  like(params?: { id: any, like: number }) {
+    return this.post('/app/v1/mood/like', params)
+  }
 }

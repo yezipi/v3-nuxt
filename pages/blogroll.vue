@@ -19,6 +19,7 @@ const blogrolls = await blogrollApi.getList()
           :key="index"
           :href="item.site"
           :title="item.content"
+          :rel="item.nofollow ? 'nofollow' : ''"
           target="_blank"
           class="yzp-blogroll-item yzp-box"
         >

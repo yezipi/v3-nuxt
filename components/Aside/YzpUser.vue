@@ -28,8 +28,7 @@ const like = async () => {
     $db.set('isLike', 1)
     $message.success('点赞成功')
   } catch (error: any) {
-    console.log(error);
-    $message.error(error.msg)
+    $message.error(error.toString())
   }
 }
 

@@ -16,6 +16,7 @@ const blogroll = result && result.rows ? result.rows : []
         v-for="(item, index) in blogroll"
         :index="index"
         :href="item.site"
+        :rel="item.nofollow ? 'nofollow' : ''"
         target="_blank"
         class="yzp-aside-blogroll-item color-primary"
       >

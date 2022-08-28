@@ -27,7 +27,7 @@ const props = defineProps({
 const baseSettings = useBaseSettings()
 const poster = ref()
 
-const { title, description, url, summary, cover } = props
+const { title, description, summary, cover } = props
 const webName = baseSettings.value.web_name
 
 const shareQzone = () => {
@@ -48,7 +48,6 @@ const shareTieba = () => {
 
 onMounted(() => {
   poster.value = props.cover.indexOf('http') > -1 ? props.cover : (location.origin + cover)
-  console.log(poster.value)
 })
 
 </script>

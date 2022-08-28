@@ -78,8 +78,9 @@ export default new class article extends Http {
    * 文章点赞
    * @param { Object } params params
    * @param { Number } params.id 文章id
+   * @param { Number } params.like 文章点赞数
    */
-  like(params?: { id: any }) {
+  like(params?: { id: any, like: number }) {
     return this.post('/app/v1/article/like', params)
   }
 }

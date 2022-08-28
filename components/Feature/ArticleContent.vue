@@ -136,17 +136,18 @@ const unclock = async () => {
 
 // 文章点赞
 const like = async () => {
-  if (+$db.get(`articleLikeId_${props.id}`) === props.id) {
+  const localId = +$db.get(`articleLikeId_${props.id}`)
+  if (localId === props.id) {
     $message.warning('您已经点过赞了')
     return
   }
   try {
-    await articleApi.like({ id: props.id })
+    await articleApi.like({ id: props.id, like: info.value.like + 1 })
     info.value.like += 1
     $db.set(`articleLikeId_${props.id}`, props.id)
     $message.success('点赞成功')
   } catch (error: any) {
-    $message.error(error.msg)
+    $message.error(error.toString())
   }
 }
 
