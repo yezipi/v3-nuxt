@@ -90,7 +90,7 @@ onMounted(() => {
         >
            <base-yzp-image
             class="yzp-mood-item-img-main"
-            :src="img.indexOf('aliyuncs') > -1 ? `${img}?x-oss-process=image/resize,w_375` : img"
+            :src="img && img.indexOf('aliyuncs') > -1 ? `${img}?x-oss-process=image/resize,w_375` : img"
             @click.native="previewImage(img)"
           >
           </base-yzp-image>

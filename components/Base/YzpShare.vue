@@ -47,7 +47,7 @@ const shareTieba = () => {
 }
 
 onMounted(() => {
-  poster.value = props.cover.indexOf('http') > -1 ? props.cover : (location.origin + cover)
+  poster.value = props.cover && props.cover.indexOf('http') > -1 ? props.cover : (location.origin + cover)
 })
 
 </script>

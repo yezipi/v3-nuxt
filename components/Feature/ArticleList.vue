@@ -91,7 +91,7 @@ await getArticles()
                 <i v-else style="font-style: normal">{{ txt }}</i>
               </span>
             </div>
-            <div class="yzp-article-item-desc">{{ item.description.substring(0, 100) }}</div>
+            <div v-if="item.description" class="yzp-article-item-desc">{{ item.description.substring(0, 100) }}</div>
             <div class="yzp-article-item-bottom">
               <div class="yzp-article-item-icon">
                 <i class="iconfont iconshijian"></i>
